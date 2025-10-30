@@ -1,0 +1,87 @@
+// ===================================================================
+// OBRA ERP · Prisma Schema (SQLite)
+// ===================================================================
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // p.ej. file:./prisma/dev.db
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ========================= Catálogos base ===========================
+
+model Obra {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  code  String? @unique
+
+  frentes Frente[]
+  moves   Move[]
+}
+
+model Material {
+  id    Int     @id @default(autoincrement())
+  code  String? @unique
+  name  String
+  unit  String?
+
+  moves Move[]
+}
+
+model Proveedor {
+  id    Int     @id @default(autoincrement())
+  name  String
+  ruc   String? @unique
+  phone String?
+
+  moves Move[]
+}
+
+model Frente {
+  id     Int    @id @default(autoincrement())
+  name   String
+  obraId Int
+  obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
+
+  moves Move[]
+
+  @@index([obraId, name])
+}
+
+// ========================= Movimientos ==============================
+
+enum MoveType {
+  IN   // Entrada (compra, devolución)
+  OUT  // Salida (consumo, traslado)
+}
+
+model Move {
+  id          Int        @id @default(autoincrement())
+
+  // Relaciones/FKs
+  obraId      Int
+  obra        Obra       @relation(fields: [obraId], references: [id], onDelete: Cascade)
+
+  frenteId    Int?
+  frente      Frente?    @relation(fields: [frenteId], references: [id])
+
+  materialId  Int
+  material    Material   @relation(fields: [materialId], references: [id])
+
+  proveedorId Int?
+  proveedor   Proveedor? @relation(fields: [proveedorId], references: [id])
+
+  // Datos
+  type        MoveType
+  quantity    Float
+  unitCost    Float?
+  date        DateTime   @default(now())
+  note        String?
+
+  // Índices
+  @@index([obraId, materialId])
+  @@index([materialId, date])
+}

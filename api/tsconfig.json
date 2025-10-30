@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",               // Salida JS moderna
+    "module": "commonjs",             // Evita problemas ESM; compatible con Node
+    "moduleResolution": "node",
+    "esModuleInterop": true,          // Permite import default de libs CommonJS
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "rootDir": "src",                 // Código fuente aquí
+    "outDir": "dist",                 // JS compilado va aquí
+    "strict": false,                  // Puedes subirlo a true más adelante
+    "types": ["node"]
+  },
+  "include": ["src"]
+}
