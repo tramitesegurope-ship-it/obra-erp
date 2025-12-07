@@ -1,0 +1,32 @@
+# Node dependencies
+node_modules/
+api/node_modules/
+obra-erp-ui/node_modules/
+
+# Build artifacts
+dist/
+api/dist/
+obra-erp-ui/dist/
+
+# Environment files
+.env
+api/.env
+obra-erp-ui/.env
+
+# Local data / databases / uploads
+api/prisma/*.db*
+api/prisma/dev.db*
+api/uploads/
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+*.DS_Store
+obra-erp-ui/tmp*.*
+
+# Virtual environments
+venv/
+
+# IDE settings
+.vscode/

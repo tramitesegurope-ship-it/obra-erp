@@ -1,20 +1,20 @@
 // scripts/resetMoves.ts
+// (mantiene el nombre histórico, pero ahora reinicia movimientos, ingresos y egresos)
 import { PrismaClient } from '@prisma/client';
+import { resetDemoData } from '../src/services/resetDemo';
+
 const prisma = new PrismaClient();
 
 async function main() {
-  // 1) borramos todos los movimientos
-  await prisma.move.deleteMany({});
-
-  // 2) reset autoincrement solo para SQLite
-  //    (si usas Postgres/MariaDB avísame y te doy los comandos equivalentes)
-  await prisma.$executeRawUnsafe(
-    "DELETE FROM sqlite_sequence WHERE name = 'Move';"
-  );
-
-  console.log('OK: Movimientos borrados y contador reseteado.');
+  await resetDemoData(prisma);
+  console.log('OK: Movimientos, ingresos y egresos borrados. Contadores reiniciados.');
 }
 
 main()
-  .catch(e => { console.error(e); process.exit(1); })
-  .finally(async () => { await prisma.$disconnect(); });
+  .catch((e) => {
+    console.error('Fallo reseteando la base de prueba:', e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

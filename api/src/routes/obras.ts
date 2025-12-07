@@ -7,7 +7,14 @@ const router = Router();
 // Lista obras (orden determinista)
 router.get('/obras', async (_req, res) => {
   const obras = await prisma.obra.findMany({ orderBy: { id: 'asc' } });
-  res.json(obras);
+  const adjusted = obras.map(obra => {
+    const name = obra.name?.toLowerCase?.() ?? '';
+    if (name.includes('electrificacion huaraz') || name.includes('electrificación huaraz')) {
+      return { ...obra, name: 'Proyecto La Carbonera' };
+    }
+    return obra;
+  });
+  res.json(adjusted);
 });
 
 // Valida el body de creación
@@ -27,4 +34,3 @@ router.post('/obras', async (req, res) => {
 });
 
 export default router;
-

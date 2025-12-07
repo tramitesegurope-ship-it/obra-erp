@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2025-11-23T03:18:35.140Z",
+  "totals": [
+    {
+      "group": "LP",
+      "contractual": 29578.91,
+      "metrado": 40348.93229999999,
+      "additions": 4521.6523,
+      "newItems": 12915.82,
+      "deductions": 6667.450000000001,
+      "binding": 1630.7,
+      "count": 392
+    },
+    {
+      "group": "RP",
+      "contractual": 6806.76,
+      "metrado": 6821.868719200002,
+      "additions": 843.2607191999999,
+      "newItems": 944.6,
+      "deductions": 1772.752,
+      "binding": 218.332,
+      "count": 303
+    },
+    {
+      "group": "RS",
+      "contractual": 25726.37483333333,
+      "metrado": 0,
+      "additions": 0,
+      "newItems": 0,
+      "deductions": 169173.87999999998,
+      "binding": 0,
+      "count": 306
+    },
+    {
+      "group": "SFV",
+      "contractual": 538.576,
+      "metrado": 0,
+      "additions": 0,
+      "newItems": 0,
+      "deductions": 24431.69,
+      "binding": 0,
+      "count": 230
+    }
+  ],
+  "overall": {
+    "contractual": 62650.620833333334,
+    "metrado": 47170.80101919999,
+    "additions": 5364.913019199999,
+    "newItems": 13860.42,
+    "deductions": 202045.77199999997,
+    "binding": 1849.0320000000002,
+    "count": 1231
+  }
+}

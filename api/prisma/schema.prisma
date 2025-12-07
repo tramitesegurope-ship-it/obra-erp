@@ -13,22 +13,66 @@ generator client {
 
 // ========================= Catálogos base ===========================
 
-model Obra {
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
-  code  String? @unique
+enum AssetStatus {
+  IN_WAREHOUSE
+  OUT_ON_FIELD
+}
 
-  frentes Frente[]
-  moves   Move[]
+enum QuotationProcessStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+enum QuotationStatus {
+  DRAFT
+  RECEIVED
+  SHORTLISTED
+  AWARDED
+  DISCARDED
+}
+
+enum QuotationAttachmentType {
+  BASE_FILE
+  SUPPLIER_FILE
+  PARSED_SNAPSHOT
+}
+
+model Obra {
+  id   Int     @id @default(autoincrement())
+  name String  @unique
+  code String? @unique
+
+  frentes             Frente[]
+  moves               Move[]
+  incomes             Income[]
+  expenses            Expense[]
+  employees           Employee[]
+  payrollPeriods      PayrollPeriod[]
+  dailyCashRenditions DailyCashRendition[]
 }
 
 model Material {
-  id    Int     @id @default(autoincrement())
-  code  String? @unique
-  name  String
-  unit  String?
+  id               Int            @id @default(autoincrement())
+  code             String?        @unique
+  name             String
+  unit             String?
+  groupId          Int?
+  minStock         Decimal        @default(0)
+  reorderQuantity  Decimal        @default(0)
+  allowNegative    Boolean        @default(false)
+  isCompanyAsset   Boolean        @default(false)
+  assetStatus      AssetStatus    @default(IN_WAREHOUSE)
+  assetResponsible String?
+  group            MaterialGroup? @relation(fields: [groupId], references: [id], onDelete: SetNull)
 
-  moves Move[]
+  moves      Move[]
+  expenses   Expense[]
+  baseQuotes QuotationBaselineItem[]
+  quoteItems QuotationItem[]
+
+  @@index([groupId])
 }
 
 model Proveedor {
@@ -37,7 +81,10 @@ model Proveedor {
   ruc   String? @unique
   phone String?
 
-  moves Move[]
+  moves      Move[]
+  expenses   Expense[]
+  quotations Quotation[]
+  deliveries PurchaseDeliveryLog[]
 }
 
 model Frente {
@@ -46,7 +93,9 @@ model Frente {
   obraId Int
   obra   Obra   @relation(fields: [obraId], references: [id], onDelete: Cascade)
 
-  moves Move[]
+  moves    Move[]
+  incomes  Income[]
+  expenses Expense[]
 
   @@index([obraId, name])
 }
@@ -54,22 +103,37 @@ model Frente {
 // ========================= Movimientos ==============================
 
 enum MoveType {
-  IN   // Entrada (compra, devolución)
-  OUT  // Salida (consumo, traslado)
+  IN // Entrada (compra, devolución)
+  OUT // Salida (consumo, traslado)
+}
+
+model MaterialGroup {
+  id        Int      @id @default(autoincrement())
+  name      String
+  parentId  Int?
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent    MaterialGroup?  @relation("MaterialGroupHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children  MaterialGroup[] @relation("MaterialGroupHierarchy")
+  materials Material[]
+
+  @@unique([name])
 }
 
 model Move {
-  id          Int        @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   // Relaciones/FKs
-  obraId      Int
-  obra        Obra       @relation(fields: [obraId], references: [id], onDelete: Cascade)
+  obraId Int
+  obra   Obra @relation(fields: [obraId], references: [id], onDelete: Cascade)
 
-  frenteId    Int?
-  frente      Frente?    @relation(fields: [frenteId], references: [id])
+  frenteId Int?
+  frente   Frente? @relation(fields: [frenteId], references: [id])
 
-  materialId  Int
-  material    Material   @relation(fields: [materialId], references: [id])
+  materialId Int
+  material   Material @relation(fields: [materialId], references: [id])
 
   proveedorId Int?
   proveedor   Proveedor? @relation(fields: [proveedorId], references: [id])
@@ -78,10 +142,801 @@ model Move {
   type        MoveType
   quantity    Float
   unitCost    Float?
-  date        DateTime   @default(now())
+  totalCost   Float?
+  date        DateTime     @default(now())
   note        String?
+  docType     DocType?
+  docSerie    String?
+  docNumero   String?
+  igvRate     Decimal?
+  isTaxable   Boolean?     @default(true)
+  expense     Expense?     @relation("MoveExpense")
+  responsible String?
+  assetStatus AssetStatus?
 
   // Índices
   @@index([obraId, materialId])
   @@index([materialId, date])
+  @@index([obraId, date])
+}
+
+// ===== ADMIN MÓDULO (v1) =====
+
+enum DocType {
+  FACTURA
+  BOLETA
+  RECIBO
+  OTRO
+}
+
+enum IncomeStatus {
+  EMITIDO
+  COBRADO
+  ANULADO
+}
+
+enum ExpenseType {
+  DIRECTO
+  INDIRECTO
+}
+
+enum VariableType {
+  FIJO
+  VARIABLE
+}
+
+enum PaymentMethod {
+  EFECTIVO
+  TRANSFERENCIA
+  TARJETA
+  YAPE
+  PLIN
+  OTRO
+}
+
+enum ExpenseKind {
+  OPERATIVO // Gastos de oficina, administración, planillas, etc.
+  ADMINISTRATIVO // Gastos administrativos separados de operativos
+  MATERIAL_COMPRA // Compras de materiales (IN almacen)
+  MATERIAL_CONSUMO // Consumo valorizado (OUT almacen)
+  FINANCIERO
+  OTROS
+}
+
+// ========================= Personal & Planillas =====================
+
+enum DocumentType {
+  DNI
+  CE
+  PASS
+  OTRO
+}
+
+enum PensionSystem {
+  NINGUNO
+  ONP
+  AFP
+  SNP
+  EXONERADO
+}
+
+enum AttendanceStatus {
+  PRESENT
+  TARDY
+  ABSENT
+  PERMISSION
+}
+
+enum EmployeeArea {
+  OPERATIVE
+  ADMINISTRATIVE
+}
+
+enum BankType {
+  BCP
+  INTERBANK
+  SCOTIABANK
+  BANCO_NACION
+  YAPE_PLIN
+  OTROS
+}
+
+enum PayrollPeriodStatus {
+  OPEN
+  PROCESSED
+  CLOSED
+}
+
+enum PayrollAdjustmentType {
+  BONUS
+  DEDUCTION
+  ADVANCE
+}
+
+enum PartnerLoanStatus {
+  PENDING
+  RENDIDO
+  DEVUELTO
+}
+
+model ExpenseCategory {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  expenses  Expense[]
+  createdAt DateTime    @default(now())
+  kind      ExpenseKind @default(OPERATIVO)
+}
+
+model Income {
+  id          Int          @id @default(autoincrement())
+  obraId      Int
+  frenteId    Int?
+  date        DateTime     @default(now())
+  description String?
+  docType     DocType      @default(FACTURA)
+  docSerie    String?
+  docNumero   String?
+  status      IncomeStatus @default(EMITIDO)
+
+  // importes
+  igvRate   Decimal @default(0.18)
+  isTaxable Boolean @default(true)
+  base      Decimal
+  igv       Decimal
+  total     Decimal
+
+  obra   Obra    @relation(fields: [obraId], references: [id])
+  frente Frente? @relation(fields: [frenteId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Expense {
+  id          Int      @id @default(autoincrement())
+  obraId      Int
+  frenteId    Int?
+  proveedorId Int?
+  materialId  Int?
+  categoryId  Int?
+  moveId      Int?     @unique
+  docType     DocType  @default(FACTURA)
+  docSerie    String?
+  docNumero   String?
+  date        DateTime @default(now())
+  description String?
+  spentBy     String?
+
+  type         ExpenseType  @default(DIRECTO)
+  variableType VariableType @default(FIJO)
+
+  // cantidades y costos (opcionales si no aplica material)
+  quantity Decimal?
+  unitCost Decimal?
+
+  // importes
+  igvRate   Decimal @default(0.18)
+  isTaxable Boolean @default(true)
+  base      Decimal
+  igv       Decimal
+  total     Decimal
+
+  paymentMethod        PaymentMethod @default(TRANSFERENCIA)
+  paidAt               DateTime?
+  status               String        @default("REGISTRADO") // PENDIENTE/PAGADO/ANULADO según tu flujo
+  reminderIntervalDays Int?
+  reminderNextDate     DateTime?
+
+  obra      Obra             @relation(fields: [obraId], references: [id])
+  frente    Frente?          @relation(fields: [frenteId], references: [id])
+  proveedor Proveedor?       @relation(fields: [proveedorId], references: [id])
+  material  Material?        @relation(fields: [materialId], references: [id])
+  category  ExpenseCategory? @relation(fields: [categoryId], references: [id])
+  move      Move?            @relation("MoveExpense", fields: [moveId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([moveId])
+}
+
+model DailyCashRendition {
+  id                   Int                @id @default(autoincrement())
+  date                 DateTime           @default(now())
+  obraId               Int?
+  obra                 Obra?              @relation(fields: [obraId], references: [id], onDelete: SetNull)
+  openingBalance       Decimal            @default(0)
+  received             Decimal            @default(0)
+  spent                Decimal            @default(0)
+  personalContribution Decimal            @default(0)
+  balance              Decimal            @default(0)
+  notes                String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  expenses             DailyCashExpense[]
+
+  @@index([date])
+  @@index([obraId, date])
+}
+
+model DailyCashExpense {
+  id               Int                @id @default(autoincrement())
+  renditionId      Int
+  description      String
+  amount           Decimal
+  personalAmount   Decimal            @default(0)
+  paidWithPersonal Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  rendition        DailyCashRendition @relation(fields: [renditionId], references: [id], onDelete: Cascade)
+
+  @@index([renditionId])
+}
+
+model AdminSetting {
+  id                 Int      @id
+  deletePasswordHash String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Employee {
+  id             Int           @id @default(autoincrement())
+  code           String?       @unique
+  firstName      String
+  lastName       String
+  documentType   DocumentType? @default(DNI)
+  documentNumber String?       @unique
+  position       String?
+  phone          String?
+  email          String?
+  bankType       BankType      @default(BCP)
+  accountNumber  String?
+  cci            String?
+  startDate      DateTime?
+  endDate        DateTime?
+  baseSalary     Decimal       @default(0)
+  dailyHours     Decimal       @default(8)
+  pensionSystem  PensionSystem @default(NINGUNO)
+  pensionRate    Decimal       @default(0)
+  healthRate     Decimal       @default(0.09)
+  isActive       Boolean       @default(true)
+  area           EmployeeArea  @default(OPERATIVE)
+  obraId         Int?
+  obra           Obra?         @relation(fields: [obraId], references: [id], onDelete: SetNull)
+  notes          String?
+  absenceSundayPenalty Boolean  @default(false)
+
+  attendances    AttendanceRecord[]
+  payrollEntries PayrollEntry[]
+  accumulationPayment EmployeeAccumulationPayment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([obraId, isActive])
+  @@index([lastName])
+}
+
+model EmployeeAccumulationPayment {
+  employeeId Int @id
+  paid       Boolean   @default(false)
+  paidAt     DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+}
+
+model AttendanceRecord {
+  id              Int              @id @default(autoincrement())
+  employeeId      Int
+  date            DateTime
+  status          AttendanceStatus @default(PRESENT)
+  minutesLate     Int?             @default(0)
+  permissionHours Decimal?         @default(0)
+  extraHours      Decimal?         @default(0)
+  permissionPaid  Boolean?         @default(false)
+  holidayWorked   Boolean          @default(false)
+  holidayCount    Int              @default(0)
+  notes           String?
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([employeeId, date])
+  @@index([date])
+}
+
+model PayrollPeriod {
+  id          Int                 @id @default(autoincrement())
+  obraId      Int?
+  month       Int
+  year        Int
+  startDate   DateTime
+  endDate     DateTime
+  workingDays Int
+  status      PayrollPeriodStatus @default(OPEN)
+  notes       String?
+
+  obra    Obra?          @relation(fields: [obraId], references: [id], onDelete: SetNull)
+  entries PayrollEntry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([year, month, obraId])
+}
+
+model PayrollEntry {
+  id               Int     @id @default(autoincrement())
+  periodId         Int
+  employeeId       Int
+  baseSalary       Decimal
+  dailyRate        Decimal
+  hourlyRate       Decimal
+  workedDays       Int     @default(0)
+  absenceDays      Int     @default(0)
+  tardinessMinutes Int     @default(0)
+  permissionHours  Decimal @default(0)
+  overtimeHours    Decimal @default(0)
+  bonusesTotal     Decimal @default(0)
+  deductionsTotal  Decimal @default(0)
+  pensionAmount    Decimal @default(0)
+  healthAmount     Decimal @default(0)
+  grossEarnings    Decimal @default(0)
+  netPay           Decimal @default(0)
+  permissionDays   Int     @default(0)
+  holidayDays      Int     @default(0)
+  holidayBonus     Decimal @default(0)
+  details          Json?
+
+  period      PayrollPeriod       @relation(fields: [periodId], references: [id], onDelete: Cascade)
+  employee    Employee            @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  adjustments PayrollAdjustment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([periodId, employeeId])
+}
+
+model PayrollAdjustment {
+  id      Int                   @id @default(autoincrement())
+  entryId Int
+  type    PayrollAdjustmentType
+  concept String
+  amount  Decimal
+
+  entry PayrollEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([entryId])
+}
+
+model Partner {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loansGiven    PartnerLoan[] @relation("PartnerLoanGiver")
+  loansReceived PartnerLoan[] @relation("PartnerLoanReceiver")
+}
+
+model PartnerLoan {
+  id          Int               @id @default(autoincrement())
+  date        DateTime
+  giverId     Int
+  receiverId  Int
+  amount      Decimal
+  note        String?
+  status      PartnerLoanStatus @default(PENDING)
+  financeRefs Json?
+  closeDate   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  giver    Partner @relation("PartnerLoanGiver", fields: [giverId], references: [id], onDelete: Cascade)
+  receiver Partner @relation("PartnerLoanReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([status, receiverId])
+  @@index([date])
+}
+
+// ========================= Alimentación ============================
+
+enum FoodMealType {
+  DESAYUNO
+  ALMUERZO
+  CENA
+  REFRIGERIO
+  COMPONENTE
+}
+
+enum FoodCostPeriod {
+  POR_RACION
+  POR_SERVICIO
+  DIARIO
+  SEMANAL
+  MENSUAL
+}
+
+enum FoodCostPoolType {
+  MANO_OBRA
+  ALQUILER
+  SERVICIOS_BASICOS
+  LOGISTICA
+  TRANSPORTE
+  COMBUSTIBLE
+  SUMINISTROS
+  OTROS
+}
+
+enum FoodCostLineType {
+  MANO_OBRA
+  INDIRECTO
+  TRANSPORTE
+  LOGISTICA
+  SUMINISTROS
+  OTROS
+}
+
+model FoodIngredient {
+  id              Int                   @id @default(autoincrement())
+  name            String
+  category        String?
+  unit            String?
+  defaultWastePct Decimal                @default(0)
+  notes           String?
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  costs           FoodIngredientCost[]
+  items           FoodRecipeItem[]
+
+  @@unique([name])
+}
+
+model FoodIngredientCost {
+  id            Int            @id @default(autoincrement())
+  ingredientId  Int
+  unitCost      Decimal
+  effectiveDate DateTime?      @default(now())
+  source        String?
+  createdAt     DateTime       @default(now())
+  ingredient    FoodIngredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@index([ingredientId, effectiveDate])
+}
+
+model FoodRecipe {
+  id         Int              @id @default(autoincrement())
+  name       String
+  code       String?
+  mealType   FoodMealType     @default(DESAYUNO)
+  yield      Decimal          @default(1)
+  yieldUnit  String?          @default("raciones")
+  isActive   Boolean          @default(true)
+  notes      String?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  items      FoodRecipeItem[] @relation("RecipeItems")
+  childItems FoodRecipeItem[] @relation("ChildRecipeItems")
+  extraCosts FoodRecipeCost[]
+  mealPlanEntries FoodMealPlanEntry[]
+  prepMinutes Decimal? @default(0)
+  dailyBlocks Int? @default(1)
+
+  @@index([mealType, isActive])
+}
+
+model FoodRecipeItem {
+  id             Int             @id @default(autoincrement())
+  recipeId       Int
+  ingredientId   Int?
+  childRecipeId  Int?
+  quantity       Decimal         @default(0)
+  unit           String?
+  wastePct       Decimal?
+  notes          String?
+  createdAt      DateTime        @default(now())
+  recipe         FoodRecipe      @relation("RecipeItems", fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient     FoodIngredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+  childRecipe    FoodRecipe?     @relation("ChildRecipeItems", fields: [childRecipeId], references: [id], onDelete: SetNull)
+
+  @@index([recipeId])
+  @@index([ingredientId])
+  @@index([childRecipeId])
+}
+
+model FoodRecipeCost {
+  id            Int              @id @default(autoincrement())
+  recipeId      Int
+  label         String
+  amount        Decimal          @default(0)
+  costType      FoodCostLineType @default(OTROS)
+  period        FoodCostPeriod   @default(POR_RACION)
+  periodRations Decimal?
+  notes         String?
+  createdAt     DateTime         @default(now())
+  recipe        FoodRecipe       @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index([recipeId])
+}
+
+model FoodCostPool {
+  id            Int             @id @default(autoincrement())
+  name          String
+  type          FoodCostPoolType @default(OTROS)
+  amount        Decimal          @default(0)
+  period        FoodCostPeriod   @default(MENSUAL)
+  periodRations Decimal?
+  appliesTo     FoodMealType?
+  notes         String?
+  allocationMethod PoolAllocationMethod @default(RACIONES)
+  dailyBlocks    Int?
+  timeMinutes    Decimal?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([appliesTo])
+}
+
+enum PoolAllocationMethod {
+  RACIONES
+  BLOQUES
+  MINUTOS
+}
+
+model FoodMealPlan {
+  id        Int       @id @default(autoincrement())
+  name      String
+  weekStart DateTime?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  entries FoodMealPlanEntry[]
+}
+
+model FoodMealPlanEntry {
+  id        Int          @id @default(autoincrement())
+  planId    Int
+  dayIndex  Int
+  mealType  FoodMealType
+  recipeId  Int
+  servings  Decimal      @default(0)
+  notes     String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  plan   FoodMealPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  recipe FoodRecipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index([planId])
+  @@index([mealType])
+}
+
+// ========================= Cotizaciones ============================
+
+model QuotationProcess {
+  id              Int                    @id @default(autoincrement())
+  name            String
+  code            String?                @unique
+  status          QuotationProcessStatus @default(DRAFT)
+  baseCurrency    String                 @default("PEN")
+  targetCurrency  String?
+  exchangeRate    Decimal?
+  targetMarginPct Decimal?
+  baselineFileId  Int?                   @unique
+  notes           String?
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  baselineFile QuotationAttachment?    @relation("ProcessBaseline", fields: [baselineFileId], references: [id], onDelete: SetNull)
+  baselines    QuotationBaselineItem[]
+  quotations   Quotation[]
+  purchaseOrders PurchaseOrderLog[]
+  deliveryLogs   PurchaseDeliveryLog[]
+}
+
+model QuotationBaselineItem {
+  id          Int      @id @default(autoincrement())
+  processId   Int
+  materialId  Int?
+  sheetName   String?
+  sectionPath String?
+  itemCode    String?
+  description String
+  unit        String?
+  quantity    Decimal? @default(0)
+  unitPrice   Decimal? @default(0)
+  totalPrice  Decimal? @default(0)
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  process    QuotationProcess @relation(fields: [processId], references: [id], onDelete: Cascade)
+  material   Material?        @relation(fields: [materialId], references: [id], onDelete: SetNull)
+  quoteItems QuotationItem[]
+  orderLines PurchaseOrderLine[]
+  deliveryItems PurchaseDeliveryItem[]
+
+  @@index([processId, itemCode])
+  @@index([materialId])
+}
+
+model Quotation {
+  id             Int             @id @default(autoincrement())
+  processId      Int
+  proveedorId    Int?
+  supplierName   String?
+  currency       String          @default("PEN")
+  exchangeRate   Decimal?
+  submittedAt    DateTime?       @default(now())
+  status         QuotationStatus @default(DRAFT)
+  totalAmount    Decimal?        @default(0)
+  totalAmountPen Decimal?        @default(0)
+  qualityScore   Int?
+  notes          String?
+  metadata       Json?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  process     QuotationProcess      @relation(fields: [processId], references: [id], onDelete: Cascade)
+  proveedor   Proveedor?            @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  items       QuotationItem[]
+  attachments QuotationAttachment[]
+  purchaseOrders PurchaseOrderLog[]
+
+  @@index([processId, status])
+  @@index([proveedorId])
+  @@unique([processId, proveedorId])
+}
+
+model QuotationItem {
+  id              Int      @id @default(autoincrement())
+  quotationId     Int
+  baselineItemId  Int?
+  materialId      Int?
+  sourceRow       Int?
+  itemCode        String?
+  description     String
+  unit            String?
+  quantity        Decimal? @default(0)
+  unitPrice       Decimal? @default(0)
+  totalPrice      Decimal? @default(0)
+  currency        String?  @default("PEN")
+  normalizedPrice Decimal?
+  matchScore      Float?   @default(0)
+  extraAttributes Json?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  quotation    Quotation              @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  baselineItem QuotationBaselineItem? @relation(fields: [baselineItemId], references: [id], onDelete: SetNull)
+  material     Material?              @relation(fields: [materialId], references: [id], onDelete: SetNull)
+
+  @@index([quotationId])
+  @@index([baselineItemId])
+  @@index([materialId])
+}
+
+model QuotationAttachment {
+  id           Int                     @id @default(autoincrement())
+  quotationId  Int?
+  type         QuotationAttachmentType @default(SUPPLIER_FILE)
+  originalName String
+  storagePath  String
+  mimeType     String?
+  sizeBytes    Int?
+  checksum     String?
+  parsed       Boolean                 @default(false)
+  parsedAt     DateTime?
+  metadata     Json?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+
+  quotation Quotation?        @relation(fields: [quotationId], references: [id], onDelete: SetNull)
+  process   QuotationProcess? @relation("ProcessBaseline")
+
+  @@index([quotationId])
+}
+
+model PurchaseOrderLog {
+  id           Int      @id @default(autoincrement())
+  processId    Int
+  quotationId  Int?
+  supplierId   Int?
+  supplierName String
+  orderNumber  String
+  sequence     Int      @default(1)
+  issueDate    DateTime @default(now())
+  currency     String   @default("PEN")
+  subtotal     Decimal? @default(0)
+  discount     Decimal? @default(0)
+  netSubtotal  Decimal? @default(0)
+  igv          Decimal? @default(0)
+  total        Decimal? @default(0)
+  totalsJson   Json?
+  itemsJson    Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  process   QuotationProcess @relation(fields: [processId], references: [id], onDelete: Cascade)
+  quotation Quotation?       @relation(fields: [quotationId], references: [id], onDelete: SetNull)
+  lines     PurchaseOrderLine[]
+  deliveries PurchaseDeliveryLog[]
+
+  @@index([processId, createdAt])
+  @@index([sequence])
+  @@unique([orderNumber])
+}
+
+model PurchaseOrderLine {
+  id           Int      @id @default(autoincrement())
+  orderId      Int
+  baselineId   Int?
+  description  String
+  unit         String?
+  quantity     Decimal? @default(0)
+  unitPrice    Decimal? @default(0)
+  totalPrice   Decimal? @default(0)
+  metadata     Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  order     PurchaseOrderLog     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  baseline  QuotationBaselineItem? @relation(fields: [baselineId], references: [id], onDelete: SetNull)
+  deliveries PurchaseDeliveryItem[]
+
+  @@index([orderId])
+  @@index([baselineId])
+}
+
+model PurchaseDeliveryLog {
+  id          Int      @id @default(autoincrement())
+  processId   Int
+  orderId     Int?
+  proveedorId Int?
+  supplierName String?
+  guideNumber String?
+  date        DateTime @default(now())
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  process   QuotationProcess @relation(fields: [processId], references: [id], onDelete: Cascade)
+  order     PurchaseOrderLog? @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  proveedor Proveedor?        @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  items     PurchaseDeliveryItem[]
+
+  @@index([processId, date])
+  @@index([orderId])
+  @@unique([guideNumber])
+}
+
+model PurchaseDeliveryItem {
+  id           Int      @id @default(autoincrement())
+  deliveryId   Int
+  orderLineId  Int?
+  baselineId   Int?
+  description  String
+  unit         String?
+  quantity     Decimal? @default(0)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  delivery PurchaseDeliveryLog @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  orderLine PurchaseOrderLine?  @relation(fields: [orderLineId], references: [id], onDelete: SetNull)
+  baseline  QuotationBaselineItem? @relation(fields: [baselineId], references: [id], onDelete: SetNull)
+
+  @@index([deliveryId])
+  @@index([baselineId])
 }

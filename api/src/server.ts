@@ -11,6 +11,22 @@ import frentes from './routes/frentes';
 import moves from './routes/moves';
 import stock from './routes/stock';
 import kardex from './routes/kardex';
+import materialGroups from './routes/material.groups';
+import adminIncomes from './routes/admin.incomes';
+import adminExpenses from './routes/admin.expenses';
+import adminSummary from './routes/admin.summary';
+import adminReset from './routes/admin.reset';
+import personnelEmployees from './routes/personnel.employees';
+import personnelAttendance from './routes/personnel.attendance';
+import personnelPayroll from './routes/personnel.payroll';
+import partnerLedger from './routes/partners.internal';
+import dailyCash from './routes/daily.cash';
+import adminSecurity from './routes/admin.security';
+import quotations from './routes/quotations';
+import foodCosting from './routes/food.costing';
+import financeBudget from './routes/finance.budget';
+import globalSearch from './routes/search.global';
+
 
 const app = express();
 const API_PREFIX = '/api';
@@ -19,7 +35,7 @@ const API_PREFIX = '/api';
 app.use(cors({
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Key'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Delete-Password'],
   credentials: false,
 }));
 
@@ -42,6 +58,21 @@ app.use(API_PREFIX, frentes);
 app.use(API_PREFIX, moves);
 app.use(API_PREFIX, stock);
 app.use(API_PREFIX, kardex);
+app.use(API_PREFIX, materialGroups);
+app.use(API_PREFIX, adminIncomes);
+app.use(API_PREFIX, adminExpenses);
+app.use(API_PREFIX, adminSummary);
+app.use(API_PREFIX, adminReset);
+app.use(API_PREFIX, personnelEmployees);
+app.use(API_PREFIX, personnelAttendance);
+app.use(API_PREFIX, personnelPayroll);
+app.use(API_PREFIX, partnerLedger);
+app.use(API_PREFIX, dailyCash);
+app.use(API_PREFIX, adminSecurity);
+app.use(API_PREFIX, quotations);
+app.use(API_PREFIX, foodCosting);
+app.use(API_PREFIX, financeBudget);
+app.use(API_PREFIX, globalSearch);
 
 // 404 para cualquier otra ruta de /api no encontrada
 app.use(API_PREFIX, (_req, res) => res.status(404).json({ error: 'Not found' }));

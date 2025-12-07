@@ -1,0 +1,2855 @@
+{
+  "generatedAt": "2025-11-23T16:39:41.495Z",
+  "entries": [
+    {
+      "date": "2025-11-23",
+      "group": "LP",
+      "code": "1.01",
+      "description": "Cruceta de madera tratada de 90 mm x 115 mm x 1,20 m",
+      "unit": "u",
+      "plannedQty": 7,
+      "executedQty": 1.05,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 337.37,
+        "labor": 224.91,
+        "equipment": 96.39,
+        "feeding": 40.16,
+        "lodging": 32.13,
+        "logistics": 32.13,
+        "other": 40.16
+      }
+    },
+    {
+      "date": "2025-11-22",
+      "group": "LP",
+      "code": "1.02",
+      "description": "Cruceta de madera tratada de 90 mm x 115 mm x 2,00 m",
+      "unit": "u",
+      "plannedQty": 1,
+      "executedQty": 0.22,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 76.39,
+        "labor": 49.74,
+        "equipment": 21.32,
+        "feeding": 8.88,
+        "lodging": 7.11,
+        "logistics": 7.11,
+        "other": 7.1
+      }
+    },
+    {
+      "date": "2025-11-21",
+      "group": "LP",
+      "code": "1.03",
+      "description": "Cruceta de madera tratada de 90 mm x 115 mm x 2,40 m",
+      "unit": "u",
+      "plannedQty": 13,
+      "executedQty": 3.77,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1409.98,
+        "labor": 897.26,
+        "equipment": 384.54,
+        "feeding": 160.23,
+        "lodging": 128.18,
+        "logistics": 128.18,
+        "other": 96.13
+      }
+    },
+    {
+      "date": "2025-11-20",
+      "group": "LP",
+      "code": "2.01",
+      "description": "Poste de C.A.C. de 12 m/200 daN (Incluye perilla)",
+      "unit": "u",
+      "plannedQty": 3,
+      "executedQty": 1.08,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 433.76,
+        "labor": 269.89,
+        "equipment": 115.67,
+        "feeding": 48.2,
+        "lodging": 38.56,
+        "logistics": 38.56,
+        "other": 19.26
+      }
+    },
+    {
+      "date": "2025-11-19",
+      "group": "LP",
+      "code": "2.0199999999999996",
+      "description": "Poste de C.A.C. de 12 m/300 daN (Incluye perilla)",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 2.58,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 907.9,
+        "labor": 552.64,
+        "equipment": 236.84,
+        "feeding": 98.69,
+        "lodging": 78.95,
+        "logistics": 78.95,
+        "other": 19.73
+      }
+    },
+    {
+      "date": "2025-11-18",
+      "group": "LP",
+      "code": "2.0299999999999994",
+      "description": "Poste de C.A.C. de 13 m/300 daN (Incluye perilla)",
+      "unit": "u",
+      "plannedQty": 96,
+      "executedQty": 48,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 16279.2,
+        "labor": 10852.8,
+        "equipment": 4651.2,
+        "feeding": 1938,
+        "lodging": 1550.4,
+        "logistics": 1550.4,
+        "other": 1938
+      }
+    },
+    {
+      "date": "2025-11-17",
+      "group": "LP",
+      "code": "2.039999999999999",
+      "description": "Poste de C.A.C. de 13 m/400 daN (Incluye perilla)",
+      "unit": "u",
+      "plannedQty": 60,
+      "executedQty": 9,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 3289.5,
+        "labor": 2142,
+        "equipment": 918,
+        "feeding": 382.5,
+        "lodging": 306,
+        "logistics": 306,
+        "other": 306
+      }
+    },
+    {
+      "date": "2025-11-16",
+      "group": "LP",
+      "code": "3.01A",
+      "description": "Poste de PRFV de 12 m/200 daN",
+      "unit": "u",
+      "plannedQty": 4,
+      "executedQty": 0.88,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 345.58,
+        "labor": 219.91,
+        "equipment": 94.25,
+        "feeding": 39.27,
+        "lodging": 31.42,
+        "logistics": 31.42,
+        "other": 23.55
+      }
+    },
+    {
+      "date": "2025-11-15",
+      "group": "LP",
+      "code": "3.02A",
+      "description": "Poste de PRFV de 12 m/300 daN",
+      "unit": "u",
+      "plannedQty": 11,
+      "executedQty": 3.19,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1098.16,
+        "labor": 683.3,
+        "equipment": 292.84,
+        "feeding": 122.02,
+        "lodging": 97.61,
+        "logistics": 97.61,
+        "other": 48.81
+      }
+    },
+    {
+      "date": "2025-11-14",
+      "group": "LP",
+      "code": "4.02",
+      "description": "Ménsula de C.A.V. M / 1,2 / 250 / 150 / 150 daN (M / L / T / F / V)",
+      "unit": "u",
+      "plannedQty": 84,
+      "executedQty": 30.24,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 11232.65,
+        "labor": 6837.26,
+        "equipment": 2930.26,
+        "feeding": 1220.94,
+        "lodging": 976.75,
+        "logistics": 976.75,
+        "other": 244.19
+      }
+    },
+    {
+      "date": "2025-11-13",
+      "group": "LP",
+      "code": "4.05",
+      "description": "Cruceta Simétrica de C.A.V. Z / 2,4 / 300 / 300 / 150 daN (Z/ L / T / F / V)",
+      "unit": "u",
+      "plannedQty": 122,
+      "executedQty": 52.46,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 18728.22,
+        "labor": 12485.48,
+        "equipment": 5350.92,
+        "feeding": 2229.55,
+        "lodging": 1783.64,
+        "logistics": 1783.64,
+        "other": 2229.55
+      }
+    },
+    {
+      "date": "2025-11-12",
+      "group": "LP",
+      "code": "5.01",
+      "description": "Aislador de Porcelana Tipo Pin, Clase ANSI 56-3",
+      "unit": "u",
+      "plannedQty": 24,
+      "executedQty": 12,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4605.3,
+        "labor": 2998.8,
+        "equipment": 1285.2,
+        "feeding": 535.5,
+        "lodging": 428.4,
+        "logistics": 428.4,
+        "other": 428.4
+      }
+    },
+    {
+      "date": "2025-11-11",
+      "group": "LP",
+      "code": "5.02",
+      "description": "Espiga de AºGº de 609 mm longitud, para Cabeza de Poste y Aislador ANSI 56-3",
+      "unit": "u",
+      "plannedQty": 24,
+      "executedQty": 3.6,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1211.76,
+        "labor": 771.12,
+        "equipment": 330.48,
+        "feeding": 137.7,
+        "lodging": 110.16,
+        "logistics": 110.16,
+        "other": 82.62
+      }
+    },
+    {
+      "date": "2025-11-10",
+      "group": "LP",
+      "code": "5.029999999999999",
+      "description": "Conjunto Aislador Line Post Polimérico en Mesula y Cruceta:",
+      "unit": "u",
+      "plannedQty": 307,
+      "executedQty": 67.54,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 24542.35,
+        "labor": 15270.79,
+        "equipment": 6544.63,
+        "feeding": 2726.93,
+        "lodging": 2181.54,
+        "logistics": 2181.54,
+        "other": 1090.77
+      }
+    },
+    {
+      "date": "2025-11-09",
+      "group": "LP",
+      "code": "6.01",
+      "description": "Grillete Recto",
+      "unit": "u",
+      "plannedQty": 283,
+      "executedQty": 82.07,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 32089.37,
+        "labor": 19532.66,
+        "equipment": 8371.14,
+        "feeding": 3487.98,
+        "lodging": 2790.38,
+        "logistics": 2790.38,
+        "other": 697.59
+      }
+    },
+    {
+      "date": "2025-11-08",
+      "group": "LP",
+      "code": "6.02",
+      "description": "Aislador Polimerico con Conexión Horquilla (Estructura) y Lengüeta (Linea) de 36 kV, según Especificacion Técnica.",
+      "unit": "u",
+      "plannedQty": 283,
+      "executedQty": 101.88,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 38189.72,
+        "labor": 25459.81,
+        "equipment": 10911.35,
+        "feeding": 4546.4,
+        "lodging": 3637.12,
+        "logistics": 3637.12,
+        "other": 4546.38
+      }
+    },
+    {
+      "date": "2025-11-07",
+      "group": "LP",
+      "code": "7.01",
+      "description": "Conductor de Aleacion de Aluminio de 35 mm²",
+      "unit": "km",
+      "plannedQty": 51.19,
+      "executedQty": 22.01,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 7240.19,
+        "labor": 4714.54,
+        "equipment": 2020.52,
+        "feeding": 841.88,
+        "lodging": 673.51,
+        "logistics": 673.51,
+        "other": 673.5
+      }
+    },
+    {
+      "date": "2025-11-06",
+      "group": "LP",
+      "code": "7.02",
+      "description": "Conductor de Aleacion de Aluminio de 70 mm²",
+      "unit": "km",
+      "plannedQty": 1.17,
+      "executedQty": 0.58,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 206.07,
+        "labor": 131.14,
+        "equipment": 56.2,
+        "feeding": 23.42,
+        "lodging": 18.73,
+        "logistics": 18.73,
+        "other": 14.06
+      }
+    },
+    {
+      "date": "2025-11-05",
+      "group": "LP",
+      "code": "8.01",
+      "description": "Varilla de Armar preformada Simple para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 275,
+      "executedQty": 41.25,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 15778.12,
+        "labor": 9817.5,
+        "equipment": 4207.5,
+        "feeding": 1753.13,
+        "lodging": 1402.5,
+        "logistics": 1402.5,
+        "other": 701.25
+      }
+    },
+    {
+      "date": "2025-11-04",
+      "group": "LP",
+      "code": "8.02",
+      "description": "Varilla de Armar preformada Simple para Conductor de 70 mm²",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 0.44,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 180.64,
+        "labor": 109.96,
+        "equipment": 47.12,
+        "feeding": 19.64,
+        "lodging": 15.71,
+        "logistics": 15.71,
+        "other": 3.92
+      }
+    },
+    {
+      "date": "2025-11-03",
+      "group": "LP",
+      "code": "8.049999999999999",
+      "description": "Grapa de Doble Via de Aluminio para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 190,
+      "executedQty": 55.1,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 17703.63,
+        "labor": 11802.42,
+        "equipment": 5058.18,
+        "feeding": 2107.58,
+        "lodging": 1686.06,
+        "logistics": 1686.06,
+        "other": 2107.57
+      }
+    },
+    {
+      "date": "2025-11-02",
+      "group": "LP",
+      "code": "8.059999999999999",
+      "description": "Grapa de Doble Via de Aluminio para Conductor de 70 mm²",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 2.16,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 750.01,
+        "labor": 488.38,
+        "equipment": 209.3,
+        "feeding": 87.21,
+        "lodging": 69.77,
+        "logistics": 69.77,
+        "other": 69.76
+      }
+    },
+    {
+      "date": "2025-11-01",
+      "group": "LP",
+      "code": "8.069999999999999",
+      "description": "Alambre de Amarre Aluminio Recocido de 16 mm²",
+      "unit": "m",
+      "plannedQty": 905,
+      "executedQty": 389.15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 145542.1,
+        "labor": 92617.7,
+        "equipment": 39693.3,
+        "feeding": 16538.88,
+        "lodging": 13231.1,
+        "logistics": 13231.1,
+        "other": 9923.32
+      }
+    },
+    {
+      "date": "2025-10-31",
+      "group": "LP",
+      "code": "8.079999999999998",
+      "description": "Amortiguador de Vibracion Tipo Stockbridge para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 1,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 401.62,
+        "labor": 249.9,
+        "equipment": 107.1,
+        "feeding": 44.63,
+        "lodging": 35.7,
+        "logistics": 35.7,
+        "other": 17.85
+      }
+    },
+    {
+      "date": "2025-10-30",
+      "group": "LP",
+      "code": "8.089999999999998",
+      "description": "Amortiguador de Vibracion Tipo Stockbridge para Conductor de 70 mm²",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 0.9,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 316.71,
+        "labor": 192.78,
+        "equipment": 82.62,
+        "feeding": 34.43,
+        "lodging": 27.54,
+        "logistics": 27.54,
+        "other": 6.88
+      }
+    },
+    {
+      "date": "2025-10-29",
+      "group": "LP",
+      "code": "8.099999999999998",
+      "description": "Grapa de Angulo para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 0.44,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 149.23,
+        "labor": 99.48,
+        "equipment": 42.64,
+        "feeding": 17.77,
+        "lodging": 14.21,
+        "logistics": 14.21,
+        "other": 17.76
+      }
+    },
+    {
+      "date": "2025-10-28",
+      "group": "LP",
+      "code": "8.119999999999997",
+      "description": "Grapa de Anclaje para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 273,
+      "executedQty": 79.17,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 28936.63,
+        "labor": 18842.46,
+        "equipment": 8075.34,
+        "feeding": 3364.73,
+        "lodging": 2691.78,
+        "logistics": 2691.78,
+        "other": 2691.78
+      }
+    },
+    {
+      "date": "2025-10-27",
+      "group": "LP",
+      "code": "8.129999999999997",
+      "description": "Grapa de Anclaje para Conductor de 70 mm²",
+      "unit": "u",
+      "plannedQty": 8,
+      "executedQty": 2.88,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1130.98,
+        "labor": 719.71,
+        "equipment": 308.45,
+        "feeding": 128.52,
+        "lodging": 102.82,
+        "logistics": 102.82,
+        "other": 77.1
+      }
+    },
+    {
+      "date": "2025-10-26",
+      "group": "LP",
+      "code": "8.14",
+      "description": "Cinta plana de armar de aluminio",
+      "unit": "m",
+      "plannedQty": 281,
+      "executedQty": 120.83,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 41595.73,
+        "labor": 25881.79,
+        "equipment": 11092.19,
+        "feeding": 4621.75,
+        "lodging": 3697.4,
+        "logistics": 3697.4,
+        "other": 1848.69
+      }
+    },
+    {
+      "date": "2025-10-25",
+      "group": "LP",
+      "code": "8.15",
+      "description": "Varilla de Armar preformada Doble para Conductor de 35 mm²",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 1,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 371.45,
+        "labor": 226.1,
+        "equipment": 96.9,
+        "feeding": 40.38,
+        "lodging": 32.3,
+        "logistics": 32.3,
+        "other": 8.07
+      }
+    },
+    {
+      "date": "2025-10-24",
+      "group": "LP",
+      "code": "9.01",
+      "description": "Cable de Acero con Recubrimiento Metalúrgico de Cu de 4 AWG (21,15 mm²), para Puesta a Tierra",
+      "unit": "m",
+      "plannedQty": 3162.9,
+      "executedQty": 474.44,
+      "puBudget": 41.81,
+      "costBreakdown": {
+        "materials": 8331.26,
+        "labor": 5554.17,
+        "equipment": 2380.36,
+        "feeding": 991.82,
+        "lodging": 793.45,
+        "logistics": 793.45,
+        "other": 991.83
+      }
+    },
+    {
+      "date": "2025-10-23",
+      "group": "LP",
+      "code": "10.01",
+      "description": "Perno Cabeza Coche de AºGº de 13 mm Ø x 152 mm longitud, 76 mm maquinado, con Arandela, Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 33,
+      "executedQty": 7.26,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2786.21,
+        "labor": 1814.27,
+        "equipment": 777.55,
+        "feeding": 323.98,
+        "lodging": 259.18,
+        "logistics": 259.18,
+        "other": 259.18
+      }
+    },
+    {
+      "date": "2025-10-22",
+      "group": "LP",
+      "code": "10.03",
+      "description": "Perno de A°G° de 13 mm Ø x 305 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 21,
+      "executedQty": 6.09,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2049.89,
+        "labor": 1304.48,
+        "equipment": 559.06,
+        "feeding": 232.94,
+        "lodging": 186.35,
+        "logistics": 186.35,
+        "other": 139.78
+      }
+    },
+    {
+      "date": "2025-10-21",
+      "group": "LP",
+      "code": "10.04",
+      "description": "Perno de A°G° de 16 mm Ø x 254 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 172,
+      "executedQty": 61.92,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 22500.18,
+        "labor": 14000.11,
+        "equipment": 6000.05,
+        "feeding": 2500.02,
+        "lodging": 2000.02,
+        "logistics": 2000.02,
+        "other": 1000
+      }
+    },
+    {
+      "date": "2025-10-20",
+      "group": "LP",
+      "code": "10.049999999999999",
+      "description": "Perno de A°G° de 16 mm Ø x 305 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 14,
+      "executedQty": 6.02,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2353.82,
+        "labor": 1432.76,
+        "equipment": 614.04,
+        "feeding": 255.85,
+        "lodging": 204.68,
+        "logistics": 204.68,
+        "other": 51.17
+      }
+    },
+    {
+      "date": "2025-10-19",
+      "group": "LP",
+      "code": "10.059999999999999",
+      "description": "Perno de A°G° de 16 mm Ø x 356 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 5,
+      "executedQty": 2.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 937.13,
+        "labor": 624.75,
+        "equipment": 267.75,
+        "feeding": 111.56,
+        "lodging": 89.25,
+        "logistics": 89.25,
+        "other": 111.56
+      }
+    },
+    {
+      "date": "2025-10-18",
+      "group": "LP",
+      "code": "10.069999999999999",
+      "description": "Perno de A°G° de 16 mm Ø x 508 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 104,
+      "executedQty": 15.6,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 5131.62,
+        "labor": 3341.52,
+        "equipment": 1432.08,
+        "feeding": 596.7,
+        "lodging": 477.36,
+        "logistics": 477.36,
+        "other": 477.36
+      }
+    },
+    {
+      "date": "2025-10-17",
+      "group": "LP",
+      "code": "10.079999999999998",
+      "description": "Perno Doble Armado de A°G° de 16 mm Ø x 508 mm, provisto de 4 Tuercas y 4 Contratuercas",
+      "unit": "u",
+      "plannedQty": 107,
+      "executedQty": 23.54,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 8363.76,
+        "labor": 5322.39,
+        "equipment": 2281.03,
+        "feeding": 950.43,
+        "lodging": 760.34,
+        "logistics": 760.34,
+        "other": 570.26
+      }
+    },
+    {
+      "date": "2025-10-16",
+      "group": "LP",
+      "code": "10.089999999999998",
+      "description": "Perno Ojo de A°G° de 16 mm Ø x 254 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 70,
+      "executedQty": 20.3,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 7764.75,
+        "labor": 4831.4,
+        "equipment": 2070.6,
+        "feeding": 862.75,
+        "lodging": 690.2,
+        "logistics": 690.2,
+        "other": 345.1
+      }
+    },
+    {
+      "date": "2025-10-15",
+      "group": "LP",
+      "code": "10.099999999999998",
+      "description": "Perno Ojo de A°G° de 16 mm Ø x 305 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 21,
+      "executedQty": 7.56,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 3103.76,
+        "labor": 1889.24,
+        "equipment": 809.68,
+        "feeding": 337.37,
+        "lodging": 269.89,
+        "logistics": 269.89,
+        "other": 67.47
+      }
+    },
+    {
+      "date": "2025-10-14",
+      "group": "LP",
+      "code": "10.119999999999997",
+      "description": "Tuerca-Ojo para Perno de 16 mm Ø",
+      "unit": "u",
+      "plannedQty": 112,
+      "executedQty": 48.16,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 15473.81,
+        "labor": 10315.87,
+        "equipment": 4421.09,
+        "feeding": 1842.12,
+        "lodging": 1473.7,
+        "logistics": 1473.7,
+        "other": 1842.11
+      }
+    },
+    {
+      "date": "2025-10-13",
+      "group": "LP",
+      "code": "10.139999999999997",
+      "description": "Brazo-Soporte (Riostra) de Perfil Angular de A°G° de 38 x 38 x 5 mm y 710 mm longitud",
+      "unit": "u",
+      "plannedQty": 33,
+      "executedQty": 16.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 5729.21,
+        "labor": 3730.65,
+        "equipment": 1598.85,
+        "feeding": 666.19,
+        "lodging": 532.95,
+        "logistics": 532.95,
+        "other": 532.95
+      }
+    },
+    {
+      "date": "2025-10-12",
+      "group": "LP",
+      "code": "10.149999999999997",
+      "description": "Arandela Cuadrada Plana de A° G°, 57 x 57 x 5 mm, Agujero de 18 mm Ø",
+      "unit": "u",
+      "plannedQty": 518,
+      "executedQty": 77.7,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 29059.8,
+        "labor": 18492.6,
+        "equipment": 7925.4,
+        "feeding": 3302.25,
+        "lodging": 2641.8,
+        "logistics": 2641.8,
+        "other": 1981.35
+      }
+    },
+    {
+      "date": "2025-10-11",
+      "group": "LP",
+      "code": "10.159999999999997",
+      "description": "Arandela Cuadrada curva de A° G°, 57 x 57 x 5 mm, Agujero de 18 mm Ø",
+      "unit": "u",
+      "plannedQty": 772,
+      "executedQty": 169.84,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 68211.99,
+        "labor": 42443.02,
+        "equipment": 18189.86,
+        "feeding": 7579.11,
+        "lodging": 6063.29,
+        "logistics": 6063.29,
+        "other": 3031.64
+      }
+    },
+    {
+      "date": "2025-10-10",
+      "group": "LP",
+      "code": "10.169999999999996",
+      "description": "Plantillas para Identificación y/o codificación de Postes (Peligro, Identificación y/o codificación y Fases)",
+      "unit": "Jgo.",
+      "plannedQty": 22,
+      "executedQty": 6.38,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2245.12,
+        "labor": 1366.6,
+        "equipment": 585.68,
+        "feeding": 244.03,
+        "lodging": 195.23,
+        "logistics": 195.23,
+        "other": 48.81
+      }
+    },
+    {
+      "date": "2025-10-09",
+      "group": "LP",
+      "code": "10.209999999999996",
+      "description": "Perno Ojo de A°G° de 16 mm Ø x 203 mm, provisto de Tuerca y Contratuerca",
+      "unit": "u",
+      "plannedQty": 24,
+      "executedQty": 8.64,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2930.26,
+        "labor": 1953.5,
+        "equipment": 837.22,
+        "feeding": 348.84,
+        "lodging": 279.07,
+        "logistics": 279.07,
+        "other": 348.84
+      }
+    },
+    {
+      "date": "2025-10-08",
+      "group": "LP",
+      "code": "10.219999999999995",
+      "description": "Soporte separador de vertice de postes de A°G° fabricado con platina de 76 X 6,4 mm",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 0.86,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 314.33,
+        "labor": 204.68,
+        "equipment": 87.72,
+        "feeding": 36.55,
+        "lodging": 29.24,
+        "logistics": 29.24,
+        "other": 29.24
+      }
+    },
+    {
+      "date": "2025-10-07",
+      "group": "LP",
+      "code": "10.229999999999995",
+      "description": "Braquete de A°G° para soporte de aislador tipo Line Post en cabea de poste",
+      "unit": "u",
+      "plannedQty": 75,
+      "executedQty": 37.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 14726.25,
+        "labor": 9371.25,
+        "equipment": 4016.25,
+        "feeding": 1673.44,
+        "lodging": 1338.75,
+        "logistics": 1338.75,
+        "other": 1004.06
+      }
+    },
+    {
+      "date": "2025-10-06",
+      "group": "LP",
+      "code": "11.02",
+      "description": "Varilla de Anclaje de A°G° de 16 mm Ø x 2,40 m, provisto de Ojal Guardacabo en un extremo; Tuerca y Contratuerca en el otro",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 12.45,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4285.91,
+        "labor": 2666.79,
+        "equipment": 1142.91,
+        "feeding": 476.21,
+        "lodging": 380.97,
+        "logistics": 380.97,
+        "other": 190.49
+      }
+    },
+    {
+      "date": "2025-10-05",
+      "group": "LP",
+      "code": "11.03",
+      "description": "Mordaza Preformada de A°G° para Cable de 10 mm Ø",
+      "unit": "u",
+      "plannedQty": 166,
+      "executedQty": 36.52,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 13565.35,
+        "labor": 8257.17,
+        "equipment": 3538.79,
+        "feeding": 1474.5,
+        "lodging": 1179.6,
+        "logistics": 1179.6,
+        "other": 294.89
+      }
+    },
+    {
+      "date": "2025-10-04",
+      "group": "LP",
+      "code": "11.04",
+      "description": "Alambre de Acero N° 14 para Entorchado",
+      "unit": "m",
+      "plannedQty": 124.5,
+      "executedQty": 36.11,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 12891.27,
+        "labor": 8594.18,
+        "equipment": 3683.22,
+        "feeding": 1534.68,
+        "lodging": 1227.74,
+        "logistics": 1227.74,
+        "other": 1534.67
+      }
+    },
+    {
+      "date": "2025-10-03",
+      "group": "LP",
+      "code": "11.049999999999999",
+      "description": "Arandela de Anclaje de A°G°, 102 x 102 x 6,35 mm, Agujero de 18 mmø",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 29.88,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 11467.2,
+        "labor": 7467.01,
+        "equipment": 3200.15,
+        "feeding": 1333.4,
+        "lodging": 1066.72,
+        "logistics": 1066.72,
+        "other": 1066.7
+      }
+    },
+    {
+      "date": "2025-10-02",
+      "group": "LP",
+      "code": "11.069999999999999",
+      "description": "Abrazadera de 4 sectores para Retenida, de 75 mm de altura, 6,35 mm de espesor y 70 kN de resistencia. Diámetro según dimensiones del poste, incluye 4 pernos de 12,7 mm Ø x 63,5 mm y 4 arandelas",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 35.69,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 12013.25,
+        "labor": 7644.8,
+        "equipment": 3276.34,
+        "feeding": 1365.14,
+        "lodging": 1092.11,
+        "logistics": 1092.11,
+        "other": 819.1
+      }
+    },
+    {
+      "date": "2025-10-01",
+      "group": "LP",
+      "code": "11.079999999999998",
+      "description": "Enlace metálico, de 254 mm x 75 mm x 38 mm, de 70 kN de resistencia",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 41.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 15080.06,
+        "labor": 9383.15,
+        "equipment": 4021.35,
+        "feeding": 1675.56,
+        "lodging": 1340.45,
+        "logistics": 1340.45,
+        "other": 670.23
+      }
+    },
+    {
+      "date": "2025-09-30",
+      "group": "LP",
+      "code": "11.089999999999998",
+      "description": "Aislador Polimerico con Conexión Horquilla (Estructura) y Lengüeta (Linea) de 36 kV, según Especificacion Técnica, para Retenida Aislada.",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 12.45,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4867.95,
+        "labor": 2963.1,
+        "equipment": 1269.9,
+        "feeding": 529.13,
+        "lodging": 423.3,
+        "logistics": 423.3,
+        "other": 105.82
+      }
+    },
+    {
+      "date": "2025-09-29",
+      "group": "LP",
+      "code": "11.099999999999998",
+      "description": "Grillete de Acero de 70 kN",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 18.26,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 6844.76,
+        "labor": 4563.17,
+        "equipment": 1955.65,
+        "feeding": 814.85,
+        "lodging": 651.88,
+        "logistics": 651.88,
+        "other": 814.86
+      }
+    },
+    {
+      "date": "2025-09-28",
+      "group": "LP",
+      "code": "11.109999999999998",
+      "description": "Bloque de Concreto de 0,40 x 0,40 x 0,15 m",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 24.07,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 7917.83,
+        "labor": 5155.79,
+        "equipment": 2209.63,
+        "feeding": 920.68,
+        "lodging": 736.54,
+        "logistics": 736.54,
+        "other": 736.54
+      }
+    },
+    {
+      "date": "2025-09-27",
+      "group": "LP",
+      "code": "11.14",
+      "description": "Cable de acero grado Alta Resistencia (HS), de 10 mm ø, 7 hilos",
+      "unit": "m",
+      "plannedQty": 1162,
+      "executedQty": 418.32,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 148629.1,
+        "labor": 94582.15,
+        "equipment": 40535.21,
+        "feeding": 16889.67,
+        "lodging": 13511.74,
+        "logistics": 13511.74,
+        "other": 10133.79
+      }
+    },
+    {
+      "date": "2025-09-26",
+      "group": "LP",
+      "code": "12.01",
+      "description": "Electrodo de Acero Recubierto de Cobre de 16 mm Ø x 2,40 m",
+      "unit": "u",
+      "plannedQty": 16,
+      "executedQty": 6.88,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2631.6,
+        "labor": 1637.44,
+        "equipment": 701.76,
+        "feeding": 292.4,
+        "lodging": 233.92,
+        "logistics": 233.92,
+        "other": 116.96
+      }
+    },
+    {
+      "date": "2025-09-25",
+      "group": "LP",
+      "code": "12.02",
+      "description": "Plancha Doblada de Cobre para toma a Tierra de Espigas y/o Pernos",
+      "unit": "u",
+      "plannedQty": 450,
+      "executedQty": 225,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 92373.75,
+        "labor": 56227.5,
+        "equipment": 24097.5,
+        "feeding": 10040.63,
+        "lodging": 8032.5,
+        "logistics": 8032.5,
+        "other": 2008.12
+      }
+    },
+    {
+      "date": "2025-09-24",
+      "group": "LP",
+      "code": "12.03",
+      "description": "Conector de Bronce para Electrodo de 16 mm ø y Cable de Acero con Recubrimiento Metalúrgico de Cobre de 4 AWG (21,15 mm2)",
+      "unit": "u",
+      "plannedQty": 100,
+      "executedQty": 15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4819.5,
+        "labor": 3213,
+        "equipment": 1377,
+        "feeding": 573.75,
+        "lodging": 459,
+        "logistics": 459,
+        "other": 573.75
+      }
+    },
+    {
+      "date": "2025-09-23",
+      "group": "LP",
+      "code": "12.04",
+      "description": "Conector de Cobre tipo Perno Partido para Cable de Acero con Recubrimiento Metalúrgico de Cobre de 4 AWG (21,15 mm2)",
+      "unit": "u",
+      "plannedQty": 262,
+      "executedQty": 57.64,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 20014.05,
+        "labor": 13032.4,
+        "equipment": 5585.32,
+        "feeding": 2327.22,
+        "lodging": 1861.77,
+        "logistics": 1861.77,
+        "other": 1861.77
+      }
+    },
+    {
+      "date": "2025-09-22",
+      "group": "LP",
+      "code": "12.049999999999999",
+      "description": "Caja Registro de Concreto para Puesta a Tierra 0,50 x 0,50 x 0,45 m",
+      "unit": "u",
+      "plannedQty": 16,
+      "executedQty": 4.64,
+      "puBudget": 41.81,
+      "costBreakdown": {
+        "materials": 85.36,
+        "labor": 54.32,
+        "equipment": 23.28,
+        "feeding": 9.7,
+        "lodging": 7.76,
+        "logistics": 7.76,
+        "other": 5.82
+      }
+    },
+    {
+      "date": "2025-09-21",
+      "group": "LP",
+      "code": "12.059999999999999",
+      "description": "Grapa en \"U\" para fijar conductor de PAT a Madera",
+      "unit": "u",
+      "plannedQty": 171,
+      "executedQty": 61.56,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 24724.03,
+        "labor": 15383.84,
+        "equipment": 6593.08,
+        "feeding": 2747.12,
+        "lodging": 2197.69,
+        "logistics": 2197.69,
+        "other": 1098.85
+      }
+    },
+    {
+      "date": "2025-09-20",
+      "group": "LP",
+      "code": "12.079999999999998",
+      "description": "Plantilla para Señalización de Poste (Puesta a Tierra)",
+      "unit": "u",
+      "plannedQty": 15,
+      "executedQty": 6.45,
+      "puBudget": 41.81,
+      "costBreakdown": {
+        "materials": 111.65,
+        "labor": 67.96,
+        "equipment": 29.12,
+        "feeding": 12.14,
+        "lodging": 9.71,
+        "logistics": 9.71,
+        "other": 2.42
+      }
+    },
+    {
+      "date": "2025-09-19",
+      "group": "LP",
+      "code": "12.089999999999998",
+      "description": "Tubo Plastico de PVC SAP de 19 mm ø x 0,5 m ( incluye curva de plastico de 19 mm ø x 90º)",
+      "unit": "u",
+      "plannedQty": 156,
+      "executedQty": 78,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 26453.7,
+        "labor": 17635.8,
+        "equipment": 7558.2,
+        "feeding": 3149.25,
+        "lodging": 2519.4,
+        "logistics": 2519.4,
+        "other": 3149.25
+      }
+    },
+    {
+      "date": "2025-09-18",
+      "group": "LP",
+      "code": "12.1",
+      "description": "Bentonita sódica saco de 30 kg",
+      "unit": "u",
+      "plannedQty": 48,
+      "executedQty": 7.2,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2631.6,
+        "labor": 1713.6,
+        "equipment": 734.4,
+        "feeding": 306,
+        "lodging": 244.8,
+        "logistics": 244.8,
+        "other": 244.8
+      }
+    },
+    {
+      "date": "2025-09-17",
+      "group": "LP",
+      "code": "13.01",
+      "description": "Seccionador Fusible Unipolar Tipo Expulsion (Cut-Out) de 27/38 kV, 100A, 150 kV-BIL.",
+      "unit": "u",
+      "plannedQty": 13,
+      "executedQty": 2.86,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1123.12,
+        "labor": 714.71,
+        "equipment": 306.31,
+        "feeding": 127.63,
+        "lodging": 102.1,
+        "logistics": 102.1,
+        "other": 76.58
+      }
+    },
+    {
+      "date": "2025-09-16",
+      "group": "LP",
+      "code": "13.02",
+      "description": "Fusible Tipo Expulsion de 3 A, Tipo K",
+      "unit": "u",
+      "plannedQty": 7,
+      "executedQty": 2.03,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 698.83,
+        "labor": 434.83,
+        "equipment": 186.35,
+        "feeding": 77.65,
+        "lodging": 62.12,
+        "logistics": 62.12,
+        "other": 31.05
+      }
+    },
+    {
+      "date": "2025-09-15",
+      "group": "LP",
+      "code": "13.03",
+      "description": "Fusible Tipo Expulsion de 6 A, Tipo K",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 2.16,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 802.33,
+        "labor": 488.38,
+        "equipment": 209.3,
+        "feeding": 87.21,
+        "lodging": 69.77,
+        "logistics": 69.77,
+        "other": 17.44
+      }
+    },
+    {
+      "date": "2025-09-14",
+      "group": "LP",
+      "code": "13.04",
+      "description": "Pararrayos de Oxido Metalico, 21 kV, 10 KA Clase 1",
+      "unit": "u",
+      "plannedQty": 5,
+      "executedQty": 2.15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 767.55,
+        "labor": 511.7,
+        "equipment": 219.3,
+        "feeding": 91.38,
+        "lodging": 73.1,
+        "logistics": 73.1,
+        "other": 91.37
+      }
+    },
+    {
+      "date": "2025-09-13",
+      "group": "LP",
+      "code": "13.05",
+      "description": "Pararrayos de Oxido Metalico, 12 kV, 10 KA Clase 1",
+      "unit": "u",
+      "plannedQty": 28,
+      "executedQty": 14,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 5372.85,
+        "labor": 3498.6,
+        "equipment": 1499.4,
+        "feeding": 624.75,
+        "lodging": 499.8,
+        "logistics": 499.8,
+        "other": 499.8
+      }
+    },
+    {
+      "date": "2025-09-12",
+      "group": "LP",
+      "code": "14.01",
+      "description": "Abrazadera AºGº 36MMD.P.N2XSY",
+      "unit": "u",
+      "plannedQty": 37,
+      "executedQty": 5.55,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1868.13,
+        "labor": 1188.81,
+        "equipment": 509.49,
+        "feeding": 212.29,
+        "lodging": 169.83,
+        "logistics": 169.83,
+        "other": 127.37
+      }
+    },
+    {
+      "date": "2025-09-11",
+      "group": "LP",
+      "code": "14.02",
+      "description": "Terminacion Autocontraible N2XSY 8,7/15kV 1x50 mm2. Exterior",
+      "unit": "u",
+      "plannedQty": 36,
+      "executedQty": 7.92,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2877.93,
+        "labor": 1790.71,
+        "equipment": 767.45,
+        "feeding": 319.77,
+        "lodging": 255.82,
+        "logistics": 255.82,
+        "other": 127.9
+      }
+    },
+    {
+      "date": "2025-09-10",
+      "group": "LP",
+      "code": "14.03",
+      "description": "Cable de Energía N2XSY 1x50 mm2 8,7/15kV",
+      "unit": "m",
+      "plannedQty": 1174.7511499999998,
+      "executedQty": 340.68,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 133205.88,
+        "labor": 81081.84,
+        "equipment": 34749.36,
+        "feeding": 14478.9,
+        "lodging": 11583.12,
+        "logistics": 11583.12,
+        "other": 2895.78
+      }
+    },
+    {
+      "date": "2025-09-09",
+      "group": "LP",
+      "code": "14.04",
+      "description": "Tubo PVC-SAP 4\" ø y Codo 90° de 4\" ø",
+      "unit": "u",
+      "plannedQty": 10,
+      "executedQty": 3.6,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 1349.46,
+        "labor": 899.64,
+        "equipment": 385.56,
+        "feeding": 160.65,
+        "lodging": 128.52,
+        "logistics": 128.52,
+        "other": 160.65
+      }
+    },
+    {
+      "date": "2025-09-08",
+      "group": "LP",
+      "code": "14.049999999999999",
+      "description": "Arandela de presion de A°G° de 9.5 mm ø",
+      "unit": "u",
+      "plannedQty": 32,
+      "executedQty": 13.76,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4526.35,
+        "labor": 2947.39,
+        "equipment": 1263.17,
+        "feeding": 526.32,
+        "lodging": 421.06,
+        "logistics": 421.06,
+        "other": 421.05
+      }
+    },
+    {
+      "date": "2025-09-07",
+      "group": "LP",
+      "code": "14.059999999999999",
+      "description": "Perno CCAW, ø 9.5mm x 38 mm LONG",
+      "unit": "u",
+      "plannedQty": 32,
+      "executedQty": 16,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 5684.8,
+        "labor": 3617.6,
+        "equipment": 1550.4,
+        "feeding": 646,
+        "lodging": 516.8,
+        "logistics": 516.8,
+        "other": 387.6
+      }
+    },
+    {
+      "date": "2025-09-06",
+      "group": "LP",
+      "code": "14.069999999999999",
+      "description": "Terminal de compresion bimetalico",
+      "unit": "u",
+      "plannedQty": 64,
+      "executedQty": 9.6,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 3672,
+        "labor": 2284.8,
+        "equipment": 979.2,
+        "feeding": 408,
+        "lodging": 326.4,
+        "logistics": 326.4,
+        "other": 163.2
+      }
+    },
+    {
+      "date": "2025-09-05",
+      "group": "LP",
+      "code": "14.079999999999998",
+      "description": "Fleje de acero inoxidable 19mm, espesor 0.8mm, provisto de Hebilla",
+      "unit": "m",
+      "plannedQty": 55,
+      "executedQty": 12.1,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4967.65,
+        "labor": 3023.79,
+        "equipment": 1295.91,
+        "feeding": 539.96,
+        "lodging": 431.97,
+        "logistics": 431.97,
+        "other": 108
+      }
+    },
+    {
+      "date": "2025-09-04",
+      "group": "LP",
+      "code": "14.089999999999998",
+      "description": "Perfil \"U\" de A° G° de 150 x 105 x 4.5 mm y 3.00m de Longitud",
+      "unit": "u",
+      "plannedQty": 10,
+      "executedQty": 2.9,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 931.77,
+        "labor": 621.18,
+        "equipment": 266.22,
+        "feeding": 110.93,
+        "lodging": 88.74,
+        "logistics": 88.74,
+        "other": 110.92
+      }
+    },
+    {
+      "date": "2025-09-03",
+      "group": "LP",
+      "code": "14.11",
+      "description": "Ducto de concreto de 4 vias",
+      "unit": "u",
+      "plannedQty": 76,
+      "executedQty": 27.36,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 9500.08,
+        "labor": 6186.1,
+        "equipment": 2651.18,
+        "feeding": 1104.66,
+        "lodging": 883.73,
+        "logistics": 883.73,
+        "other": 883.72
+      }
+    },
+    {
+      "date": "2025-09-02",
+      "group": "LP",
+      "code": "14.12",
+      "description": "Ladrillos común",
+      "unit": "u",
+      "plannedQty": 2031,
+      "executedQty": 873.33,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 326625.42,
+        "labor": 207852.54,
+        "equipment": 89079.66,
+        "feeding": 37116.53,
+        "lodging": 29693.22,
+        "logistics": 29693.22,
+        "other": 22269.91
+      }
+    },
+    {
+      "date": "2025-09-01",
+      "group": "LP",
+      "code": "14.13",
+      "description": "Cinta de señalizacion y peligro color rojo",
+      "unit": "u",
+      "plannedQty": 309,
+      "executedQty": 154.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 62051.06,
+        "labor": 38609.55,
+        "equipment": 16546.95,
+        "feeding": 6894.56,
+        "lodging": 5515.65,
+        "logistics": 5515.65,
+        "other": 2757.83
+      }
+    },
+    {
+      "date": "2025-08-31",
+      "group": "LP",
+      "code": "14.14",
+      "description": "Espuma Expansiva (Frasco)",
+      "unit": "u",
+      "plannedQty": 15,
+      "executedQty": 2.25,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 791.77,
+        "labor": 481.95,
+        "equipment": 206.55,
+        "feeding": 86.06,
+        "lodging": 68.85,
+        "logistics": 68.85,
+        "other": 17.22
+      }
+    },
+    {
+      "date": "2025-08-30",
+      "group": "LP",
+      "code": "1.01",
+      "description": "Estudio de Coordinación de la Protección y Balance de Cargas",
+      "unit": "Global",
+      "plannedQty": 1,
+      "executedQty": 0.22,
+      "puBudget": 22636.02,
+      "costBreakdown": {
+        "materials": 1986.99,
+        "labor": 1324.66,
+        "equipment": 567.71,
+        "feeding": 236.55,
+        "lodging": 189.24,
+        "logistics": 189.24,
+        "other": 236.54
+      }
+    },
+    {
+      "date": "2025-08-29",
+      "group": "LP",
+      "code": "1.02",
+      "description": "Monitoreo e Inspección del Ministerio de Cultura ( Incluye Líneas Primarias, Redes Primarias, Redes Secundarias y SFV )",
+      "unit": "Global",
+      "plannedQty": 1,
+      "executedQty": 0.29,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 105.99,
+        "labor": 69.02,
+        "equipment": 29.58,
+        "feeding": 12.32,
+        "lodging": 9.86,
+        "logistics": 9.86,
+        "other": 9.87
+      }
+    },
+    {
+      "date": "2025-08-28",
+      "group": "LP",
+      "code": "1.03",
+      "description": "Programa de Monitoreo Ambiental (Incluye Línea Primarias, Red Primaria, Red Secundaria y SFV)",
+      "unit": "Global",
+      "plannedQty": 1,
+      "executedQty": 0.36,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 141.37,
+        "labor": 89.96,
+        "equipment": 38.56,
+        "feeding": 16.07,
+        "lodging": 12.85,
+        "logistics": 12.85,
+        "other": 9.64
+      }
+    },
+    {
+      "date": "2025-08-27",
+      "group": "LP",
+      "code": "1.04",
+      "description": "Programa de Manejo de Residuos",
+      "unit": "Global",
+      "plannedQty": 1,
+      "executedQty": 0.43,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 148.03,
+        "labor": 92.11,
+        "equipment": 39.47,
+        "feeding": 16.45,
+        "lodging": 13.16,
+        "logistics": 13.16,
+        "other": 6.57
+      }
+    },
+    {
+      "date": "2025-08-26",
+      "group": "LP",
+      "code": "1.05",
+      "description": "Programa de Talleres de Información y de Medidas Preventivas y/o Correctivas",
+      "unit": "Global",
+      "plannedQty": 1,
+      "executedQty": 0.5,
+      "puBudget": 5413.1,
+      "costBreakdown": {
+        "materials": 1182.76,
+        "labor": 719.94,
+        "equipment": 308.55,
+        "feeding": 128.56,
+        "lodging": 102.85,
+        "logistics": 102.85,
+        "other": 25.71
+      }
+    },
+    {
+      "date": "2025-08-25",
+      "group": "LP",
+      "code": "1.06",
+      "description": "Cartel para Obra",
+      "unit": "u",
+      "plannedQty": 1,
+      "executedQty": 0.15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 53.55,
+        "labor": 35.7,
+        "equipment": 15.3,
+        "feeding": 6.38,
+        "lodging": 5.1,
+        "logistics": 5.1,
+        "other": 6.37
+      }
+    },
+    {
+      "date": "2025-08-24",
+      "group": "LP",
+      "code": "1.07",
+      "description": "Despeje de Árboles Dentro de la Franja de Servidumbre",
+      "unit": "Ha",
+      "plannedQty": 0.69,
+      "executedQty": 0.15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 57.57,
+        "labor": 37.49,
+        "equipment": 16.06,
+        "feeding": 6.69,
+        "lodging": 5.36,
+        "logistics": 5.36,
+        "other": 5.35
+      }
+    },
+    {
+      "date": "2025-08-23",
+      "group": "LP",
+      "code": "1.08",
+      "description": "Elaboración del Expediente Técnico Sustentatorio de Gestión de Servidumbre (1original + 3copias). Incluye Levantamiento Topografico, y presentacion digitalizada del Expediente",
+      "unit": "km",
+      "plannedQty": 21.65,
+      "executedQty": 6.28,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2113.85,
+        "labor": 1345.18,
+        "equipment": 576.5,
+        "feeding": 240.21,
+        "lodging": 192.17,
+        "logistics": 192.17,
+        "other": 144.12
+      }
+    },
+    {
+      "date": "2025-08-22",
+      "group": "LP",
+      "code": "1.09",
+      "description": "Replanteo Topografico y ubicación de estructuras de Lineas Primarias, incluye elaboracion de planos de concesion rural",
+      "unit": "u",
+      "plannedQty": 21.65,
+      "executedQty": 7.79,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2830.69,
+        "labor": 1761.32,
+        "equipment": 754.85,
+        "feeding": 314.52,
+        "lodging": 251.62,
+        "logistics": 251.62,
+        "other": 125.81
+      }
+    },
+    {
+      "date": "2025-08-21",
+      "group": "LP",
+      "code": "2.01",
+      "description": "Transporte de Poste de 12 m/200 daN de Almacen a Punto de Izaje, en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 3,
+      "executedQty": 1.29,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 543.29,
+        "labor": 330.7,
+        "equipment": 141.73,
+        "feeding": 59.05,
+        "lodging": 47.24,
+        "logistics": 47.24,
+        "other": 11.82
+      }
+    },
+    {
+      "date": "2025-08-20",
+      "group": "LP",
+      "code": "2.0299999999999994",
+      "description": "Transporte de Poste de 12 m/300 daN de Almacen a Punto de Izaje, en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 3,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 1211.29,
+        "labor": 807.52,
+        "equipment": 346.08,
+        "feeding": 144.2,
+        "lodging": 115.36,
+        "logistics": 115.36,
+        "other": 144.2
+      }
+    },
+    {
+      "date": "2025-08-19",
+      "group": "LP",
+      "code": "2.049999999999999",
+      "description": "Transporte de Poste de 13 m/300 daN de Almacen a Punto de Izaje, en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 96,
+      "executedQty": 14.4,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 5102.23,
+        "labor": 3322.38,
+        "equipment": 1423.88,
+        "feeding": 593.28,
+        "lodging": 474.63,
+        "logistics": 474.63,
+        "other": 474.63
+      }
+    },
+    {
+      "date": "2025-08-18",
+      "group": "LP",
+      "code": "2.0599999999999987",
+      "description": "Transporte de Poste de 13 m/400 daN de Almacen a Punto de Izaje, en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 60,
+      "executedQty": 13.2,
+      "puBudget": 514.41,
+      "costBreakdown": {
+        "materials": 2838.31,
+        "labor": 1806.2,
+        "equipment": 774.08,
+        "feeding": 322.54,
+        "lodging": 258.03,
+        "logistics": 258.03,
+        "other": 193.51
+      }
+    },
+    {
+      "date": "2025-08-17",
+      "group": "LP",
+      "code": "2.089999999999998",
+      "description": "Transporte de Cruceta de madera tratada de 90 mm x 115 mm x 1,20 m, de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 5,
+      "executedQty": 1.45,
+      "puBudget": 5.43,
+      "costBreakdown": {
+        "materials": 3.54,
+        "labor": 2.2,
+        "equipment": 0.94,
+        "feeding": 0.39,
+        "lodging": 0.31,
+        "logistics": 0.31,
+        "other": 0.18
+      }
+    },
+    {
+      "date": "2025-08-16",
+      "group": "LP",
+      "code": "2.099999999999998",
+      "description": "Transporte de Cruceta de madera tratada de 90 mm x 115 mm x 1,20 m, de Almacen a Punto de Instalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 0.72,
+      "puBudget": 7.06,
+      "costBreakdown": {
+        "materials": 2.46,
+        "labor": 1.49,
+        "equipment": 0.64,
+        "feeding": 0.27,
+        "lodging": 0.21,
+        "logistics": 0.21,
+        "other": 0.06
+      }
+    },
+    {
+      "date": "2025-08-15",
+      "group": "LP",
+      "code": "2.1099999999999977",
+      "description": "Transporte de Ménsula de C.A.V y Cruceta Asimétrica de C.A.V, de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 84,
+      "executedQty": 36.12,
+      "puBudget": 13.3,
+      "costBreakdown": {
+        "materials": 181.59,
+        "labor": 121.06,
+        "equipment": 51.88,
+        "feeding": 21.62,
+        "lodging": 17.29,
+        "logistics": 17.29,
+        "other": 21.63
+      }
+    },
+    {
+      "date": "2025-08-14",
+      "group": "LP",
+      "code": "2.1199999999999974",
+      "description": "Transporte de Cruceta de madera tratada de 90 mm x 115 mm x 2,40 m y 2,00 m, de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 14,
+      "executedQty": 7,
+      "puBudget": 13.1,
+      "costBreakdown": {
+        "materials": 37.46,
+        "labor": 24.39,
+        "equipment": 10.45,
+        "feeding": 4.36,
+        "lodging": 3.48,
+        "logistics": 3.48,
+        "other": 3.5
+      }
+    },
+    {
+      "date": "2025-08-13",
+      "group": "LP",
+      "code": "2.1299999999999972",
+      "description": "Transporte de Aislador de Porcelana Tipo Pin, Clase ANSI 56-3 de Almacén a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 9,
+      "executedQty": 1.35,
+      "puBudget": 10.62,
+      "costBreakdown": {
+        "materials": 6.31,
+        "labor": 4.01,
+        "equipment": 1.72,
+        "feeding": 0.72,
+        "lodging": 0.57,
+        "logistics": 0.57,
+        "other": 0.44
+      }
+    },
+    {
+      "date": "2025-08-12",
+      "group": "LP",
+      "code": "2.139999999999997",
+      "description": "Transporte de Aislador de Porcelana Tipo Pin, Clase ANSI 56-3 de Almacén a Punto de Instalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 15,
+      "executedQty": 3.3,
+      "puBudget": 13.11,
+      "costBreakdown": {
+        "materials": 20.44,
+        "labor": 12.72,
+        "equipment": 5.45,
+        "feeding": 2.27,
+        "lodging": 1.82,
+        "logistics": 1.82,
+        "other": 0.91
+      }
+    },
+    {
+      "date": "2025-08-11",
+      "group": "LP",
+      "code": "2.149999999999997",
+      "description": "Transporte de Aislador Line Post Polimérico de Almacén a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 307,
+      "executedQty": 89.03,
+      "puBudget": 13.1,
+      "costBreakdown": {
+        "materials": 482.85,
+        "labor": 293.91,
+        "equipment": 125.96,
+        "feeding": 52.48,
+        "lodging": 41.99,
+        "logistics": 41.99,
+        "other": 10.48
+      }
+    },
+    {
+      "date": "2025-08-10",
+      "group": "LP",
+      "code": "2.1599999999999966",
+      "description": "Transporte de Aislador Polimerico con Conexión Horquilla (Estructura) y Lengüeta (Linea), de 36 Kv y según Especificacion Técnica. de Almacen a Punto de Intalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 266,
+      "executedQty": 95.76,
+      "puBudget": 5.43,
+      "costBreakdown": {
+        "materials": 207.47,
+        "labor": 138.31,
+        "equipment": 59.28,
+        "feeding": 24.7,
+        "lodging": 19.76,
+        "logistics": 19.76,
+        "other": 24.7
+      }
+    },
+    {
+      "date": "2025-08-09",
+      "group": "LP",
+      "code": "2.1699999999999964",
+      "description": "Transporte de Aislador Polimerico con Conexión Horquilla (Estructura) y Lengüeta (Linea), de 36 Kv y según Especificacion Técnica. de Almacen a Punto de Intalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 17,
+      "executedQty": 7.31,
+      "puBudget": 6.57,
+      "costBreakdown": {
+        "materials": 20.65,
+        "labor": 13.45,
+        "equipment": 5.76,
+        "feeding": 2.4,
+        "lodging": 1.92,
+        "logistics": 1.92,
+        "other": 1.93
+      }
+    },
+    {
+      "date": "2025-08-08",
+      "group": "LP",
+      "code": "2.179999999999996",
+      "description": "Transporte de Conductor de Aleacion de Aluminio de 35 mm² de Almacen a Punto de Intalaciòn en Terreno con Acceso Carrozable",
+      "unit": "km",
+      "plannedQty": 50.11,
+      "executedQty": 25.05,
+      "puBudget": 64.56,
+      "costBreakdown": {
+        "materials": 747.16,
+        "labor": 475.47,
+        "equipment": 203.77,
+        "feeding": 84.9,
+        "lodging": 67.92,
+        "logistics": 67.92,
+        "other": 50.95
+      }
+    },
+    {
+      "date": "2025-08-07",
+      "group": "LP",
+      "code": "2.189999999999996",
+      "description": "Transporte de Conductor de Aleacion de Aluminio de 35 mm² de Almacen a Punto de Intalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "km",
+      "plannedQty": 1.07,
+      "executedQty": 0.16,
+      "puBudget": 70.48,
+      "costBreakdown": {
+        "materials": 4.57,
+        "labor": 2.84,
+        "equipment": 1.22,
+        "feeding": 0.51,
+        "lodging": 0.41,
+        "logistics": 0.41,
+        "other": 0.19
+      }
+    },
+    {
+      "date": "2025-08-06",
+      "group": "LP",
+      "code": "2.1999999999999957",
+      "description": "Transporte de Conductor de Aleacion de Aluminio de 70 mm² de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "km",
+      "plannedQty": 1.17,
+      "executedQty": 0.26,
+      "puBudget": 131.25,
+      "costBreakdown": {
+        "materials": 14.91,
+        "labor": 9.08,
+        "equipment": 3.89,
+        "feeding": 1.62,
+        "lodging": 1.3,
+        "logistics": 1.3,
+        "other": 0.32
+      }
+    },
+    {
+      "date": "2025-08-05",
+      "group": "LP",
+      "code": "2.2199999999999953",
+      "description": "Transporte de Seccionador Fusible Unipolar Tipo Expulsion (Cut-Out) de 27/38 kV, 100A, 150 kV-BIL. de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 11,
+      "executedQty": 3.19,
+      "puBudget": 26.2,
+      "costBreakdown": {
+        "materials": 35.1,
+        "labor": 23.4,
+        "equipment": 10.03,
+        "feeding": 4.18,
+        "lodging": 3.34,
+        "logistics": 3.34,
+        "other": 4.19
+      }
+    },
+    {
+      "date": "2025-08-04",
+      "group": "LP",
+      "code": "2.23",
+      "description": "Transporte de Seccionador Fusible Unipolar Tipo Expulsion (Cut-Out) de 27/38 kV, 100A, 150 kV-BIL. de Almacen a Punto de Instalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 0.72,
+      "puBudget": 28.35,
+      "costBreakdown": {
+        "materials": 9.22,
+        "labor": 6,
+        "equipment": 2.57,
+        "feeding": 1.07,
+        "lodging": 0.86,
+        "logistics": 0.86,
+        "other": 0.85
+      }
+    },
+    {
+      "date": "2025-08-03",
+      "group": "LP",
+      "code": "2.23999999999999",
+      "description": "Transporte de Pararrayos de Oxido Metalico, 21 kV, 10 KA Clase 1 de Almacen a Punto de Montaje en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 31,
+      "executedQty": 13.33,
+      "puBudget": 10.27,
+      "costBreakdown": {
+        "materials": 54.21,
+        "labor": 34.5,
+        "equipment": 14.79,
+        "feeding": 6.16,
+        "lodging": 4.93,
+        "logistics": 4.93,
+        "other": 3.69
+      }
+    },
+    {
+      "date": "2025-08-02",
+      "group": "LP",
+      "code": "2.24999999999999",
+      "description": "Transporte de Pararrayos de Oxido Metalico, 21 kV, 10 KA Clase 1 de Almacen a Punto de Montaje en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 2,
+      "executedQty": 1,
+      "puBudget": 13.53,
+      "costBreakdown": {
+        "materials": 5.78,
+        "labor": 3.6,
+        "equipment": 1.54,
+        "feeding": 0.64,
+        "lodging": 0.51,
+        "logistics": 0.51,
+        "other": 0.27
+      }
+    },
+    {
+      "date": "2025-08-01",
+      "group": "LP",
+      "code": "2.25999999999999",
+      "description": "Transporte de Bloque de Concreto de 0,40 x 0,40 x 0,15 m, de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 73,
+      "executedQty": 10.95,
+      "puBudget": 62.87,
+      "costBreakdown": {
+        "materials": 316.68,
+        "labor": 192.76,
+        "equipment": 82.61,
+        "feeding": 34.42,
+        "lodging": 27.54,
+        "logistics": 27.54,
+        "other": 6.88
+      }
+    },
+    {
+      "date": "2025-07-31",
+      "group": "LP",
+      "code": "2.26999999999999",
+      "description": "Transporte de Bloque de Concreto de 0,40 x 0,40 x 0,15 m, de Almacen a Punto de Instalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 10,
+      "executedQty": 2.2,
+      "puBudget": 73.71,
+      "costBreakdown": {
+        "materials": 71.51,
+        "labor": 47.68,
+        "equipment": 20.43,
+        "feeding": 8.51,
+        "lodging": 6.81,
+        "logistics": 6.81,
+        "other": 8.52
+      }
+    },
+    {
+      "date": "2025-07-30",
+      "group": "LP",
+      "code": "2.27999999999999",
+      "description": "Transporte de Caja Registro de Concreto para Puesta a Tierra 0,50 x 0,50 x 0,45 m, de Almacen a Punto de Montaje en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 16,
+      "executedQty": 4.64,
+      "puBudget": 41.81,
+      "costBreakdown": {
+        "materials": 75.08,
+        "labor": 48.89,
+        "equipment": 20.95,
+        "feeding": 8.73,
+        "lodging": 6.98,
+        "logistics": 6.98,
+        "other": 6.99
+      }
+    },
+    {
+      "date": "2025-07-29",
+      "group": "LP",
+      "code": "2.29999999999999",
+      "description": "Transporte de cable de acero con recubrimiento metalurgico de Cu de 4AWG de Almacen a Punto de Intalaciòn en Terreno con Acceso Carrozable",
+      "unit": "km",
+      "plannedQty": 2.97,
+      "executedQty": 1.07,
+      "puBudget": 70.35,
+      "costBreakdown": {
+        "materials": 31.46,
+        "labor": 20.02,
+        "equipment": 8.58,
+        "feeding": 3.58,
+        "lodging": 2.86,
+        "logistics": 2.86,
+        "other": 2.15
+      }
+    },
+    {
+      "date": "2025-07-28",
+      "group": "LP",
+      "code": "2.30999999999999",
+      "description": "Transporte de cable de acero con recubrimiento metalurgico de Cu de 4AWG de Almacen a Punto de Intalaciòn en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "km",
+      "plannedQty": 0.2,
+      "executedQty": 0.09,
+      "puBudget": 91.14,
+      "costBreakdown": {
+        "materials": 3.69,
+        "labor": 2.3,
+        "equipment": 0.98,
+        "feeding": 0.41,
+        "lodging": 0.33,
+        "logistics": 0.33,
+        "other": 0.16
+      }
+    },
+    {
+      "date": "2025-07-27",
+      "group": "LP",
+      "code": "2.32999999999999",
+      "description": "Transporte de Terminacion Autocontraible de Almacen a Punto de Instalacion en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 36,
+      "executedQty": 18,
+      "puBudget": 26.2,
+      "costBreakdown": {
+        "materials": 227.78,
+        "labor": 138.65,
+        "equipment": 59.42,
+        "feeding": 24.76,
+        "lodging": 19.81,
+        "logistics": 19.81,
+        "other": 4.95
+      }
+    },
+    {
+      "date": "2025-07-26",
+      "group": "LP",
+      "code": "2.33999999999999",
+      "description": "Transporte de Accesorios de Ferreteria (Para Postes , conductores, Retenidas y PAT) de Almacen a Punto de Instalaciòn con Acceso Carrozable",
+      "unit": "Global",
+      "plannedQty": 0.9999999999999974,
+      "executedQty": 0.15,
+      "puBudget": 1571.83,
+      "costBreakdown": {
+        "materials": 89.12,
+        "labor": 59.42,
+        "equipment": 25.46,
+        "feeding": 10.61,
+        "lodging": 8.49,
+        "logistics": 8.49,
+        "other": 10.61
+      }
+    },
+    {
+      "date": "2025-07-25",
+      "group": "LP",
+      "code": "2.34999999999999",
+      "description": "Transporte de Accesorios de Ferreteria (Para Postes , conductores, Retenidas y PAT) de Almacen a Punto de Instalaciòn sin Acceso Carrozable (< 1000 m)",
+      "unit": "Global",
+      "plannedQty": 0.9999999999999974,
+      "executedQty": 0.22,
+      "puBudget": 2275.69,
+      "costBreakdown": {
+        "materials": 204.52,
+        "labor": 133.17,
+        "equipment": 57.07,
+        "feeding": 23.78,
+        "lodging": 19.02,
+        "logistics": 19.02,
+        "other": 19.04
+      }
+    },
+    {
+      "date": "2025-07-24",
+      "group": "LP",
+      "code": "2.3599999999999923",
+      "description": "Transporte de poste de PRFV de 12 m/200 de Almacen a Punto de Izaje, en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 4,
+      "executedQty": 1.16,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 467.3,
+        "labor": 297.37,
+        "equipment": 127.45,
+        "feeding": 53.1,
+        "lodging": 42.48,
+        "logistics": 42.48,
+        "other": 31.87
+      }
+    },
+    {
+      "date": "2025-07-23",
+      "group": "LP",
+      "code": "2.369999999999992",
+      "description": "Transporte de poste de PRFV de 12 m/300 de Almacen a Punto de Izaje, en Terreno sin Acceso Carrozable (< 1000 m)",
+      "unit": "u",
+      "plannedQty": 11,
+      "executedQty": 3.96,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 1713.1,
+        "labor": 1065.93,
+        "equipment": 456.83,
+        "feeding": 190.34,
+        "lodging": 152.28,
+        "logistics": 152.28,
+        "other": 76.14
+      }
+    },
+    {
+      "date": "2025-07-22",
+      "group": "LP",
+      "code": "2.37999999999999",
+      "description": "Transporte de Cruceta Simétrica de C.A.V. Z / 2,4 / 300 / 300 / 150 daN (Z/ L / T / F / V), de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 122,
+      "executedQty": 52.46,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 18460.67,
+        "labor": 11236.93,
+        "equipment": 4815.83,
+        "feeding": 2006.6,
+        "lodging": 1605.28,
+        "logistics": 1605.28,
+        "other": 401.31
+      }
+    },
+    {
+      "date": "2025-07-21",
+      "group": "LP",
+      "code": "2.3899999999999917",
+      "description": "Transporte de Cable de Energía N2XSY 1x50 mm2 8,7/15kV, de Almacen a Punto de Instalaciòn en Terreno con Acceso Carrozable",
+      "unit": "km",
+      "plannedQty": 1.17,
+      "executedQty": 0.58,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 196.71,
+        "labor": 131.14,
+        "equipment": 56.2,
+        "feeding": 23.42,
+        "lodging": 18.73,
+        "logistics": 18.73,
+        "other": 23.42
+      }
+    },
+    {
+      "date": "2025-07-20",
+      "group": "LP",
+      "code": "2.39999999999999",
+      "description": "Transporte de Ductos de concretos de 4 Vias de almacen a punto de Instalacion en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 76,
+      "executedQty": 11.4,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 4166.7,
+        "labor": 2713.2,
+        "equipment": 1162.8,
+        "feeding": 484.5,
+        "lodging": 387.6,
+        "logistics": 387.6,
+        "other": 387.6
+      }
+    },
+    {
+      "date": "2025-07-19",
+      "group": "LP",
+      "code": "2.40999999999999",
+      "description": "Transporte de ladrillos de almacen a punto de Instalacion en Terreno con Acceso Carrozable",
+      "unit": "u",
+      "plannedQty": 2031,
+      "executedQty": 446.82,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 175466.21,
+        "labor": 111660.32,
+        "equipment": 47854.42,
+        "feeding": 19939.34,
+        "lodging": 15951.47,
+        "logistics": 15951.47,
+        "other": 11963.62
+      }
+    },
+    {
+      "date": "2025-07-18",
+      "group": "LP",
+      "code": "3.01",
+      "description": "Excavación en Terreno Tipo I (Arcilloso y Conglomerado)",
+      "unit": null,
+      "plannedQty": 180.36,
+      "executedQty": 52.3,
+      "puBudget": 61.15,
+      "costBreakdown": {
+        "materials": 1295.25,
+        "labor": 805.93,
+        "equipment": 345.4,
+        "feeding": 143.92,
+        "lodging": 115.13,
+        "logistics": 115.13,
+        "other": 57.57
+      }
+    },
+    {
+      "date": "2025-07-17",
+      "group": "LP",
+      "code": "3.0199999999999996",
+      "description": "Excavación en Terreno Tipo II (Rocoso)",
+      "unit": null,
+      "plannedQty": 9.3,
+      "executedQty": 3.35,
+      "puBudget": 208.14,
+      "costBreakdown": {
+        "materials": 304.71,
+        "labor": 185.47,
+        "equipment": 79.49,
+        "feeding": 33.12,
+        "lodging": 26.5,
+        "logistics": 26.5,
+        "other": 6.62
+      }
+    },
+    {
+      "date": "2025-07-16",
+      "group": "LP",
+      "code": "3.039999999999999",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de 13 m/300 daN (*)",
+      "unit": "u",
+      "plannedQty": 96,
+      "executedQty": 41.28,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 15873.61,
+        "labor": 10582.41,
+        "equipment": 4535.32,
+        "feeding": 1889.72,
+        "lodging": 1511.77,
+        "logistics": 1511.77,
+        "other": 1889.72
+      }
+    },
+    {
+      "date": "2025-07-15",
+      "group": "LP",
+      "code": "3.049999999999999",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de 13 m/400 daN (*)",
+      "unit": "u",
+      "plannedQty": 60,
+      "executedQty": 30,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 12401.26,
+        "labor": 8075.24,
+        "equipment": 3460.82,
+        "feeding": 1442.01,
+        "lodging": 1153.61,
+        "logistics": 1153.61,
+        "other": 1153.59
+      }
+    },
+    {
+      "date": "2025-07-14",
+      "group": "LP",
+      "code": "3.0599999999999987",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de 12 m/300 daN (*)",
+      "unit": "u",
+      "plannedQty": 6,
+      "executedQty": 0.9,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 326.31,
+        "labor": 207.65,
+        "equipment": 88.99,
+        "feeding": 37.08,
+        "lodging": 29.66,
+        "logistics": 29.66,
+        "other": 22.25
+      }
+    },
+    {
+      "date": "2025-07-13",
+      "group": "LP",
+      "code": "3.0699999999999985",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de 12 m/200 daN (*)",
+      "unit": "u",
+      "plannedQty": 3,
+      "executedQty": 0.66,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 258.33,
+        "labor": 160.74,
+        "equipment": 68.89,
+        "feeding": 28.7,
+        "lodging": 22.96,
+        "logistics": 22.96,
+        "other": 11.48
+      }
+    },
+    {
+      "date": "2025-07-12",
+      "group": "LP",
+      "code": "3.0799999999999983",
+      "description": "Relleno y Compactación para cimentación de Poste 12m, en Terreno Tipo I (Arcilloso y Conglomerado)",
+      "unit": null,
+      "plannedQty": 18,
+      "executedQty": 5.22,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2041.02,
+        "labor": 1242.36,
+        "equipment": 532.44,
+        "feeding": 221.85,
+        "lodging": 177.48,
+        "logistics": 177.48,
+        "other": 44.37
+      }
+    },
+    {
+      "date": "2025-07-11",
+      "group": "LP",
+      "code": "3.099999999999998",
+      "description": "Cimentación con Concreto Ciclópeo de Poste de 13m en Terreno Tipo I (Arcilloso y Conglomerado)",
+      "unit": "u",
+      "plannedQty": 156,
+      "executedQty": 56.16,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 21051.58,
+        "labor": 14034.38,
+        "equipment": 6014.74,
+        "feeding": 2506.14,
+        "lodging": 2004.91,
+        "logistics": 2004.91,
+        "other": 2506.14
+      }
+    },
+    {
+      "date": "2025-07-10",
+      "group": "LP",
+      "code": "3.1199999999999974",
+      "description": "Solado para poste de concreto (e=0.10 m. C:H, 1:8)",
+      "unit": "u",
+      "plannedQty": 156,
+      "executedQty": 67.08,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 22065.97,
+        "labor": 14368.54,
+        "equipment": 6157.94,
+        "feeding": 2565.81,
+        "lodging": 2052.65,
+        "logistics": 2052.65,
+        "other": 2052.64
+      }
+    },
+    {
+      "date": "2025-07-09",
+      "group": "LP",
+      "code": "3.1299999999999972",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de PRFV 12 m/200",
+      "unit": "u",
+      "plannedQty": 4,
+      "executedQty": 2,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 765.41,
+        "labor": 487.08,
+        "equipment": 208.75,
+        "feeding": 86.98,
+        "lodging": 69.58,
+        "logistics": 69.58,
+        "other": 52.18
+      }
+    },
+    {
+      "date": "2025-07-08",
+      "group": "LP",
+      "code": "3.139999999999997",
+      "description": "Izaje, Identificación y/o codificación, y Señalización de Poste de PRFV 12 m/300",
+      "unit": "u",
+      "plannedQty": 11,
+      "executedQty": 1.65,
+      "puBudget": 915.56,
+      "costBreakdown": {
+        "materials": 679.8,
+        "labor": 422.99,
+        "equipment": 181.28,
+        "feeding": 75.53,
+        "lodging": 60.43,
+        "logistics": 60.43,
+        "other": 30.21
+      }
+    },
+    {
+      "date": "2025-07-07",
+      "group": "LP",
+      "code": "4.01",
+      "description": "Excavación en Terreno Tipo I (Arcilloso y Conglomerado)",
+      "unit": null,
+      "plannedQty": 87.36,
+      "executedQty": 19.22,
+      "puBudget": 61.15,
+      "costBreakdown": {
+        "materials": 567.67,
+        "labor": 345.54,
+        "equipment": 148.09,
+        "feeding": 61.7,
+        "lodging": 49.36,
+        "logistics": 49.36,
+        "other": 12.35
+      }
+    },
+    {
+      "date": "2025-07-06",
+      "group": "LP",
+      "code": "4.02",
+      "description": "Excavación en Terreno Tipo II (Rocoso)",
+      "unit": null,
+      "plannedQty": 5.6,
+      "executedQty": 1.62,
+      "puBudget": 208.14,
+      "costBreakdown": {
+        "materials": 127.46,
+        "labor": 84.97,
+        "equipment": 36.42,
+        "feeding": 15.17,
+        "lodging": 12.14,
+        "logistics": 12.14,
+        "other": 15.17
+      }
+    },
+    {
+      "date": "2025-07-05",
+      "group": "LP",
+      "code": "4.029999999999999",
+      "description": "Instalación de Retenida Inclinada",
+      "unit": "u",
+      "plannedQty": 83,
+      "executedQty": 29.88,
+      "puBudget": 58.28,
+      "costBreakdown": {
+        "materials": 711.36,
+        "labor": 463.21,
+        "equipment": 198.52,
+        "feeding": 82.72,
+        "lodging": 66.17,
+        "logistics": 66.17,
+        "other": 66.19
+      }
+    },
+    {
+      "date": "2025-07-04",
+      "group": "LP",
+      "code": "4.0699999999999985",
+      "description": "Relleno y Compactación en Terreno Tipo I de Retenida",
+      "unit": null,
+      "plannedQty": 85.8,
+      "executedQty": 36.89,
+      "puBudget": 90.22,
+      "costBreakdown": {
+        "materials": 1464.41,
+        "labor": 931.9,
+        "equipment": 399.39,
+        "feeding": 166.41,
+        "lodging": 133.13,
+        "logistics": 133.13,
+        "other": 99.85
+      }
+    },
+    {
+      "date": "2025-07-03",
+      "group": "LP",
+      "code": "4.079999999999998",
+      "description": "Relleno y Compactación en Terreno Tipo II de Retenida",
+      "unit": null,
+      "plannedQty": 5.5,
+      "executedQty": 2.75,
+      "puBudget": 96.57,
+      "costBreakdown": {
+        "materials": 125.48,
+        "labor": 78.08,
+        "equipment": 33.46,
+        "feeding": 13.94,
+        "lodging": 11.15,
+        "logistics": 11.15,
+        "other": 5.59
+      }
+    },
+    {
+      "date": "2025-07-02",
+      "group": "LP",
+      "code": "5.01",
+      "description": "Armado PS1-0 (0°-5°) Monofasico retorno por tierra",
+      "unit": "Jgo.",
+      "plannedQty": 7,
+      "executedQty": 1.05,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 369.49,
+        "labor": 224.91,
+        "equipment": 96.39,
+        "feeding": 40.16,
+        "lodging": 32.13,
+        "logistics": 32.13,
+        "other": 8.04
+      }
+    },
+    {
+      "date": "2025-07-01",
+      "group": "LP",
+      "code": "5.029999999999999",
+      "description": "Armado PR3-0 Anclaje Monofásico retorno por tierra",
+      "unit": "Jgo.",
+      "plannedQty": 7,
+      "executedQty": 1.54,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 522.29,
+        "labor": 348.19,
+        "equipment": 149.23,
+        "feeding": 62.18,
+        "lodging": 49.74,
+        "logistics": 49.74,
+        "other": 62.18
+      }
+    },
+    {
+      "date": "2025-06-30",
+      "group": "LP",
+      "code": "5.039999999999999",
+      "description": "Armado TS-0 Soporte de Retención, monofásico, retorno por tierra",
+      "unit": "Jgo.",
+      "plannedQty": 3,
+      "executedQty": 0.87,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 317.99,
+        "labor": 207.06,
+        "equipment": 88.74,
+        "feeding": 36.98,
+        "lodging": 29.58,
+        "logistics": 29.58,
+        "other": 29.57
+      }
+    },
+    {
+      "date": "2025-06-29",
+      "group": "LP",
+      "code": "5.049999999999999",
+      "description": "Armado Tipo PSVE-3M Soporte de suspensión vertical 0° a 10° trifásico",
+      "unit": "Jgo.",
+      "plannedQty": 18,
+      "executedQty": 6.48,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 2544.7,
+        "labor": 1619.35,
+        "equipment": 694.01,
+        "feeding": 289.17,
+        "lodging": 231.34,
+        "logistics": 231.34,
+        "other": 173.49
+      }
+    },
+    {
+      "date": "2025-06-28",
+      "group": "LP",
+      "code": "5.059999999999999",
+      "description": "Armado DS-0 Soporte derivación no tensada monofásico sin neutro",
+      "unit": "Jgo.",
+      "plannedQty": 5,
+      "executedQty": 2.15,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 740.14,
+        "labor": 460.53,
+        "equipment": 197.37,
+        "feeding": 82.24,
+        "lodging": 65.79,
+        "logistics": 65.79,
+        "other": 32.89
+      }
+    },
+    {
+      "date": "2025-06-27",
+      "group": "LP",
+      "code": "5.0699999999999985",
+      "description": "Armado DS-2 Soporte derivación no tensada bifásico sin neutro",
+      "unit": "Jgo.",
+      "plannedQty": 1,
+      "executedQty": 0.5,
+      "puBudget": 850,
+      "costBreakdown": {
+        "materials": 185.72,
+        "labor": 113.05,
+        "equipment": 48.45,
+        "feeding": 20.19,
+        "lodging": 16.15,
+        "logistics": 16.15,
+        "other": 4.04
+      }
+    }
+  ]
+}
