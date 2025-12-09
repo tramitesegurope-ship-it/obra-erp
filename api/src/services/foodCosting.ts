@@ -70,7 +70,11 @@ export type RecipeCostSummary = {
 
 type CostingContext = {
   visited: Set<number>;
-  cache: Map<number, RecipeCostSummary>;
+  cache: Map<string, RecipeCostSummary>;
+};
+
+type RecipeCostOptions = {
+  includePools?: boolean;
 };
 
 const decimalToNumber = (value?: Prisma.Decimal | number | null) => {
@@ -243,12 +247,21 @@ const convertToBaseQuantity = (
 
 const createContext = (): CostingContext => ({
   visited: new Set<number>(),
-  cache: new Map<number, RecipeCostSummary>(),
+  cache: new Map<string, RecipeCostSummary>(),
 });
 
-export async function computeRecipeCost(recipeId: number, ctx = createContext()): Promise<RecipeCostSummary> {
-  if (ctx.cache.has(recipeId)) {
-    return ctx.cache.get(recipeId)!;
+const recipeCacheKey = (recipeId: number, includePools: boolean) =>
+  `${recipeId}-${includePools ? 'with-pools' : 'no-pools'}`;
+
+export async function computeRecipeCost(
+  recipeId: number,
+  ctx = createContext(),
+  options: RecipeCostOptions = {},
+): Promise<RecipeCostSummary> {
+  const includePools = options.includePools !== false;
+  const cacheKey = recipeCacheKey(recipeId, includePools);
+  if (ctx.cache.has(cacheKey)) {
+    return ctx.cache.get(cacheKey)!;
   }
 
   if (ctx.visited.has(recipeId)) {
@@ -332,7 +345,7 @@ export async function computeRecipeCost(recipeId: number, ctx = createContext())
     } else if (item.childRecipeId && item.childRecipe) {
       const quantity = decimalToNumber(item.quantity) || 0;
       if (quantity === 0) continue;
-      const childSummary = await computeRecipeCost(item.childRecipe.id, ctx);
+      const childSummary = await computeRecipeCost(item.childRecipe.id, ctx, { includePools: false });
       const batchCost = quantity * childSummary.totals.batchTotal;
       const perPortion = recipeYield > 0 ? batchCost / recipeYield : batchCost;
 
@@ -369,38 +382,40 @@ export async function computeRecipeCost(recipeId: number, ctx = createContext())
     extraTotal += totalCost;
   }
 
-  const pools = await prisma.foodCostPool.findMany({
-    where: {
-      OR: [
-        { appliesTo: null },
-        { appliesTo: recipe.mealType },
-      ],
-    },
-    orderBy: { name: 'asc' },
-  });
-
-  const poolLines: PoolCostLine[] = [];
+  let poolLines: PoolCostLine[] = [];
   let poolTotal = 0;
-  const recipePrepMinutes = decimalToNumber(recipe.prepMinutes);
-  const recipeBlocks = recipe.dailyBlocks ?? 1;
-  for (const pool of pools) {
-    const { totalCost, perPortion } = calculatePoolCost(
-      pool,
-      recipeYield,
-      recipePrepMinutes,
-      recipeBlocks ?? 1,
-    );
-    poolLines.push({
-      id: pool.id,
-      name: pool.name,
-      type: pool.type,
-      period: pool.period,
-      amount: decimalToNumber(pool.amount),
-      periodRations: pool.periodRations ? decimalToNumber(pool.periodRations) : null,
-      totalCost,
-      perPortion,
+  if (includePools) {
+    const pools = await prisma.foodCostPool.findMany({
+      where: {
+        OR: [
+          { appliesTo: null },
+          { appliesTo: recipe.mealType },
+        ],
+      },
+      orderBy: { name: 'asc' },
     });
-    poolTotal += totalCost;
+
+    const recipePrepMinutes = decimalToNumber(recipe.prepMinutes);
+    const recipeBlocks = recipe.dailyBlocks ?? 1;
+    for (const pool of pools) {
+      const { totalCost, perPortion } = calculatePoolCost(
+        pool,
+        recipeYield,
+        recipePrepMinutes,
+        recipeBlocks ?? 1,
+      );
+      poolLines.push({
+        id: pool.id,
+        name: pool.name,
+        type: pool.type,
+        period: pool.period,
+        amount: decimalToNumber(pool.amount),
+        periodRations: pool.periodRations ? decimalToNumber(pool.periodRations) : null,
+        totalCost,
+        perPortion,
+      });
+      poolTotal += totalCost;
+    }
   }
 
   const batchTotal = ingredientTotal + componentTotal + extraTotal + poolTotal;
@@ -429,7 +444,7 @@ export async function computeRecipeCost(recipeId: number, ctx = createContext())
     pools: poolLines,
   };
 
-  ctx.cache.set(recipeId, summary);
+  ctx.cache.set(cacheKey, summary);
   ctx.visited.delete(recipeId);
 
   return summary;
