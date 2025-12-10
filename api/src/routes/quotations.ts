@@ -17,6 +17,7 @@ import {
   computePurchaseProgress,
   createPurchaseDelivery,
   listPurchaseDeliveries,
+  deletePurchaseDelivery,
   upsertManualQuotationItem,
 } from '../services/quotations/service';
 
@@ -384,6 +385,21 @@ router.post('/quotations/processes/:processId/deliveries', async (req, res) => {
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ error: err?.message ?? 'No se pudo registrar la guía' });
+  }
+});
+
+router.delete('/quotations/processes/:processId/deliveries/:deliveryId', async (req, res) => {
+  const processId = Number(req.params.processId);
+  const deliveryId = Number(req.params.deliveryId);
+  if (!processId || !deliveryId) {
+    return res.status(400).json({ error: 'Identificadores inválidos' });
+  }
+  try {
+    await deletePurchaseDelivery(processId, deliveryId);
+    res.json({ ok: true });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ error: err?.message ?? 'No se pudo eliminar la guía' });
   }
 });
 

@@ -13,6 +13,7 @@ import {
   fetchPurchaseProgress,
   fetchPurchaseDeliveries,
   savePurchaseDelivery,
+  deletePurchaseDelivery,
 } from '../lib/api';
 import type { PurchaseProgressResponse } from '../lib/api';
 import type {
@@ -326,6 +327,7 @@ const [deliveryStatus, setDeliveryStatus] = useState<{ loading: boolean; error?:
 const [deliveryHistory, setDeliveryHistory] = useState<PurchaseDeliveryLogEntry[]>([]);
 const [deliveryHistoryLoading, setDeliveryHistoryLoading] = useState(false);
 const [deliveryHistoryError, setDeliveryHistoryError] = useState<string | null>(null);
+const [deletingDeliveryId, setDeletingDeliveryId] = useState<number | null>(null);
 const [deliveryMode, setDeliveryMode] = useState<'ORDER' | 'MANUAL'>('ORDER');
 const [deliveryItemQuery, setDeliveryItemQuery] = useState('');
 const [operationsTab, setOperationsTab] = useState<'ORDER' | 'DELIVERY'>('ORDER');
@@ -2178,6 +2180,23 @@ const handleSupplierFileClear = () => {
         error: err?.message ?? 'No se pudo registrar la guía.',
         message: null,
       });
+    }
+  };
+
+  const handleDeleteDelivery = async (deliveryId: number) => {
+    if (!summaryProcessId) return;
+    const confirmDelete = window.confirm('¿Eliminar esta guía de remisión? No podrás recuperarla.');
+    if (!confirmDelete) return;
+    setDeletingDeliveryId(deliveryId);
+    try {
+      await deletePurchaseDelivery(summaryProcessId, deliveryId);
+      await Promise.all([loadDeliveries(), refreshPurchaseProgress()]);
+    } catch (err) {
+      setDeliveryHistoryError(
+        err instanceof Error ? err.message : 'No se pudo eliminar la guía seleccionada.',
+      );
+    } finally {
+      setDeletingDeliveryId(null);
     }
   };
 
@@ -4198,7 +4217,17 @@ const handleSupplierFileClear = () => {
                       <li key={delivery.id} className="py-2 text-sm">
                         <div className="flex items-center justify-between text-xs uppercase text-slate-500">
                           <span>Guía {delivery.guideNumber || '—'}</span>
-                          <span>{formatShortDate(delivery.date)}</span>
+                          <div className="flex items-center gap-3">
+                            <span>{formatShortDate(delivery.date)}</span>
+                            <button
+                              type="button"
+                              className="text-[11px] font-semibold text-rose-600 hover:underline disabled:opacity-50"
+                              onClick={() => handleDeleteDelivery(delivery.id)}
+                              disabled={deletingDeliveryId === delivery.id}
+                            >
+                              Eliminar
+                            </button>
+                          </div>
                         </div>
                         <p className="font-semibold text-slate-700">{delivery.supplierName}</p>
                         {delivery.orderNumber && (
@@ -4424,7 +4453,17 @@ const handleSupplierFileClear = () => {
                         <li key={delivery.id} className="py-2 text-sm">
                           <div className="flex items-center justify-between text-xs uppercase text-slate-500">
                             <span>Guía {delivery.guideNumber || '—'}</span>
-                            <span>{formatShortDate(delivery.date)}</span>
+                            <div className="flex items-center gap-3">
+                              <span>{formatShortDate(delivery.date)}</span>
+                              <button
+                                type="button"
+                                className="text-[11px] font-semibold text-rose-600 hover:underline disabled:opacity-50"
+                                onClick={() => handleDeleteDelivery(delivery.id)}
+                                disabled={deletingDeliveryId === delivery.id}
+                              >
+                                Eliminar
+                              </button>
+                            </div>
                           </div>
                           <p className="font-semibold text-slate-700">{delivery.supplierName}</p>
                           {delivery.orderNumber && <p className="text-xs text-slate-500">Orden: {delivery.orderNumber}</p>}

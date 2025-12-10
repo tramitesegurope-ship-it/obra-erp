@@ -448,6 +448,9 @@ export const fetchPurchaseDeliveries = (processId: number) =>
 export const savePurchaseDelivery = (processId: number, payload: PurchaseDeliveryForm) =>
   http.post(`/quotations/processes/${processId}/deliveries`, payload);
 
+export const deletePurchaseDelivery = (processId: number, deliveryId: number) =>
+  http.delete<{ ok: boolean }>(`/quotations/processes/${processId}/deliveries/${deliveryId}`);
+
 export const uploadQuotationBase = (form: FormData) =>
   http.postForm<ImportBaselineResponse>('/quotations/processes/import-base', form);
 

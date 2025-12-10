@@ -233,6 +233,48 @@ const normalizeIdentifier = (value?: string | null): string | null => {
   return trimmed.replace(/\s+/g, ' ').toUpperCase();
 };
 
+const formatGuideNumber = (value?: string | null): string | null => {
+  const normalized = normalizeIdentifier(value);
+  if (!normalized) return null;
+  return normalized.replace(/\s*([\-_/])\s*/g, '$1');
+};
+
+const collapseGuideNumberKey = (value?: string | null): string | null => {
+  const formatted = formatGuideNumber(value);
+  if (!formatted) return null;
+  return formatted.replace(/[\s\-_/.,\\:;|+·]/g, '');
+};
+
+const sanitizeGuideNumberSql = Prisma.sql`
+upper(
+  replace(
+    replace(
+      replace(
+        replace(
+          replace(
+            replace(
+              replace(
+                replace(
+                  replace(
+                    replace(
+                      replace(
+                        replace(
+                          guideNumber, ' ', ''
+                        ), '-', ''
+                      ), '_', ''
+                    ), '/', ''
+                  ), '.', ''
+                ), ',', ''
+              ), '\\', ''
+            ), ':', ''
+          ), ';', ''
+        ), '+', ''
+      ), '|', ''
+    ), '·', ''
+  )
+)
+`;
+
 const padOrderSequence = (sequence: number) => sequence.toString().padStart(3, '0');
 
 const extractOrderSuffix = (label?: string | null) => {
@@ -266,12 +308,19 @@ const assertOrderNumberAvailable = async (
 };
 
 const assertGuideNumberAvailable = async (guideNumber: string) => {
-  const duplicate = await prisma.purchaseDeliveryLog.findFirst({
-    where: { guideNumber: { equals: guideNumber, mode: 'insensitive' } },
-    select: { id: true },
-  });
-  if (duplicate) {
-    throw new Error(`Ya registraste la guía ${guideNumber} (registro #${duplicate.id}).`);
+  const guideKey = collapseGuideNumberKey(guideNumber);
+  if (!guideKey) return;
+  const matches = await prisma.$queryRaw<{ id: number }[]>(
+    Prisma.sql`
+      SELECT id
+      FROM "PurchaseDeliveryLog"
+      WHERE guideNumber IS NOT NULL
+        AND ${sanitizeGuideNumberSql} = ${guideKey}
+      LIMIT 1
+    `,
+  );
+  if (matches.length > 0) {
+    throw new Error(`Ya registraste la guía ${guideNumber} (registro #${matches[0].id}).`);
   }
 };
 
@@ -1275,7 +1324,7 @@ export async function createPurchaseDelivery(input: PurchaseDeliveryInput) {
   if (!input.items.length) throw new Error('Una guía debe tener al menos un ítem.');
   const resolvedDate = input.date ? new Date(input.date) : new Date();
   const supplierName = input.supplierName?.trim() || 'Proveedor';
-  const guideNumber = normalizeIdentifier(input.guideNumber ?? null);
+  const guideNumber = formatGuideNumber(input.guideNumber ?? null);
   if (guideNumber) {
     await assertGuideNumberAvailable(guideNumber);
   }
@@ -1335,6 +1384,18 @@ export async function listPurchaseDeliveries(processId: number) {
       notes: item.notes,
     })),
   }));
+}
+
+export async function deletePurchaseDelivery(processId: number, deliveryId: number) {
+  const delivery = await prisma.purchaseDeliveryLog.findFirst({
+    where: { id: deliveryId, processId },
+    select: { id: true },
+  });
+  if (!delivery) {
+    throw new Error('No se encontró la guía a eliminar.');
+  }
+  await prisma.purchaseDeliveryLog.delete({ where: { id: deliveryId } });
+  return { ok: true };
 }
 
 const normalizeProgressDescription = (value?: string | null) => {
