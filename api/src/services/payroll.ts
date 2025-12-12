@@ -2,7 +2,6 @@ import { AttendanceStatus, PayrollAdjustmentType, PayrollPeriodStatus, Prisma } 
 import prisma from '../db';
 
 const ZERO = new Prisma.Decimal(0);
-const THIRTY = new Prisma.Decimal(30);
 
 type DecimalLike = Prisma.Decimal | number | string | null | undefined;
 
@@ -66,10 +65,7 @@ type ComputeContext = {
 
 const computeEntry = ({ period, employee, attendance, adjustments }: ComputeContext) => {
   const monthlyBaseSalary = toDecimal(employee.baseSalary);
-  const dailyRate = THIRTY.gt(0) ? monthlyBaseSalary.dividedBy(THIRTY) : ZERO;
-
   const dailyHours = toDecimal(employee.dailyHours ?? 8);
-  const hourlyRate = dailyHours.gt(0) ? dailyRate.dividedBy(dailyHours) : ZERO;
 
   const periodStartUTC = toUTCDateOnly(period.startDate);
   const periodEndUTC = toUTCDateOnly(period.endDate);
@@ -87,6 +83,12 @@ const computeEntry = ({ period, employee, attendance, adjustments }: ComputeCont
     ),
   );
   const calendarPeriodDays = rawPeriodDays > 0 ? rawPeriodDays : STANDARD_MONTH_DAYS;
+  const periodDaysDecimal = new Prisma.Decimal(payrollPeriodDays);
+  const monthDaysDecimal = new Prisma.Decimal(STANDARD_MONTH_DAYS);
+  const prorationFactor = monthDaysDecimal.gt(0) ? periodDaysDecimal.dividedBy(monthDaysDecimal) : ZERO;
+  const proratedMonthlyBase = monthlyBaseSalary.mul(prorationFactor);
+  const dailyRate = periodDaysDecimal.gt(0) ? proratedMonthlyBase.dividedBy(periodDaysDecimal) : ZERO;
+  const hourlyRate = dailyHours.gt(0) ? dailyRate.dividedBy(dailyHours) : ZERO;
 
   const employeeStartUTC = employee.startDate ? toUTCDateOnly(employee.startDate) : null;
   const employeeEndUTC = employee.endDate ? toUTCDateOnly(employee.endDate) : null;
@@ -209,7 +211,7 @@ const computeEntry = ({ period, employee, attendance, adjustments }: ComputeCont
   const payrollPeriodDaysDecimal = new Prisma.Decimal(payrollPeriodDays);
   const eligibleRatio =
     payrollPeriodDaysDecimal.gt(0) ? eligibleDaysDecimal.dividedBy(payrollPeriodDaysDecimal) : ZERO;
-  const baseSalary = round2(monthlyBaseSalary.mul(eligibleRatio));
+  const baseSalary = round2(proratedMonthlyBase.mul(eligibleRatio));
 
   workedDays = Math.min(workedDays, eligibleDays);
   const recordedAbsenceDays = Math.min(absenceDays, eligibleDays);

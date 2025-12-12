@@ -295,8 +295,9 @@ const assertOrderNumberAvailable = async (
   orderNumber: string,
   excludeId?: number,
 ) => {
+  const normalizedOrderNumber = orderNumber.trim().toUpperCase();
   const where: Prisma.PurchaseOrderLogWhereInput = {
-    orderNumber: { equals: orderNumber, mode: 'insensitive' },
+    orderNumber: normalizedOrderNumber,
   };
   if (excludeId) {
     where.id = { not: excludeId };
@@ -342,16 +343,17 @@ const assertQuotationSupplierAvailable = async (
     }
   }
   if (options.supplierName) {
+    const supplierName = options.supplierName.trim();
     const duplicate = await tx.quotation.findFirst({
       where: {
         processId: options.processId,
-        supplierName: { equals: options.supplierName, mode: 'insensitive' },
+        supplierName,
         id: options.excludeId ? { not: options.excludeId } : undefined,
       },
       select: { id: true },
     });
     if (duplicate) {
-      throw new Error(`Ya existe una cotización registrada para "${options.supplierName}".`);
+      throw new Error(`Ya existe una cotización registrada para "${supplierName}".`);
     }
   }
 };

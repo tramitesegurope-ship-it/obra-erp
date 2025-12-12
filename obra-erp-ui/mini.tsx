@@ -724,73 +724,114 @@ function Foo() {
                             ) : null}
                           </article>
                         );
-                      })}
-                      <article className="flex min-w-[280px] flex-col justify-between rounded-[28px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-white p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-sky-100">
-                        <div className="flex items-start justify-between gap-3">
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                              Acumulado general
-                            </p>
-                            <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-sky-700">
-                              Total desembolsado
-                            </p>
-                            <p className="text-2xl font-semibold text-sky-800">
-                              {currency(accumulationDisbursement.totalDisbursed)}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-600">Pendiente</p>
-                            <p className="text-xl font-semibold text-amber-600">
-                              {currency(accumulationDisbursement.pending)}
-                            </p>
-                          </div>
-                        </div>
-                        <dl className="mt-4 grid gap-2 text-slate-700">
-                          <div className="flex items-center justify-between gap-2">
-                            <dt className="text-xs uppercase tracking-wide text-slate-500">Total a desembolsar</dt>
-                            <dd className="text-base font-semibold text-slate-900">
-                              {currency(accumulationDisbursement.totalToPay)}
-                            </dd>
-                          </div>
-                        </dl>
-                        <div className="mt-4 grid gap-2 text-[11px] text-slate-600">
-                          <div className="flex items-center justify-between">
-                            <span>Adelantos</span>
-                            <span className="font-semibold text-slate-900">
-                              {currency(accumulationDisbursement.extras.advances)}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span>Feriados</span>
-                            <span className="font-semibold text-slate-900">
-                              {currency(accumulationDisbursement.extras.holidays)}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span>Horas extra</span>
-                            <span className="font-semibold text-slate-900">
-                              {currency(accumulationDisbursement.extras.overtime)}
-                            </span>
-                          </div>
-                          {accumulationDisbursement.extras.bonuses > 0 && (
-                            <div className="flex items-center justify-between">
-                              <span>Bonificaciones</span>
-                              <span className="font-semibold text-slate-900">
-                                {currency(accumulationDisbursement.extras.bonuses)}
-                              </span>
-                            </div>
-                          )}
-                          {accumulationSummary.totalDeductions > 0 && (
-                            <div className="flex items-center justify-between">
-                              <span>Descuentos</span>
-                              <span className="font-semibold text-slate-900">
-                                {currency(accumulationSummary.totalDeductions)}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </article>
                     </div>
+                  </div>
+                  </div>
+                  <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.6fr),minmax(0,1fr)]">
+                    <article className="flex flex-col justify-between rounded-[28px] border border-slate-100 bg-white/90 p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-slate-100">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                            Acumulado general
+                          </p>
+                          <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                            Pagos realizados y pendientes
+                          </p>
+                          <p className="text-2xl font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.totalDisbursed)}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-600">
+                            Pendiente
+                          </p>
+                          <p className="text-xl font-semibold text-amber-600">
+                            {currency(accumulationDisbursement.pending)}
+                          </p>
+                        </div>
+                      </div>
+                      <dl className="mt-4 grid gap-2 text-slate-600">
+                        <div className="flex items-center justify-between gap-2">
+                          <dt className="text-xs uppercase tracking-wide text-slate-400">Total a desembolsar</dt>
+                          <dd className="text-base font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.totalToPay)}
+                          </dd>
+                        </div>
+                      </dl>
+                      <div className="mt-4 grid gap-2 text-[11px] text-slate-600">
+                        <div className="flex items-center justify-between">
+                          <span>Adelantos</span>
+                          <span className="font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.extras.advances)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span>Feriados</span>
+                          <span className="font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.extras.holidays)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span>Horas extra</span>
+                          <span className="font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.extras.overtime)}
+                          </span>
+                        </div>
+                        {accumulationDisbursement.extras.bonuses > 0 && (
+                          <div className="flex items-center justify-between">
+                            <span>Bonificaciones</span>
+                            <span className="font-semibold text-slate-900">
+                              {currency(accumulationDisbursement.extras.bonuses)}
+                            </span>
+                          </div>
+                        )}
+                        {accumulationSummary.totalDeductions > 0 && (
+                          <div className="flex items-center justify-between">
+                            <span>Descuentos</span>
+                            <span className="font-semibold text-slate-900">
+                              {currency(accumulationSummary.totalDeductions)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                    <article className="flex flex-col justify-between rounded-[28px] border border-slate-100 bg-white/90 p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-slate-100">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Resumen general</p>
+                        <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                          Neto acumulado (incluye pendientes)
+                        </p>
+                        <p className="text-2xl font-semibold text-slate-900">
+                          {currency(accumulationSummary.total)}
+                        </p>
+                      </div>
+                      <dl className="mt-4 grid gap-2 text-slate-600">
+                        <div className="flex items-center justify-between gap-2">
+                          <dt className="text-xs uppercase tracking-wide text-slate-400">Pagado</dt>
+                          <dd className="text-base font-semibold text-slate-900">
+                            {currency(accumulationDisbursement.totalDisbursed)}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <dt className="text-xs uppercase tracking-wide text-slate-400">Pendiente</dt>
+                          <dd className="text-base font-semibold text-amber-600">
+                            {currency(accumulationPaymentStats.pending)}
+                          </dd>
+                        </div>
+                        <div className="flex items-center justify-between gap-2">
+                          <dt className="text-xs uppercase tracking-wide text-slate-400">Descuentos</dt>
+                          <dd className="text-base font-semibold text-slate-900">
+                            {currency(accumulationSummary.totalDeductions)}
+                          </dd>
+                        </div>
+                      </dl>
+                      <p className="mt-4 text-[11px] text-slate-500">
+                        La brecha entre ambos totales (≈ {currency(accumulationSummary.total - accumulationDisbursement.totalDisbursed)}) corresponde a
+                        los sueldos netos que aún no están marcados como pagados y los descuentos registrados, por eso el
+                        <strong className="font-semibold text-slate-900"> resumen general </strong> siempre puede ser mayor que el
+                        <strong className="font-semibold text-slate-900"> acumulado general</strong>.
+                      </p>
+                    </article>
                   </div>
                   <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {summaryCardAreas.map(area => {

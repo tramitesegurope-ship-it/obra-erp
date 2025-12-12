@@ -25,10 +25,19 @@ const AdjustmentCreate = z.object({
   amount: z.number().positive(),
 });
 
-const parseMonthRange = (year: number, month: number) => {
+const DEFAULT_PERIOD_DAYS = 30;
+
+const clampToMonthDays = (year: number, month: number, value: number) => {
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  const normalized = Number.isFinite(value) ? Math.round(value) : DEFAULT_PERIOD_DAYS;
+  return Math.max(1, Math.min(normalized, daysInMonth));
+};
+
+const buildPeriodRange = (year: number, month: number, workingDays: number) => {
+  const days = clampToMonthDays(year, month, workingDays);
   const start = new Date(Date.UTC(year, month - 1, 1));
-  const end = new Date(Date.UTC(year, month, 0, 23, 59, 59));
-  return { start, end };
+  const end = new Date(Date.UTC(year, month - 1, days, 23, 59, 59));
+  return { start, end, days };
 };
 
 router.post('/personnel/periods', async (req, res, next) => {
@@ -37,7 +46,8 @@ router.post('/personnel/periods', async (req, res, next) => {
     if (!parsed.success) {
       return res.status(400).json({ error: 'Validación', detail: parsed.error.flatten() });
     }
-    const { start, end } = parseMonthRange(parsed.data.year, parsed.data.month);
+    const requestedDays = parsed.data.workingDays ?? DEFAULT_PERIOD_DAYS;
+    const { start, end, days } = buildPeriodRange(parsed.data.year, parsed.data.month, requestedDays);
 
     const created = await prisma.payrollPeriod.create({
       data: {
@@ -45,7 +55,7 @@ router.post('/personnel/periods', async (req, res, next) => {
         year: parsed.data.year,
         startDate: start,
         endDate: end,
-        workingDays: parsed.data.workingDays ?? 30,
+        workingDays: days,
         status: PayrollPeriodStatus.OPEN,
         notes: parsed.data.notes ?? null,
         obra: parsed.data.obraId ? { connect: { id: parsed.data.obraId } } : undefined,
@@ -119,19 +129,20 @@ router.patch('/personnel/periods/:id', async (req, res, next) => {
       return res.status(400).json({ error: 'Validación', detail: parsed.error.flatten() });
     }
 
-    const data: Prisma.PayrollPeriodUpdateInput = {};
-    if (parsed.data.month !== undefined || parsed.data.year !== undefined) {
-      const month = parsed.data.month ?? undefined;
-      const year = parsed.data.year ?? undefined;
-      if (month !== undefined && year !== undefined) {
-        const { start, end } = parseMonthRange(year, month);
-        data.month = month;
-        data.year = year;
-        data.startDate = start;
-        data.endDate = end;
-      }
+    const existing = await prisma.payrollPeriod.findUnique({ where: { id } });
+    if (!existing) {
+      return res.status(404).json({ error: 'Periodo no encontrado' });
     }
-    if (parsed.data.workingDays !== undefined) data.workingDays = parsed.data.workingDays;
+    const data: Prisma.PayrollPeriodUpdateInput = {};
+    const month = parsed.data.month ?? existing.month;
+    const year = parsed.data.year ?? existing.year;
+    const requestedDays = parsed.data.workingDays ?? existing.workingDays;
+    const { start, end, days } = buildPeriodRange(year, month, requestedDays);
+    data.month = month;
+    data.year = year;
+    data.startDate = start;
+    data.endDate = end;
+    data.workingDays = days;
     if (parsed.data.notes !== undefined) data.notes = parsed.data.notes ?? null;
     if (parsed.data.obraId !== undefined) {
       data.obra = parsed.data.obraId ? { connect: { id: parsed.data.obraId } } : { disconnect: true };
