@@ -727,110 +727,56 @@ function Foo() {
                     </div>
                   </div>
                   </div>
-                  <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1.6fr),minmax(0,1fr)]">
-                    <article className="flex flex-col justify-between rounded-[28px] border border-slate-100 bg-white/90 p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-slate-100">
-                      <div className="flex items-start justify-between gap-3">
+                  <div className="mt-6">
+                    <article className="rounded-[28px] border border-slate-100 bg-gradient-to-br from-slate-50/80 via-white to-white/80 p-6 text-sm shadow-sm shadow-slate-200">
+                      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Acumulado general
-                          </p>
-                          <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-                            Pagos realizados y pendientes
-                          </p>
-                          <p className="text-2xl font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.totalDisbursed)}
-                          </p>
+                          <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Resumen rápido</p>
+                          <p className="text-lg font-semibold text-slate-900">Pagos acumulados</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-600">
-                            Pendiente
-                          </p>
-                          <p className="text-xl font-semibold text-amber-600">
-                            {currency(accumulationDisbursement.pending)}
-                          </p>
-                        </div>
-                      </div>
-                      <dl className="mt-4 grid gap-2 text-slate-600">
-                        <div className="flex items-center justify-between gap-2">
-                          <dt className="text-xs uppercase tracking-wide text-slate-400">Total a desembolsar</dt>
-                          <dd className="text-base font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.totalToPay)}
-                          </dd>
-                        </div>
-                      </dl>
-                      <div className="mt-4 grid gap-2 text-[11px] text-slate-600">
-                        <div className="flex items-center justify-between">
-                          <span>Adelantos</span>
-                          <span className="font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.extras.advances)}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span>Feriados</span>
-                          <span className="font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.extras.holidays)}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span>Horas extra</span>
-                          <span className="font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.extras.overtime)}
-                          </span>
-                        </div>
-                        {accumulationDisbursement.extras.bonuses > 0 && (
-                          <div className="flex items-center justify-between">
-                            <span>Bonificaciones</span>
-                            <span className="font-semibold text-slate-900">
-                              {currency(accumulationDisbursement.extras.bonuses)}
-                            </span>
-                          </div>
-                        )}
-                        {accumulationSummary.totalDeductions > 0 && (
-                          <div className="flex items-center justify-between">
-                            <span>Descuentos</span>
-                            <span className="font-semibold text-slate-900">
-                              {currency(accumulationSummary.totalDeductions)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </article>
-                    <article className="flex flex-col justify-between rounded-[28px] border border-slate-100 bg-white/90 p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-slate-100">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Resumen general</p>
-                        <p className="mt-3 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
-                          Neto acumulado (incluye pendientes)
-                        </p>
-                        <p className="text-2xl font-semibold text-slate-900">
-                          {currency(accumulationSummary.total)}
+                        <p className="text-[11px] text-slate-500 md:text-right">
+                          {accumulationSummary.months.length
+                            ? accumulationSummary.months.map(month => month.label).join(', ')
+                            : 'Selecciona periodos para ver los totales.'}
                         </p>
                       </div>
-                      <dl className="mt-4 grid gap-2 text-slate-600">
-                        <div className="flex items-center justify-between gap-2">
-                          <dt className="text-xs uppercase tracking-wide text-slate-400">Pagado</dt>
-                          <dd className="text-base font-semibold text-slate-900">
-                            {currency(accumulationDisbursement.totalDisbursed)}
-                          </dd>
+                      <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1.1fr),minmax(0,0.9fr)]">
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.3em] text-slate-400">Pagos seleccionados (neto total)</p>
+                          <p className="mt-1 text-4xl font-semibold text-slate-900">{currency(accumulationSummary.total)}</p>
+                          <p className="mt-2 text-xs text-slate-500">
+                            Incluye sueldos netos, descuentos y ajustes de los periodos elegidos.
+                          </p>
                         </div>
-                        <div className="flex items-center justify-between gap-2">
-                          <dt className="text-xs uppercase tracking-wide text-slate-400">Pendiente</dt>
-                          <dd className="text-base font-semibold text-amber-600">
-                            {currency(accumulationPaymentStats.pending)}
-                          </dd>
+                        <div className="grid gap-2 text-[11px] text-slate-500 sm:grid-cols-3">
+                          <div className="rounded-2xl bg-white/70 px-3 py-2 shadow-inner shadow-slate-100">
+                            <p className="text-[9px] uppercase tracking-[0.3em] text-slate-400">Pagado</p>
+                            <p className="mt-1 text-base font-semibold text-slate-900">{currency(accumulationDisbursement.totalDisbursed)}</p>
+                          </div>
+                          <div className="rounded-2xl bg-white/70 px-3 py-2 shadow-inner shadow-slate-100">
+                            <p className="text-[9px] uppercase tracking-[0.3em] text-slate-400">Pendiente</p>
+                            <p className="mt-1 text-base font-semibold text-amber-600">{currency(accumulationPaymentStats.pending)}</p>
+                          </div>
+                          <div className="rounded-2xl bg-white/70 px-3 py-2 shadow-inner shadow-slate-100">
+                            <p className="text-[9px] uppercase tracking-[0.3em] text-slate-400">Total a desembolsar</p>
+                            <p className="mt-1 text-base font-semibold text-slate-900">{currency(accumulationDisbursement.totalToPay)}</p>
+                          </div>
                         </div>
-                        <div className="flex items-center justify-between gap-2">
-                          <dt className="text-xs uppercase tracking-wide text-slate-400">Descuentos</dt>
-                          <dd className="text-base font-semibold text-slate-900">
-                            {currency(accumulationSummary.totalDeductions)}
-                          </dd>
-                        </div>
-                      </dl>
-                      <p className="mt-4 text-[11px] text-slate-500">
-                        La brecha entre ambos totales (≈ {currency(accumulationSummary.total - accumulationDisbursement.totalDisbursed)}) corresponde a
-                        los sueldos netos que aún no están marcados como pagados y los descuentos registrados, por eso el
-                        <strong className="font-semibold text-slate-900"> resumen general </strong> siempre puede ser mayor que el
-                        <strong className="font-semibold text-slate-900"> acumulado general</strong>.
-                      </p>
+                      </div>
+                      <div className="mt-4 grid gap-2 text-[11px] text-slate-500 sm:grid-cols-3">
+                        <p>
+                          <span className="font-semibold text-slate-700">{currency(accumulationDisbursement.totalDisbursed)}</span> = suma de los netos pagados
+                          (neto + adelantos/bonos) para los colaboradores marcados como pagado.
+                        </p>
+                        <p>
+                          <span className="font-semibold text-slate-700">{currency(accumulationSummary.total)}</span> = total neto de los periodos seleccionados.
+                          La diferencia queda como pendiente (<span className="text-amber-600">{currency(accumulationPaymentStats.pending)}</span>).
+                        </p>
+                        <p>
+                          El total a desembolsar (<span className="text-slate-900">{currency(accumulationDisbursement.totalToPay)}</span>) combina ambos montos con
+                          los descuentos registrados.
+                        </p>
+                      </div>
                     </article>
                   </div>
                   <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">

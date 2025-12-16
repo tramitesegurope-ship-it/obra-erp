@@ -1208,8 +1208,16 @@ export default function PersonnelPage() {
             bonusSpecialsDetailParts.push(`Feriados ${feriadoLabel}`);
         if (weekendSundayDays > 0)
             bonusSpecialsDetailParts.push(`Domingos ${domingoLabel}`);
-        if (otherBonuses > 0)
+        const manualBonusesConcepts = (entry.adjustments ?? [])
+            .filter(adj => adj.type === 'BONUS')
+            .map(adj => adj.concept?.trim())
+            .filter(Boolean);
+        if (manualBonusesConcepts.length > 0) {
+            bonusSpecialsDetailParts.push(manualBonusesConcepts.join(' · '));
+        }
+        else if (otherBonuses > 0) {
             bonusSpecialsDetailParts.push('Bonos manuales');
+        }
         const bonusSpecialsDetail = bonusSpecialsDetailParts.length ? bonusSpecialsDetailParts.join(' · ') : '—';
         const contributionsAmount = pension + essalud;
         const contributionsDetailParts = [];
@@ -1910,6 +1918,8 @@ ${pages}
             totalDeductions: 0,
             netPaid: 0,
             netPending: 0,
+            disbursedPaid: 0,
+            disbursedPending: 0,
         });
         const map = {
             ALL: template(),
@@ -1932,10 +1942,14 @@ ${pages}
                 bucket.totalNet += row.total;
                 bucket.totalPaid += row.totalPaid;
                 bucket.totalDeductions += row.totalDeductions;
-                if (isPaid)
+                if (isPaid) {
                     bucket.netPaid += row.total;
-                else
+                    bucket.disbursedPaid += row.totalPaid;
+                }
+                else {
                     bucket.netPending += row.total;
+                    bucket.disbursedPending += row.totalPaid;
+                }
             });
         });
         map.ALL.monthNet = accumulationSummary.monthTotals.slice();
@@ -1954,7 +1968,7 @@ ${pages}
             const breakdown = accumulationSummary.monthDeductionBreakdown[summaryIndex] ?? createDeductionBreakdown();
             let paidMarked = 0;
             rows.forEach(row => {
-                const value = row.perMonth[summaryIndex] ?? 0;
+                const value = row.perMonthPaid[summaryIndex] ?? 0;
                 if (!value)
                     return;
                 const isPaid = accumulationPayments[row.employeeId] ?? false;
@@ -1967,15 +1981,15 @@ ${pages}
             const overtime = accumulationSummary.monthOvertime[summaryIndex] ?? 0;
             const bonuses = accumulationSummary.monthBonuses[summaryIndex] ?? 0;
             const extrasTotal = advances + holidays + overtime + bonuses;
-            const disbursed = paidMarked + extrasTotal;
-            const pendingNet = Math.max(net - paidMarked, 0);
-            const totalToPay = disbursed + pendingNet;
+            const disbursed = paidMarked;
+            const totalToPay = net + extrasTotal;
+            const pending = Math.max(totalToPay - disbursed, 0);
             return {
                 id: month.id,
                 label: month.label,
                 net,
                 disbursed,
-                pending: pendingNet,
+                pending,
                 totalToPay,
                 extrasTotal,
                 deductions: accumulationSummary.monthTotalsDeductions[summaryIndex] ?? 0,
@@ -2372,9 +2386,12 @@ ${pages}
                                                         }), _jsxs("article", { className: "flex min-w-[280px] flex-col justify-between rounded-[28px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-white p-5 text-sm shadow-md shadow-slate-100 ring-1 ring-sky-100", children: [_jsxs("div", { className: "flex items-start justify-between gap-3", children: [_jsxs("div", { children: [_jsx("p", { className: "text-xs font-semibold uppercase tracking-wide text-slate-500", children: "Acumulado general" }), _jsx("p", { className: "mt-3 text-[11px] font-semibold uppercase tracking-wide text-sky-700", children: "Total desembolsado" }), _jsx("p", { className: "text-2xl font-semibold text-sky-800", children: currency(accumulationDisbursement.totalDisbursed) })] }), _jsxs("div", { className: "text-right", children: [_jsx("p", { className: "text-[11px] font-semibold uppercase tracking-wide text-amber-600", children: "Pendiente" }), _jsx("p", { className: "text-xl font-semibold text-amber-600", children: currency(accumulationDisbursement.pending) })] })] }), _jsx("dl", { className: "mt-4 grid gap-2 text-slate-700", children: _jsxs("div", { className: "flex items-center justify-between gap-2", children: [_jsx("dt", { className: "text-xs uppercase tracking-wide text-slate-500", children: "Total a desembolsar" }), _jsx("dd", { className: "text-base font-semibold text-slate-900", children: currency(accumulationDisbursement.totalToPay) })] }) }), _jsxs("div", { className: "mt-4 grid gap-2 text-[11px] text-slate-600", children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsx("span", { children: "Adelantos" }), _jsx("span", { className: "font-semibold text-slate-900", children: currency(accumulationDisbursement.extras.advances) })] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsx("span", { children: "Feriados" }), _jsx("span", { className: "font-semibold text-slate-900", children: currency(accumulationDisbursement.extras.holidays) })] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsx("span", { children: "Horas extra" }), _jsx("span", { className: "font-semibold text-slate-900", children: currency(accumulationDisbursement.extras.overtime) })] }), accumulationDisbursement.extras.bonuses > 0 && (_jsxs("div", { className: "flex items-center justify-between", children: [_jsx("span", { children: "Bonificaciones" }), _jsx("span", { className: "font-semibold text-slate-900", children: currency(accumulationDisbursement.extras.bonuses) })] })), accumulationSummary.totalDeductions > 0 && (_jsxs("div", { className: "flex items-center justify-between", children: [_jsx("span", { children: "Descuentos" }), _jsx("span", { className: "font-semibold text-slate-900", children: currency(accumulationSummary.totalDeductions) })] }))] })] })] }) }), _jsx("div", { className: "mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3", children: summaryCardAreas.map(area => {
                                                     const extras = area.extras;
                                                     const extrasTotal = extras.advances + extras.holidays + extras.overtime + extras.bonuses;
-                                                    const netPaidArea = area.data.netPaid;
-                                                    const pendingArea = area.data.netPending;
-                                                    const areaDisbursed = netPaidArea + extrasTotal;
+                                                    const pendingArea = area.key === 'ALL'
+                                                        ? accumulationDisbursement.pending
+                                                        : area.data.netPending;
+                                                    const areaDisbursed = area.key === 'ALL'
+                                                        ? accumulationDisbursement.totalDisbursed
+                                                        : area.data.disbursedPaid ?? 0;
                                                     const areaDetails = [];
                                                     if (extras.advances > 0)
                                                         areaDetails.push({ key: 'advances', label: 'Adelantos', value: extras.advances });
