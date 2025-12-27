@@ -920,20 +920,16 @@ const [mainTab, setMainTab] = useState<'COMPARE' | 'ANALYSIS' | 'OPS'>('COMPARE'
   }, [purchaseProgressFiltered, purchaseProgressDerived.length, purchaseProgressStats, progressStatusFilter, selectedProcess]);
 
 const supplierGroups = useMemo(() => {
-    if (!rankingRows.length) return [] as Array<{
-      key: string;
-      supplier: string;
-      variants: Array<{ quotationId: number; label: string; currency: string }>;
-    }>;
+    if (!rankingRows.length) return [];
     const map = new Map<
       string,
-      { key: string; supplier: string; variants: Array<{ quotationId: number; label: string; currency: string }> }
+      { key: string; base: string; variants: Array<{ quotationId: number; label: string; currency: string }> }
     >();
     rankingRows.forEach(row => {
       const baseLabel = extractBaseSupplierLabel(row.supplier);
       const key = normalizeSupplierKey(baseLabel);
       if (!map.has(key)) {
-        map.set(key, { key, supplier: baseLabel, variants: [] });
+        map.set(key, { key, base: baseLabel, variants: [] });
       }
       map.get(key)!.variants.push({
         quotationId: row.quotationId,
@@ -941,7 +937,27 @@ const supplierGroups = useMemo(() => {
         currency: row.currency,
       });
     });
-    return Array.from(map.values());
+    return Array.from(map.values()).map(entry => {
+      const detailParts = Array.from(
+        new Set(
+          entry.variants
+            .map(variant => {
+              const parts = variant.label.split(' - ');
+              return parts.length > 1 ? parts.slice(1).join(' - ').trim() : null;
+            })
+            .filter((detail): detail is string => Boolean(detail)),
+        ),
+      );
+      const label =
+        detailParts.length > 0 ? `${entry.base} (${detailParts.join(', ')})` : entry.base;
+      return {
+        key: entry.key,
+        supplier: entry.base,
+        label,
+        variants: entry.variants,
+        quotationIds: entry.variants.map(variant => variant.quotationId),
+      };
+    });
   }, [rankingRows]);
 
 const providerColumns = useMemo(() => {
@@ -949,6 +965,7 @@ const providerColumns = useMemo(() => {
     const columns = supplierGroups.map(group => ({
       key: group.key,
       supplier: group.supplier,
+      label: group.label,
       quotationIds: group.variants.map(variant => variant.quotationId),
       variantLabels: new Map(group.variants.map(variant => [variant.quotationId, variant.label])),
     }));
@@ -1017,19 +1034,23 @@ const providerColumns = useMemo(() => {
         sheetName: name,
         baseCount: coverage?.baseCount ?? 0,
         baseTotal: totals?.baseTotal ?? 0,
-        suppliers: rankingRows.map(row => {
-          const supplierTotals = totals?.suppliers.find(s => s.quotationId === row.quotationId);
-          const matched = coverage?.suppliers.get(row.quotationId) ?? 0;
+        suppliers: supplierGroups.map(group => {
+          const supplierTotals = totals?.suppliers?.filter(s => group.quotationIds.includes(s.quotationId)) ?? [];
+          const totalCount = supplierTotals.length;
+          const total =
+            totalCount > 0
+              ? supplierTotals.reduce<number>((acc, item) => acc + (item.total ?? 0), 0)
+              : null;
+          const matched = group.quotationIds.reduce((acc, id) => acc + (coverage?.suppliers.get(id) ?? 0), 0);
           return {
-            quotationId: row.quotationId,
-            supplier: row.supplier,
-            total: supplierTotals?.total ?? null,
+            label: group.label,
+            total: totalCount > 0 ? total : null,
             matched,
           };
         }),
       };
     });
-  }, [rankingRows, sheetCoverage, sheetNames, sheetSummaries, summary]);
+  }, [supplierGroups, sheetCoverage, sheetNames, sheetSummaries, summary]);
   const bestOfferStats = useMemo(() => {
     if (!summary) return new Map<number, { bestItems: number; savings: Array<{ description: string; saving: number; bestTotal: number; secondTotal: number }> }>();
     const map = new Map<number, { bestItems: number; savings: Array<{ description: string; saving: number; bestTotal: number; secondTotal: number }> }>();
@@ -2799,9 +2820,9 @@ const handleSupplierFileClear = () => {
                           <tr>
                             <th className="px-2 py-1 text-left">Hoja</th>
                             <th className="px-2 py-1 text-left">Base oficial</th>
-                            {rankingRows.map(row => (
-                              <th key={row.quotationId} className="px-2 py-1 text-left">
-                                {row.supplier}
+                            {supplierGroups.map(group => (
+                              <th key={group.key} className="px-2 py-1 text-left">
+                                {group.label}
                               </th>
                             ))}
                           </tr>
@@ -2821,17 +2842,16 @@ const handleSupplierFileClear = () => {
                                 </div>
                                 <p className="text-xs text-slate-500">Presupuesto oficial</p>
                               </td>
-                              {rankingRows.map(rowSupplier => {
-                                const supplier = row.suppliers.find(s => s.quotationId === rowSupplier.quotationId);
-                                if (!supplier || supplier.total == null) {
+                              {row.suppliers.map((supplier, idx) => {
+                                if (supplier.total == null) {
                                   return (
-                                    <td key={`${row.sheetName}-${rowSupplier.quotationId}`} className="px-2 py-2 text-xs text-slate-500">
+                                    <td key={`${row.sheetName}-${idx}`} className="px-2 py-2 text-xs text-slate-500">
                                       Sin oferta
                                     </td>
                                   );
                                 }
                                 return (
-                                  <td key={`${row.sheetName}-${rowSupplier.quotationId}`} className="px-2 py-2">
+                                  <td key={`${row.sheetName}-${idx}`} className="px-2 py-2">
                                     <div className="font-medium">
                                       {formatMoney(supplier.total, summary.process.baseCurrency)}
                                     </div>
@@ -2910,11 +2930,11 @@ const handleSupplierFileClear = () => {
                       >
                         Top 3
                       </button>
-                      {supplierGroups.map(group => {
-                        const selected = selectedSupplierKeys.includes(group.key);
-                        return (
-                          <button
-                            key={`supplier-toggle-${group.key}`}
+                    {supplierGroups.map(group => {
+                      const selected = selectedSupplierKeys.includes(group.key);
+                      return (
+                        <button
+                          key={`supplier-toggle-${group.key}`}
                             type="button"
                             onClick={() => handleSupplierColumnToggle(group.key)}
                             className={`rounded-full px-3 py-1 text-xs font-semibold ${
@@ -2923,7 +2943,7 @@ const handleSupplierFileClear = () => {
                                 : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:ring-slate-300'
                             }`}
                           >
-                            {group.supplier}
+                            {group.label}
                             {group.variants.length > 1 && (
                               <span className="ml-1 text-[10px] font-normal opacity-80">
                                 ({group.variants.length})
@@ -2944,7 +2964,7 @@ const handleSupplierFileClear = () => {
                             <th className="px-2 py-2 text-left font-semibold">Base oficial</th>
                             {providerColumns.map(column => (
                               <th key={`column-${column.key}`} className="px-2 py-2 text-left font-semibold">
-                                {column.supplier}
+                                {column.label}
                               </th>
                             ))}
                           </tr>

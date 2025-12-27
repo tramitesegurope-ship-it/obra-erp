@@ -1,0 +1,65 @@
+{
+  "name": "obra-erp-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Sistema de administracion Kosto 1.0",
+  "author": {
+    "name": "Jano Leon",
+    "email": "j.leon1604@hotmail.com"
+  },
+  "homepage": "https://example.com/kosto",
+  "main": "main.js",
+  "scripts": {
+    "build:ui": "npm --prefix ../obra-erp-ui run build",
+    "build:api": "npm --prefix ../api run build",
+    "dist": "npm run build:ui && npm run build:api && electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.kosto.erp",
+    "productName": "Kosto 1.0",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js"
+    ],
+    "extraResources": [
+      {
+        "from": "../api/dist",
+        "to": "api/dist"
+      },
+      {
+        "from": "../api/node_modules",
+        "to": "api/node_modules"
+      },
+      {
+        "from": "../api/data",
+        "to": "api/data"
+      },
+      {
+        "from": "../obra-erp-ui/dist",
+        "to": "ui"
+      },
+      {
+        "from": "../api/prisma/prisma/dev.db",
+        "to": "seed/dev.db"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Office",
+      "maintainer": "Jano Leon <j.leon1604@hotmail.com>"
+    }
+  }
+}
