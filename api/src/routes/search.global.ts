@@ -28,8 +28,8 @@ router.get('/search/global', async (req, res) => {
       where: hasTerm
         ? {
             OR: [
-              { orderNumber: { contains: query, mode: 'insensitive' } },
-              { supplierName: { contains: query, mode: 'insensitive' } },
+              { orderNumber: { contains: query } },
+              { supplierName: { contains: query } },
             ],
           }
         : undefined,
@@ -41,7 +41,7 @@ router.get('/search/global', async (req, res) => {
       where: hasTerm
         ? {
             OR: [
-              { name: { contains: query, mode: 'insensitive' } },
+              { name: { contains: query } },
               { ruc: { contains: query } },
               { phone: { contains: query } },
             ],
@@ -54,9 +54,9 @@ router.get('/search/global', async (req, res) => {
       where: hasTerm
         ? {
             OR: [
-              { supplierName: { contains: query, mode: 'insensitive' } },
-              { proveedor: { name: { contains: query, mode: 'insensitive' } } },
-              { process: { name: { contains: query, mode: 'insensitive' } } },
+              { supplierName: { contains: query } },
+              { proveedor: { name: { contains: query } } },
+              { process: { name: { contains: query } } },
             ],
           }
         : undefined,
@@ -71,8 +71,8 @@ router.get('/search/global', async (req, res) => {
       where: hasTerm
         ? {
             OR: [
-              { firstName: { contains: query, mode: 'insensitive' } },
-              { lastName: { contains: query, mode: 'insensitive' } },
+              { firstName: { contains: query } },
+              { lastName: { contains: query } },
               { documentNumber: { contains: query } },
               { phone: { contains: query } },
             ],
@@ -85,12 +85,12 @@ router.get('/search/global', async (req, res) => {
       where: hasTerm
         ? {
             OR: [
-              { name: { contains: query, mode: 'insensitive' } },
+              { name: { contains: query } },
               { code: { contains: query } },
             ],
           }
         : undefined,
-      orderBy: hasTerm ? { updatedAt: 'desc' } : { id: 'desc' },
+      orderBy: hasTerm ? { name: 'asc' } : { id: 'desc' },
       take: limit,
     }),
   ]);

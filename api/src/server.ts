@@ -31,9 +31,15 @@ import globalSearch from './routes/search.global';
 const app = express();
 const API_PREFIX = '/api';
 
-// CORS para Vite / localhost
+// CORS para Vite / localhost y app de escritorio (file:// => origin null)
+const allowedOrigins = new Set(['http://localhost:5173', 'http://127.0.0.1:5173']);
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: (origin, callback) => {
+    if (!origin || origin === 'null' || allowedOrigins.has(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Origen no permitido por CORS'));
+  },
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Delete-Password'],
   credentials: false,
