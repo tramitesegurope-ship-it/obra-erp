@@ -140,6 +140,11 @@ html, body { background: var(--app-bg); }
   column-gap: 40px;
   row-gap: 14px;
 }
+@media (max-width: 900px){
+  .grid-2{
+    grid-template-columns: 1fr;
+  }
+}
 .card.moves-form{
   max-width:1120px;
   margin:18px auto;
@@ -554,6 +559,7 @@ input:focus, select:focus{
 @media (max-width: 840px){
   .table-shell{
     padding-bottom:18px;
+    justify-content:flex-start;
   }
 }
 .table .thead > :nth-child(5),

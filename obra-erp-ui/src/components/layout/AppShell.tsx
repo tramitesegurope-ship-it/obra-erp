@@ -68,7 +68,7 @@ export default function AppShell<T extends string>({
 
       <div className="flex min-h-screen flex-1 flex-col">
         <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+          <div className="mx-auto flex w-full max-w-[1600px] items-center gap-4 px-3 py-3 sm:px-4 lg:px-6">
             <GlobalSearch items={searchItems} onNavigate={key => onNavigate(key as T)} />
             <div className="hidden gap-2 lg:flex">
               <button
@@ -87,7 +87,9 @@ export default function AppShell<T extends string>({
           </div>
         </header>
 
-        <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-6 px-4 py-6">{children}</main>
+        <main className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-6 px-3 py-6 sm:px-4 lg:px-6">
+          {children}
+        </main>
       </div>
     </div>
   );
