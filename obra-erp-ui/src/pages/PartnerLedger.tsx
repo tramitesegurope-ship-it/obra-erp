@@ -69,15 +69,11 @@ export default function PartnerLedgerPage() {
         to: string;
         loanPageSize: number;
       }>;
-      if (stored.status) {
-        setFilters(prev => ({ ...prev, status: stored.status }));
-      }
-      if (typeof stored.from === 'string') {
-        setFilters(prev => ({ ...prev, from: stored.from }));
-      }
-      if (typeof stored.to === 'string') {
-        setFilters(prev => ({ ...prev, to: stored.to }));
-      }
+      setFilters({
+        status: stored.status ?? 'ALL',
+        from: stored.from ?? '',
+        to: stored.to ?? '',
+      });
       if (typeof stored.loanPageSize === 'number' && stored.loanPageSize > 0) {
         setLoanPageSize(stored.loanPageSize);
       }

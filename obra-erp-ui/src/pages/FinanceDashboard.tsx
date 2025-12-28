@@ -13,8 +13,12 @@ const FinanceDashboard = () => {
   const [error, setError] = useState<string | null>(null);
   const [perfLoading, setPerfLoading] = useState(false);
   const [perfError, setPerfError] = useState<string | null>(null);
-  const [selectedGroup, setSelectedGroup] = useState<string>('');
-  const [tab, setTab] = useState<TabKey>('summary');
+  const [selectedGroup, setSelectedGroup] = useState<string>(
+    () => window.localStorage.getItem('obra-erp.finance.group') ?? '',
+  );
+  const [tab, setTab] = useState<TabKey>(
+    () => (window.localStorage.getItem('obra-erp.finance.tab') as TabKey) ?? 'summary',
+  );
 
   const exportPerformanceCsv = () => {
     if (!performance) return;
@@ -99,6 +103,14 @@ const FinanceDashboard = () => {
       .catch(err => setPerfError(err instanceof Error ? err.message : 'No se pudo cargar el desempeño.'))
       .finally(() => setPerfLoading(false));
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('obra-erp.finance.group', selectedGroup);
+  }, [selectedGroup]);
+
+  useEffect(() => {
+    window.localStorage.setItem('obra-erp.finance.tab', tab);
+  }, [tab]);
 
   const groups = useMemo(() => data?.summary.groups ?? [], [data]);
   const categoryEntries = useMemo(() => {
