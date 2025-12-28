@@ -57,43 +57,45 @@ export default function AppShell<T extends string>({
   }, [active]);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-800">
-      <aside
-        ref={sidebarRef}
-        className="sticky top-0 hidden h-screen w-64 flex-shrink-0 overflow-y-auto border-r border-slate-200 bg-white/90 p-4 shadow-sm lg:flex lg:flex-col"
-      >
-        <div className="mb-6">
-          <p className="text-xs uppercase tracking-wide text-slate-500">Suite de gestión</p>
-          <h1 className="text-xl font-bold text-slate-900">Obra ERP</h1>
-          <p className="text-xs text-slate-500">Administrador integral</p>
-        </div>
-        <nav className="flex flex-col gap-1">
-          {navItems.map(item => {
-            const isActive = item.key === active;
-            return (
-              <button
-                key={item.key}
-                type="button"
-                onClick={() => handleNavigate(item.key)}
-                className={`rounded-md px-3 py-2 text-left transition ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                }`}
-              >
-                <div className="text-sm font-semibold">{item.label}</div>
-                <div className="text-xs">{item.description}</div>
-              </button>
-            );
-          })}
-        </nav>
-        <div className="mt-auto rounded-md bg-blue-50 p-3 text-xs text-blue-700">
-          Optimiza tus decisiones con paneles de control, reportes y análisis predictivo. Selecciona un módulo para
-          empezar.
-        </div>
-      </aside>
+    <div className="min-h-screen bg-slate-50 text-slate-800">
+      <div className="group fixed left-0 top-0 z-30 hidden h-screen lg:block">
+        <aside
+          ref={sidebarRef}
+          className="h-full w-64 -translate-x-[244px] overflow-y-auto border-r border-slate-200 bg-white/95 p-4 shadow-xl transition-transform duration-200 group-hover:translate-x-0 group-focus-within:translate-x-0"
+        >
+          <div className="mb-6">
+            <p className="text-xs uppercase tracking-wide text-slate-500">Suite de gestión</p>
+            <h1 className="text-xl font-bold text-slate-900">Obra ERP</h1>
+            <p className="text-xs text-slate-500">Administrador integral</p>
+          </div>
+          <nav className="flex flex-col gap-1">
+            {navItems.map(item => {
+              const isActive = item.key === active;
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => handleNavigate(item.key)}
+                  className={`rounded-md px-3 py-2 text-left transition ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  }`}
+                >
+                  <div className="text-sm font-semibold">{item.label}</div>
+                  <div className="text-xs">{item.description}</div>
+                </button>
+              );
+            })}
+          </nav>
+          <div className="mt-auto rounded-md bg-blue-50 p-3 text-xs text-blue-700">
+            Optimiza tus decisiones con paneles de control, reportes y análisis predictivo. Selecciona un módulo para
+            empezar.
+          </div>
+        </aside>
+      </div>
 
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen flex-col">
         <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
           <div className="mx-auto flex w-full max-w-[1600px] items-center gap-4 px-3 py-3 sm:px-4 lg:px-6">
             <button
