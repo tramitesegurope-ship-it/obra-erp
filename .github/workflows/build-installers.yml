@@ -29,6 +29,10 @@ jobs:
         run: npm ci
         working-directory: api
 
+      - name: Generate Prisma client
+        run: npx prisma generate
+        working-directory: api
+
       - name: Install UI deps
         run: npm ci
         working-directory: obra-erp-ui
@@ -65,6 +69,10 @@ jobs:
 
       - name: Install API deps
         run: npm ci
+        working-directory: api
+
+      - name: Generate Prisma client
+        run: npx prisma generate
         working-directory: api
 
       - name: Install UI deps
