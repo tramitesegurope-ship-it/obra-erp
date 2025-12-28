@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import GlobalSearch from '../GlobalSearch';
 
 type NavItem<T extends string> = {
@@ -33,6 +33,7 @@ export default function AppShell<T extends string>({
   children,
 }: AppShellProps<T>) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const sidebarRef = useRef<HTMLElement | null>(null);
   const handleNavigate = (key: T) => {
     onNavigate(key);
     setMobileOpen(false);
@@ -49,9 +50,18 @@ export default function AppShell<T extends string>({
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (sidebarRef.current) {
+      sidebarRef.current.scrollTop = 0;
+    }
+  }, [active]);
+
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-800">
-      <aside className="sticky top-0 hidden h-screen w-64 flex-shrink-0 overflow-y-auto border-r border-slate-200 bg-white/90 p-4 shadow-sm lg:flex lg:flex-col">
+      <aside
+        ref={sidebarRef}
+        className="sticky top-0 hidden h-screen w-64 flex-shrink-0 overflow-y-auto border-r border-slate-200 bg-white/90 p-4 shadow-sm lg:flex lg:flex-col"
+      >
         <div className="mb-6">
           <p className="text-xs uppercase tracking-wide text-slate-500">Suite de gestión</p>
           <h1 className="text-xl font-bold text-slate-900">Obra ERP</h1>
