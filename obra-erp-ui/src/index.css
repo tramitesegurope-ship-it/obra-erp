@@ -22,7 +22,8 @@ html, body { background: var(--app-bg); }
 /* ========= Layout base ========= */
 .app-wrap{
   max-width:1565px;
-  margin:24px auto 40px;
+  width:100%;
+  margin:24px 0 40px;
   padding:0 24px 40px;
   font-size:16px;
   line-height:1.4;
