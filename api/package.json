@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
+    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "build": "npm run prisma:generate && tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {
