@@ -12,7 +12,8 @@
   "scripts": {
     "build:ui": "npm --prefix ../obra-erp-ui run build",
     "build:api": "npm --prefix ../api run build",
-    "dist": "npm run build:ui && npm run build:api && electron-builder"
+    "dist": "npm run build:ui && npm run build:api && electron-builder",
+    "dist:ci": "electron-builder"
   },
   "devDependencies": {
     "electron": "^31.3.1",

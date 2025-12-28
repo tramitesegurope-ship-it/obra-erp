@@ -55,8 +55,21 @@ jobs:
           name: kosto-linux
           path: desktop/dist/*
 
+      - name: Upload API dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-dist
+          path: api/dist
+
+      - name: Upload UI dist
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-dist
+          path: obra-erp-ui/dist
+
   build-windows:
     runs-on: windows-latest
+    needs: build-linux
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,22 +88,24 @@ jobs:
         run: npm ci
         working-directory: api
 
-      - name: Generate Prisma client
-        run: npx prisma generate --schema=./prisma/schema.prisma
-        working-directory: api
-        env:
-          DATABASE_URL: file:./prisma/dev.db
+      - name: Download API dist
+        uses: actions/download-artifact@v4
+        with:
+          name: api-dist
+          path: api/dist
 
-      - name: Install UI deps
-        run: npm ci
-        working-directory: obra-erp-ui
+      - name: Download UI dist
+        uses: actions/download-artifact@v4
+        with:
+          name: ui-dist
+          path: obra-erp-ui/dist
 
       - name: Install Desktop deps
         run: npm ci
         working-directory: desktop
 
       - name: Build Windows installer
-        run: npm run dist
+        run: npm run dist:ci
         working-directory: desktop
         env:
           DATABASE_URL: file:../api/prisma/dev.db
