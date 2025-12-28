@@ -66,6 +66,19 @@ type GlobalSearchPayload = {
 
 const SEARCH_CACHE = new Map<string, { expiresAt: number; payload: GlobalSearchPayload }>();
 const SEARCH_TTL_MS = 30_000;
+const SEARCH_MAX_ENTRIES = 50;
+
+const pruneSearchCache = () => {
+  const now = Date.now();
+  for (const [key, value] of SEARCH_CACHE) {
+    if (value.expiresAt <= now) SEARCH_CACHE.delete(key);
+  }
+  while (SEARCH_CACHE.size > SEARCH_MAX_ENTRIES) {
+    const oldestKey = SEARCH_CACHE.keys().next().value;
+    if (oldestKey === undefined) break;
+    SEARCH_CACHE.delete(oldestKey);
+  }
+};
 
 router.get('/search/global', async (req, res) => {
   const query = typeof req.query.q === 'string' ? req.query.q.trim() : '';
@@ -73,6 +86,7 @@ router.get('/search/global', async (req, res) => {
   const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 15) : 5;
   const hasTerm = query.length > 0;
   const cacheKey = `${query.toLowerCase()}|${limit}`;
+  pruneSearchCache();
   const cached = SEARCH_CACHE.get(cacheKey);
   if (cached && cached.expiresAt > Date.now()) {
     return res.json(cached.payload);
@@ -197,7 +211,7 @@ router.get('/search/global', async (req, res) => {
       processCode: order.process?.code ?? null,
       supplierName: order.supplierName,
       orderNumber: order.orderNumber,
-      issueDate: order.issueDate,
+      issueDate: order.issueDate.toISOString(),
       currency: order.currency,
       total: decimalToNumber(order.total),
     })),
