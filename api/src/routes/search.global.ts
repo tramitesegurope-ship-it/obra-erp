@@ -17,11 +17,66 @@ const decimalToNumber = (value?: Prisma.Decimal | number | string | null) => {
   return Number(value);
 };
 
+type GlobalSearchPayload = {
+  query: string;
+  purchaseOrders: Array<{
+    id: number;
+    processId: number;
+    processName: string | null;
+    processCode: string | null;
+    supplierName: string;
+    orderNumber: string;
+    issueDate: string;
+    currency?: string | null;
+    total: number | null;
+  }>;
+  suppliers: Array<{
+    id: number;
+    name: string;
+    ruc: string | null;
+    phone: string | null;
+  }>;
+  quotations: Array<{
+    id: number;
+    processId: number;
+    processName: string | null;
+    processCode: string | null;
+    supplierName: string | null;
+    status: string;
+    currency?: string | null;
+    totalAmount: number | null;
+  }>;
+  employees: Array<{
+    id: number;
+    firstName: string;
+    lastName: string;
+    area: string;
+    phone: string | null;
+    documentNumber: string | null;
+    accountNumber: string | null;
+    cci: string | null;
+  }>;
+  materials: Array<{
+    id: number;
+    name: string;
+    code: string | null;
+    unit: string | null;
+  }>;
+};
+
+const SEARCH_CACHE = new Map<string, { expiresAt: number; payload: GlobalSearchPayload }>();
+const SEARCH_TTL_MS = 30_000;
+
 router.get('/search/global', async (req, res) => {
   const query = typeof req.query.q === 'string' ? req.query.q.trim() : '';
   const limitParam = Number(req.query.limit);
   const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 15) : 5;
   const hasTerm = query.length > 0;
+  const cacheKey = `${query.toLowerCase()}|${limit}`;
+  const cached = SEARCH_CACHE.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return res.json(cached.payload);
+  }
 
   const [orders, suppliers, quotations, employees, materials] = await Promise.all([
     prisma.purchaseOrderLog.findMany({
@@ -133,7 +188,7 @@ router.get('/search/global', async (req, res) => {
     }),
   ]);
 
-  res.json({
+  const payload: GlobalSearchPayload = {
     query,
     purchaseOrders: orders.map(order => ({
       id: order.id,
@@ -178,7 +233,10 @@ router.get('/search/global', async (req, res) => {
       code: material.code ?? null,
       unit: material.unit ?? null,
     })),
-  });
+  };
+
+  SEARCH_CACHE.set(cacheKey, { expiresAt: Date.now() + SEARCH_TTL_MS, payload });
+  res.json(payload);
 });
 
 export default router;

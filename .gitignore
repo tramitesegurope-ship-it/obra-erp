@@ -16,6 +16,7 @@ obra-erp-ui/.env
 # Local data / databases / uploads
 api/prisma/*.db*
 api/prisma/dev.db*
+api/prisma/prisma/dev.db*
 api/uploads/
 
 # Temporary files
