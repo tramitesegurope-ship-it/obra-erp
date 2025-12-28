@@ -594,7 +594,7 @@ export default function DailyCashPage() {
         </p>
       )}
 
-      <div className="grid gap-4 lg:grid-cols-[380px_minmax(900px,1fr)]">
+      <div className="grid gap-4 lg:grid-cols-[380px_minmax(0,1fr)]">
         <form className="card space-y-4" onSubmit={handleSubmit}>
           <div className="border-b border-slate-200 pb-2">
             <h2 className="text-lg font-semibold text-slate-700">Registrar rendición</h2>
@@ -760,9 +760,9 @@ export default function DailyCashPage() {
           </button>
         </form>
 
-        <div className="card space-y-3 shadow-lg min-w-[950px]">
+        <div className="card space-y-3 shadow-lg">
           <div className="flex flex-wrap items-end gap-3 border-b border-slate-200 pb-2 text-sm">
-            <label className="flex flex-col gap-1 text-xs text-slate-500 min-w-[400px]">
+            <label className="flex flex-1 flex-col gap-1 text-xs text-slate-500 min-w-[220px]">
               <span>Obra</span>
               <select
                 className="admin-input"
@@ -835,7 +835,7 @@ export default function DailyCashPage() {
             </div>
           </div>
 
-          <div className="table-shell overflow-hidden rounded-xl border border-slate-200">
+          <div className="table-shell rounded-xl border border-slate-200">
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
