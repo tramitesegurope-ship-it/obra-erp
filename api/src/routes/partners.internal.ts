@@ -105,32 +105,25 @@ router.get('/partners/internal/loans', async (req, res) => {
     },
   });
 
-  const pending = await prisma.partnerLoan.findMany({
+  const pendingGroups = await prisma.partnerLoan.groupBy({
+    by: ['receiverId'],
     where: { status: PartnerLoanStatus.PENDING },
-    select: {
-      receiverId: true,
-      amount: true,
-      receiver: { select: { name: true } },
-    },
+    _sum: { amount: true },
   });
+  const pendingIds = pendingGroups.map(group => group.receiverId);
+  const pendingPartners = pendingIds.length
+    ? await prisma.partner.findMany({
+        where: { id: { in: pendingIds } },
+        select: { id: true, name: true },
+      })
+    : [];
+  const partnerNameById = new Map(pendingPartners.map(item => [item.id, item.name]));
 
-  const pendingAccumulator = pending.reduce((acc, loan) => {
-    const current = acc.get(loan.receiverId) ?? {
-      partner: loan.receiver,
-      amount: 0,
-    };
-    current.amount += Number(loan.amount);
-    acc.set(loan.receiverId, current);
-    return acc;
-  }, new Map<number, { partner: { name: string }; amount: number }>());
-
-  const pendingByReceiver = Array.from(pendingAccumulator.entries()).map(
-    ([partnerId, payload]) => ({
-      partnerId,
-      partnerName: payload.partner.name,
-      pendingAmount: Math.round(payload.amount * 100) / 100,
-    }),
-  );
+  const pendingByReceiver = pendingGroups.map(group => ({
+    partnerId: group.receiverId,
+    partnerName: partnerNameById.get(group.receiverId) ?? '—',
+    pendingAmount: Math.round(Number(group._sum.amount ?? 0) * 100) / 100,
+  }));
 
   res.json({
     items: loans.map(loan => ({
