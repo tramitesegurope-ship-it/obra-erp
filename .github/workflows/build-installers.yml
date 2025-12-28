@@ -33,7 +33,7 @@ jobs:
         run: npx prisma generate --schema=./prisma/schema.prisma
         working-directory: api
         env:
-          DATABASE_URL: file:${{ github.workspace }}/api/prisma/dev.db
+          DATABASE_URL: file:./prisma/dev.db
 
       - name: Install UI deps
         run: npm ci
@@ -47,7 +47,7 @@ jobs:
         run: npm run dist
         working-directory: desktop
         env:
-          DATABASE_URL: file:${{ github.workspace }}/api/prisma/dev.db
+          DATABASE_URL: file:../api/prisma/dev.db
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v4
@@ -79,7 +79,7 @@ jobs:
         run: npx prisma generate --schema=./prisma/schema.prisma
         working-directory: api
         env:
-          DATABASE_URL: file:${{ github.workspace }}/api/prisma/dev.db
+          DATABASE_URL: file:./prisma/dev.db
 
       - name: Install UI deps
         run: npm ci
@@ -93,7 +93,7 @@ jobs:
         run: npm run dist
         working-directory: desktop
         env:
-          DATABASE_URL: file:${{ github.workspace }}/api/prisma/dev.db
+          DATABASE_URL: file:../api/prisma/dev.db
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
