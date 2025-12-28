@@ -53,12 +53,19 @@ const parseLocalDate = (value?: string) => {
   return parsed ?? new Date(value);
 };
 
-const resolveOpeningBalance = async (date: Date, custom?: number | null) => {
+const resolveOpeningBalance = async (
+  date: Date,
+  custom?: number | null,
+  obraId?: number | null,
+) => {
   if (typeof custom === 'number' && Number.isFinite(custom)) {
     return custom;
   }
   const previous = await prisma.dailyCashRendition.findFirst({
-    where: { date: { lt: date } },
+    where: {
+      date: { lt: date },
+      ...(obraId ? { obraId } : {}),
+    },
     orderBy: { date: 'desc' },
   });
   return toPlainNumber(previous?.balance);
@@ -125,7 +132,11 @@ router.post('/admin/daily-cash', async (req, res) => {
   const expenses = data.expenses;
   const spent = expenses.reduce((acc, exp) => acc + exp.amount, 0);
   const personalContribution = data.personalContribution ?? 0;
-  const openingBalance = await resolveOpeningBalance(date, data.openingBalance ?? null);
+  const openingBalance = await resolveOpeningBalance(
+    date,
+    data.openingBalance ?? null,
+    data.obraId ?? null,
+  );
   const personalSpent = expenses.reduce((acc, exp) => {
     const personalAmount =
       typeof exp.personalAmount === 'number'

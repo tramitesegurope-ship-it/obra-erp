@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { GlobalSearchItem } from './layout/AppShell';
 import { MagnifyingGlassIcon } from './icons/MagnifyingGlassIcon';
 import { API_BASE } from '../lib/api';
+import { formatCurrency } from '../lib/formatters';
 
 type GlobalSearchProps = {
   items: GlobalSearchItem[];
@@ -53,14 +54,6 @@ type GlobalSearchResponse = {
     code: string | null;
     unit: string | null;
   }>;
-};
-
-const MONEY_FORMAT = { minimumFractionDigits: 2, maximumFractionDigits: 2 } as const;
-const formatMoney = (value?: number | null, currency?: string | null) => {
-  if (value === null || value === undefined) return '—';
-  const formatted = value.toLocaleString('es-PE', MONEY_FORMAT);
-  if (!currency || currency === 'PEN') return `S/ ${formatted}`;
-  return `${currency} ${formatted}`;
 };
 
 const formatDate = (value?: string) => {
@@ -215,7 +208,7 @@ export default function GlobalSearch({ items, onNavigate }: GlobalSearchProps) {
                             <p className="font-semibold text-slate-900">OC {order.orderNumber}</p>
                             <p className="text-xs text-slate-500">{order.supplierName}</p>
                             <p className="text-xs text-slate-500">
-                              {formatDate(order.issueDate)} · {formatMoney(order.total, order.currency)}
+                              {formatDate(order.issueDate)} · {formatCurrency(order.total, order.currency)}
                             </p>
                           </div>
                           <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-blue-700">
@@ -273,7 +266,7 @@ export default function GlobalSearch({ items, onNavigate }: GlobalSearchProps) {
                             <p className="text-xs text-slate-500">
                               {quotation.supplierName ?? 'Proveedor sin nombre'} · {quotation.status}
                             </p>
-                            <p className="text-xs text-slate-500">{formatMoney(quotation.totalAmount, quotation.currency)}</p>
+                            <p className="text-xs text-slate-500">{formatCurrency(quotation.totalAmount, quotation.currency)}</p>
                           </div>
                           <span className="rounded-md bg-purple-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700">
                             Cotización

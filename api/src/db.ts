@@ -11,6 +11,10 @@ const SQLITE_INDEXES = [
   'CREATE INDEX IF NOT EXISTS idx_purchase_order_supplier_name ON PurchaseOrderLog(supplierName)',
   'CREATE INDEX IF NOT EXISTS idx_employee_document_number ON Employee(documentNumber)',
   'CREATE INDEX IF NOT EXISTS idx_employee_phone ON Employee(phone)',
+  'CREATE INDEX IF NOT EXISTS idx_daily_cash_date ON DailyCashRendition(date)',
+  'CREATE INDEX IF NOT EXISTS idx_daily_cash_obra_date ON DailyCashRendition(obraId, date)',
+  'CREATE INDEX IF NOT EXISTS idx_partner_loan_date ON PartnerLoan(date)',
+  'CREATE INDEX IF NOT EXISTS idx_partner_loan_status_receiver ON PartnerLoan(status, receiverId)',
 ];
 
 export const ensureSqliteIndexes = async () => {
