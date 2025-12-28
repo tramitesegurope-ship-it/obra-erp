@@ -1,0 +1,86 @@
+name: Build Installers
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            api/package-lock.json
+            obra-erp-ui/package-lock.json
+            desktop/package-lock.json
+
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y libfuse2
+
+      - name: Install API deps
+        run: npm ci
+        working-directory: api
+
+      - name: Install UI deps
+        run: npm ci
+        working-directory: obra-erp-ui
+
+      - name: Install Desktop deps
+        run: npm ci
+        working-directory: desktop
+
+      - name: Build Linux installers
+        run: npm run dist
+        working-directory: desktop
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kosto-linux
+          path: desktop/dist/*
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            api/package-lock.json
+            obra-erp-ui/package-lock.json
+            desktop/package-lock.json
+
+      - name: Install API deps
+        run: npm ci
+        working-directory: api
+
+      - name: Install UI deps
+        run: npm ci
+        working-directory: obra-erp-ui
+
+      - name: Install Desktop deps
+        run: npm ci
+        working-directory: desktop
+
+      - name: Build Windows installer
+        run: npm run dist
+        working-directory: desktop
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: kosto-windows
+          path: desktop/dist/*
