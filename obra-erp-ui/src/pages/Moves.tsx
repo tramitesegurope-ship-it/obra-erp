@@ -641,9 +641,49 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
   ]);
 
   // Filtrado local
+  const moveSearchIndex = useMemo(() => {
+    const sourceRows = movesSearchResults ?? last;
+    const index = new Map<number, string>();
+    const pushNormalized = (bucket: string[], value?: string | number | null) => {
+      if (value === null || value === undefined) return;
+      const text =
+        typeof value === 'string'
+          ? value
+          : typeof value === 'number'
+            ? String(value)
+            : '';
+      const trimmed = text.trim();
+      if (trimmed) bucket.push(normalizeSearchValue(trimmed));
+    };
+    sourceRows.forEach(m => {
+      const mat = matById.get(m.materialId);
+      const values: string[] = [];
+      pushNormalized(values, mat?.name);
+      pushNormalized(values, mat?.code);
+      pushNormalized(values, m.note);
+      pushNormalized(values, m.docSerie);
+      pushNormalized(values, m.docNumero);
+      pushNormalized(values, m.type);
+      pushNormalized(values, m.responsible);
+      pushNormalized(values, m.id);
+      pushNormalized(values, m.materialId);
+      if (typeof m.proveedorId === 'number') {
+        pushNormalized(values, proveedorById.get(m.proveedorId) ?? `Proveedor ${m.proveedorId}`);
+      }
+      if (typeof m.obraId === 'number') {
+        pushNormalized(values, obraById.get(m.obraId) ?? `Obra ${m.obraId}`);
+      }
+      if (typeof m.frenteId === 'number') {
+        pushNormalized(values, frenteById.get(m.frenteId) ?? `Frente ${m.frenteId}`);
+      }
+      index.set(m.id, values.join('|'));
+    });
+    return { sourceRows, index };
+  }, [movesSearchResults, last, matById, proveedorById, obraById, frenteById]);
+
   const filtered = useMemo(() => {
     const from = filterRangeStart;
-    const sourceRows = movesSearchResults ?? last;
+    const { sourceRows, index } = moveSearchIndex;
     const normalizedQuery = normalizeSearchValue(materialQueryDebounced.trim());
 
     return sourceRows
@@ -655,40 +695,9 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
       })
       .filter(m => {
         if (!normalizedQuery) return true;
-        const mat = matById.get(m.materialId);
-        const values: string[] = [];
-        const push = (value?: string | number | null) => {
-          if (value === null || value === undefined) return;
-          const text =
-            typeof value === 'string'
-              ? value
-              : typeof value === 'number'
-                ? String(value)
-                : '';
-          const trimmed = text.trim();
-          if (trimmed) values.push(normalizeSearchValue(trimmed));
-        };
-        push(mat?.name);
-        push(mat?.code);
-        push(m.note);
-        push(m.docSerie);
-        push(m.docNumero);
-        push(m.type);
-        push(m.responsible);
-        push(m.id);
-        push(m.materialId);
-        if (typeof m.proveedorId === 'number') {
-          push(proveedorById.get(m.proveedorId) ?? `Proveedor ${m.proveedorId}`);
-        }
-        if (typeof m.obraId === 'number') {
-          push(obraById.get(m.obraId) ?? `Obra ${m.obraId}`);
-        }
-        if (typeof m.frenteId === 'number') {
-          push(frenteById.get(m.frenteId) ?? `Frente ${m.frenteId}`);
-        }
-        return values.some(value => value.includes(normalizedQuery));
+        return (index.get(m.id) ?? '').includes(normalizedQuery);
       });
-  }, [last, movesSearchResults, obraId, filterType, filterRangeStart, materialQueryDebounced, matById, proveedorById, obraById, frenteById]);
+  }, [moveSearchIndex, obraId, filterType, filterRangeStart, materialQueryDebounced]);
 
   const displayRows = useMemo(() => {
     if (!selectedMaterialId) return filtered;
