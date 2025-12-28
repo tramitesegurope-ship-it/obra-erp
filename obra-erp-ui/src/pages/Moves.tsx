@@ -1061,17 +1061,30 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
   }, [inventoryFiltered.length, inventoryPageSize]);
 
   const inventoryStats = useMemo(() => {
-    const total = inventoryFiltered.length;
-    const low = inventoryFiltered.filter(row => row.status === 'LOW').length;
-    const out = inventoryFiltered.filter(row => row.status === 'OUT').length;
-    const negative = inventoryFiltered.filter(row => row.status === 'NEGATIVE').length;
-    const assets = inventoryFiltered.filter(row => row.isCompanyAsset);
-    const assetsInWarehouse = assets.filter(row => row.assetStatus !== 'OUT_ON_FIELD').length;
-    const assetsOut = assets.filter(row => row.assetStatus === 'OUT_ON_FIELD').length;
-    const consumptionStock = inventoryFiltered
-      .filter(row => !row.isCompanyAsset)
-      .reduce((acc, row) => acc + row.disponible, 0);
-    return { total, low, out, negative, assetsInWarehouse, assetsOut, consumptionStock };
+    return inventoryFiltered.reduce(
+      (acc, row) => {
+        acc.total += 1;
+        if (row.status === 'LOW') acc.low += 1;
+        if (row.status === 'OUT') acc.out += 1;
+        if (row.status === 'NEGATIVE') acc.negative += 1;
+        if (row.isCompanyAsset) {
+          if (row.assetStatus === 'OUT_ON_FIELD') acc.assetsOut += 1;
+          else acc.assetsInWarehouse += 1;
+        } else {
+          acc.consumptionStock += row.disponible;
+        }
+        return acc;
+      },
+      {
+        total: 0,
+        low: 0,
+        out: 0,
+        negative: 0,
+        assetsInWarehouse: 0,
+        assetsOut: 0,
+        consumptionStock: 0,
+      },
+    );
   }, [inventoryFiltered]);
 
   const warehouseSearchResults = useMemo(() => {
