@@ -34,6 +34,15 @@ const PURCHASE_MOTIVES_KEY = 'obra-erp.purchaseMotives';
 const LEGACY_SIGNATURE_LEFT_KEY = 'obra-erp.purchaseSignatureLeft';
 const LEGACY_SIGNATURE_RIGHT_KEY = 'obra-erp.purchaseSignatureRight';
 
+const MONEY_FORMATTER = new Intl.NumberFormat('es-PE', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+const QUANTITY_FORMATTER = new Intl.NumberFormat('es-PE', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
 const todayInputDate = () => {
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -42,7 +51,7 @@ const todayInputDate = () => {
 
 const formatMoney = (value?: number | null, currency?: string) => {
   if (value === null || value === undefined || Number.isNaN(value)) return '—';
-  const formatted = value.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const formatted = MONEY_FORMATTER.format(value);
   return currency ? `${currency} ${formatted}` : formatted;
 };
 
@@ -73,7 +82,7 @@ const formatShortDate = (value?: string | null) => {
 };
 
 const formatQuantity = (value: number, unit?: string | null) => {
-  const formatted = value.toLocaleString('es-PE', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  const formatted = QUANTITY_FORMATTER.format(value);
   return unit ? `${formatted} ${unit}` : formatted;
 };
 

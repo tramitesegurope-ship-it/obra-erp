@@ -6,6 +6,7 @@ import type {
   PartnerLoanStatus,
   PartnerLoanSummary,
 } from '../lib/types';
+import { formatPEN } from '../lib/formatters';
 
 type LoanStatusFilter = 'ALL' | PartnerLoanStatus;
 
@@ -23,12 +24,7 @@ const formatISODate = (value: string | Date) => {
 const formatDisplayDate = (value: string) =>
   new Date(value).toLocaleDateString('es-PE', { timeZone: 'UTC' });
 
-const formatMoney = (amount: number) =>
-  new Intl.NumberFormat('es-PE', {
-    style: 'currency',
-    currency: 'PEN',
-    minimumFractionDigits: 2,
-  }).format(amount);
+const formatMoney = (amount: number) => formatPEN(amount);
 
 const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : String(error ?? 'Error inesperado');
@@ -60,6 +56,47 @@ export default function PartnerLedgerPage() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [loanPage, setLoanPage] = useState(1);
+  const [loanPageSize, setLoanPageSize] = useState(50);
+
+  useEffect(() => {
+    const raw = window.localStorage.getItem('obra-erp.partner-loans.filters');
+    if (!raw) return;
+    try {
+      const stored = JSON.parse(raw) as Partial<{
+        status: LoanStatusFilter;
+        from: string;
+        to: string;
+        loanPageSize: number;
+      }>;
+      if (stored.status) {
+        setFilters(prev => ({ ...prev, status: stored.status }));
+      }
+      if (typeof stored.from === 'string') {
+        setFilters(prev => ({ ...prev, from: stored.from }));
+      }
+      if (typeof stored.to === 'string') {
+        setFilters(prev => ({ ...prev, to: stored.to }));
+      }
+      if (typeof stored.loanPageSize === 'number' && stored.loanPageSize > 0) {
+        setLoanPageSize(stored.loanPageSize);
+      }
+    } catch {
+      // ignore malformed storage
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      'obra-erp.partner-loans.filters',
+      JSON.stringify({
+        status: filters.status,
+        from: filters.from,
+        to: filters.to,
+        loanPageSize,
+      }),
+    );
+  }, [filters.status, filters.from, filters.to, loanPageSize]);
 
   const partnerOptions = useMemo(
     () => partners.map(partner => ({ value: partner.id, label: partner.name })),
@@ -81,6 +118,17 @@ export default function PartnerLedgerPage() {
       return true;
     });
   }, [loans, filters]);
+
+  const loanTotalPages = Math.max(1, Math.ceil(filteredLoans.length / loanPageSize));
+  const safeLoanPage = Math.min(loanPage, loanTotalPages);
+  const pagedLoans = useMemo(() => {
+    const start = (safeLoanPage - 1) * loanPageSize;
+    return filteredLoans.slice(start, start + loanPageSize);
+  }, [filteredLoans, safeLoanPage, loanPageSize]);
+
+  useEffect(() => {
+    setLoanPage(1);
+  }, [filteredLoans.length, loanPageSize]);
 
   const loadPartners = async () => {
     try {
@@ -453,6 +501,41 @@ export default function PartnerLedgerPage() {
             </button>
           </div>
 
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+            <span>{filteredLoans.length} registros</span>
+            <div className="flex items-center gap-2">
+              <label className="flex items-center gap-1">
+                <span>Filas</span>
+                <select
+                  className="rounded border border-slate-300 px-2 py-1 text-xs"
+                  value={loanPageSize}
+                  onChange={event => setLoanPageSize(Number(event.target.value))}
+                >
+                  {[25, 50, 100, 200].map(size => (
+                    <option key={size} value={size}>{size}</option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50"
+                onClick={() => setLoanPage(prev => Math.max(1, prev - 1))}
+                disabled={safeLoanPage <= 1}
+              >
+                ←
+              </button>
+              <span>Página {safeLoanPage} de {loanTotalPages}</span>
+              <button
+                type="button"
+                className="rounded border border-slate-300 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50"
+                onClick={() => setLoanPage(prev => Math.min(loanTotalPages, prev + 1))}
+                disabled={safeLoanPage >= loanTotalPages}
+              >
+                →
+              </button>
+            </div>
+          </div>
+
           <div className="max-h-[420px] overflow-y-auto">
             <table className="min-w-full text-sm">
               <thead className="sticky top-0 bg-slate-100 text-xs uppercase tracking-wide text-slate-600">
@@ -468,7 +551,7 @@ export default function PartnerLedgerPage() {
                 </tr>
               </thead>
               <tbody>
-                {filteredLoans.map(loan => (
+                {pagedLoans.map(loan => (
                   <tr key={loan.id} className="border-b border-slate-100">
                     <td className="px-3 py-2 text-slate-600">{formatDisplayDate(loan.date)}</td>
                     <td className="px-3 py-2 text-slate-700">{loan.giver.name}</td>

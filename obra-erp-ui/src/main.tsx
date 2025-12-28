@@ -1,9 +1,10 @@
-import { StrictMode, useCallback, useEffect, useMemo, useState } from 'react';
+import { StrictMode, Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import './index.css';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import Admin from './pages/Admin';
-import FinanceDashboard from './pages/FinanceDashboard';
+
+const Admin = lazy(() => import('./pages/Admin'));
+const FinanceDashboard = lazy(() => import('./pages/FinanceDashboard'));
 
 const Shell = () => {
   const [route, setRoute] = useState(() => window.location.pathname || '/');
@@ -60,7 +61,9 @@ const Shell = () => {
           Finanzas
         </button>
       </nav>
-      {routes}
+      <Suspense fallback={<div className="p-4 text-sm text-slate-500">Cargando…</div>}>
+        {routes}
+      </Suspense>
     </div>
   );
 };

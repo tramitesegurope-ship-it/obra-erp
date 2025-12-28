@@ -33,7 +33,16 @@ router.get('/search/global', async (req, res) => {
             ],
           }
         : undefined,
-      include: { process: { select: { id: true, name: true, code: true } } },
+      select: {
+        id: true,
+        processId: true,
+        process: { select: { id: true, name: true, code: true } },
+        supplierName: true,
+        orderNumber: true,
+        issueDate: true,
+        currency: true,
+        total: true,
+      },
       orderBy: hasTerm ? { issueDate: 'desc' } : { createdAt: 'desc' },
       take: limit,
     }),
@@ -47,6 +56,12 @@ router.get('/search/global', async (req, res) => {
             ],
           }
         : undefined,
+      select: {
+        id: true,
+        name: true,
+        ruc: true,
+        phone: true,
+      },
       orderBy: hasTerm ? { name: 'asc' } : { id: 'desc' },
       take: limit,
     }),
@@ -60,9 +75,16 @@ router.get('/search/global', async (req, res) => {
             ],
           }
         : undefined,
-      include: {
+      select: {
+        id: true,
+        processId: true,
         process: { select: { id: true, name: true, code: true } },
         proveedor: { select: { name: true } },
+        supplierName: true,
+        status: true,
+        currency: true,
+        totalAmountPen: true,
+        totalAmount: true,
       },
       orderBy: hasTerm ? { updatedAt: 'desc' } : { createdAt: 'desc' },
       take: limit,
@@ -78,6 +100,16 @@ router.get('/search/global', async (req, res) => {
             ],
           }
         : undefined,
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        area: true,
+        phone: true,
+        documentNumber: true,
+        accountNumber: true,
+        cci: true,
+      },
       orderBy: hasTerm ? { updatedAt: 'desc' } : { lastName: 'asc' },
       take: limit,
     }),
@@ -90,6 +122,12 @@ router.get('/search/global', async (req, res) => {
             ],
           }
         : undefined,
+      select: {
+        id: true,
+        name: true,
+        code: true,
+        unit: true,
+      },
       orderBy: hasTerm ? { name: 'asc' } : { id: 'desc' },
       take: limit,
     }),

@@ -88,15 +88,30 @@ router.get('/partners/internal/loans', async (req, res) => {
   const loans = await prisma.partnerLoan.findMany({
     where,
     orderBy: { date: 'desc' },
-    include: {
-      giver: true,
-      receiver: true,
+    select: {
+      id: true,
+      date: true,
+      amount: true,
+      note: true,
+      status: true,
+      financeRefs: true,
+      closeDate: true,
+      createdAt: true,
+      updatedAt: true,
+      giverId: true,
+      receiverId: true,
+      giver: { select: { id: true, name: true } },
+      receiver: { select: { id: true, name: true } },
     },
   });
 
   const pending = await prisma.partnerLoan.findMany({
     where: { status: PartnerLoanStatus.PENDING },
-    include: { receiver: true },
+    select: {
+      receiverId: true,
+      amount: true,
+      receiver: { select: { name: true } },
+    },
   });
 
   const pendingAccumulator = pending.reduce((acc, loan) => {

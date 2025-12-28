@@ -1,7 +1,7 @@
 // api/src/server.ts
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import prisma from './db';
+import prisma, { ensureSqliteIndexes } from './db';
 
 // Routers (cada uno exporta un Router con rutas como /materials, /moves, etc.)
 import obras from './routes/obras';
@@ -97,7 +97,11 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 const PORT = Number(process.env.PORT) || 4000;
-app.listen(PORT, () => console.log(`API ready on :${PORT}`));
+ensureSqliteIndexes()
+  .catch(error => console.warn('No se pudieron crear índices locales:', error))
+  .finally(() => {
+    app.listen(PORT, () => console.log(`API ready on :${PORT}`));
+  });
 
 // Cierre limpio de Prisma
 process.on('SIGINT', async () => { await prisma.$disconnect(); process.exit(0); });

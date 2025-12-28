@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import api, { adminApi, type DailyCashPayload } from '../lib/api';
+import { formatPEN } from '../lib/formatters';
 import type { DailyCashExpense, DailyCashRendition, Obra } from '../lib/types';
 import { useDeleteAuth } from '../hooks/useDeleteAuth';
 
@@ -9,8 +10,7 @@ const todayInput = () => {
   return now.toISOString().slice(0, 10);
 };
 
-const formatMoney = (value: number) =>
-  new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(value);
+const formatMoney = (value: number) => formatPEN(value);
 
 const getPersonalAmount = (expense: DailyCashExpense) => {
   const value = Number(expense.personalAmount ?? 0);
@@ -61,6 +61,8 @@ export default function DailyCashPage() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [alert, setAlert] = useState<string | null>(null);
+  const [renditionPage, setRenditionPage] = useState(1);
+  const [renditionPageSize, setRenditionPageSize] = useState(50);
   const deleteUnlocked = useDeleteAuth();
   const ensureDeleteUnlocked = () => {
     if (!deleteUnlocked) {
@@ -146,6 +148,48 @@ export default function DailyCashPage() {
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    const raw = window.localStorage.getItem('obra-erp.daily-cash.filters');
+    if (!raw) return;
+    try {
+      const stored = JSON.parse(raw) as Partial<{
+        filterObraId: number | '';
+        filterFrom: string;
+        filterTo: string;
+        renditionPageSize: number;
+      }>;
+      if (stored.filterObraId !== undefined) setFilterObraId(stored.filterObraId);
+      if (typeof stored.filterFrom === 'string') setFilterFrom(stored.filterFrom);
+      if (typeof stored.filterTo === 'string') setFilterTo(stored.filterTo);
+      if (typeof stored.renditionPageSize === 'number' && stored.renditionPageSize > 0) {
+        setRenditionPageSize(stored.renditionPageSize);
+      }
+    } catch {
+      // ignore malformed storage
+    }
+  }, []);
+
+  useEffect(() => {
+    const payload = {
+      filterObraId,
+      filterFrom,
+      filterTo,
+      renditionPageSize,
+    };
+    window.localStorage.setItem('obra-erp.daily-cash.filters', JSON.stringify(payload));
+  }, [filterObraId, filterFrom, filterTo, renditionPageSize]);
+
+  const renditionTotalPages = Math.max(1, Math.ceil(items.length / renditionPageSize));
+  const safeRenditionPage = Math.min(renditionPage, renditionTotalPages);
+  const pagedItems = useMemo(() => {
+    const start = (safeRenditionPage - 1) * renditionPageSize;
+    return items.slice(start, start + renditionPageSize);
+  }, [items, safeRenditionPage, renditionPageSize]);
+
+  useEffect(() => {
+    setRenditionPage(1);
+  }, [items.length, renditionPageSize]);
 
   const summary = useMemo(() => {
     if (items.length === 0) {
@@ -756,6 +800,41 @@ export default function DailyCashPage() {
             </div>
           </div>
 
+          <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+            <span>{items.length} rendiciones</span>
+            <div className="flex items-center gap-2">
+              <label className="flex items-center gap-1">
+                <span>Filas</span>
+                <select
+                  className="admin-input h-7 px-2 py-0 text-xs"
+                  value={renditionPageSize}
+                  onChange={event => setRenditionPageSize(Number(event.target.value))}
+                >
+                  {[25, 50, 100, 200].map(size => (
+                    <option key={size} value={size}>{size}</option>
+                  ))}
+                </select>
+              </label>
+              <button
+                type="button"
+                className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+                onClick={() => setRenditionPage(prev => Math.max(1, prev - 1))}
+                disabled={safeRenditionPage <= 1}
+              >
+                ←
+              </button>
+              <span>Página {safeRenditionPage} de {renditionTotalPages}</span>
+              <button
+                type="button"
+                className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+                onClick={() => setRenditionPage(prev => Math.min(renditionTotalPages, prev + 1))}
+                disabled={safeRenditionPage >= renditionTotalPages}
+              >
+                →
+              </button>
+            </div>
+          </div>
+
           <div className="table-shell overflow-hidden rounded-xl border border-slate-200">
             <table className="w-full border-collapse text-sm">
               <thead>
@@ -776,7 +855,7 @@ export default function DailyCashPage() {
                 ) : items.length === 0 ? (
                   <tr><td colSpan={8} className="px-3 py-4 text-center text-slate-500">Sin rendiciones en el rango seleccionado.</td></tr>
                 ) : (
-                  items.map(item => {
+                  pagedItems.map(item => {
                     const personalContribution = Number(item.personalContribution ?? 0);
                     const personalSpent =
                       item.expenses?.reduce((acc, exp) => acc + getPersonalAmount(exp), 0) ?? 0;

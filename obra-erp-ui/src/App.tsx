@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import MovesPage from './pages/Moves';
-import AdminPage from './pages/Admin';
-import PersonnelPage from './pages/Personnel';
-import PartnerLedgerPage from './pages/PartnerLedger';
-import DailyCashPage from './pages/DailyCash';
-import SecurityPage from './pages/Security';
-import QuotationsPage from './pages/Quotations';
-import FoodCostingPage from './pages/FoodCosting';
-import DashboardPage from './pages/Dashboard';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import AppShell, { type GlobalSearchItem } from './components/layout/AppShell';
+
+const DashboardPage = lazy(() => import('./pages/Dashboard'));
+const PersonnelPage = lazy(() => import('./pages/Personnel'));
+const MovesPage = lazy(() => import('./pages/Moves'));
+const AdminPage = lazy(() => import('./pages/Admin'));
+const QuotationsPage = lazy(() => import('./pages/Quotations'));
+const DailyCashPage = lazy(() => import('./pages/DailyCash'));
+const PartnerLedgerPage = lazy(() => import('./pages/PartnerLedger'));
+const SecurityPage = lazy(() => import('./pages/Security'));
+const FoodCostingPage = lazy(() => import('./pages/FoodCosting'));
 
 type ViewKey =
   | 'dashboard'
@@ -34,7 +35,14 @@ const NAV_ITEMS: Array<{ key: ViewKey; label: string; description: string; keywo
 ];
 
 export default function App() {
-  const [view, setView] = useState<ViewKey>('dashboard');
+  const [view, setView] = useState<ViewKey>(() => {
+    const stored = window.localStorage.getItem('obra-erp.view');
+    return (stored as ViewKey) || 'dashboard';
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('obra-erp.view', view);
+  }, [view]);
 
   const quickActions: GlobalSearchItem[] = [
     {
@@ -90,15 +98,17 @@ export default function App() {
 
   return (
     <AppShell navItems={NAV_ITEMS} active={view} onNavigate={setView} searchItems={searchItems}>
-      {view === 'dashboard' && <DashboardPage />}
-      {view === 'personnel' && <PersonnelPage />}
-      {view === 'moves' && <MovesPage />}
-      {view === 'admin' && <AdminPage />}
-      {view === 'quotations' && <QuotationsPage />}
-      {view === 'dailyCash' && <DailyCashPage />}
-      {view === 'partners' && <PartnerLedgerPage />}
-      {view === 'security' && <SecurityPage />}
-      {view === 'food' && <FoodCostingPage />}
+      <Suspense fallback={<div className="p-6 text-sm text-slate-500">Cargando módulo…</div>}>
+        {view === 'dashboard' && <DashboardPage />}
+        {view === 'personnel' && <PersonnelPage />}
+        {view === 'moves' && <MovesPage />}
+        {view === 'admin' && <AdminPage />}
+        {view === 'quotations' && <QuotationsPage />}
+        {view === 'dailyCash' && <DailyCashPage />}
+        {view === 'partners' && <PartnerLedgerPage />}
+        {view === 'security' && <SecurityPage />}
+        {view === 'food' && <FoodCostingPage />}
+      </Suspense>
     </AppShell>
   );
 }

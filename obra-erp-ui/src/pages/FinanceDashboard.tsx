@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { financeApi } from '../lib/api';
 import type { FinanceBudgetResponse, FinancePerformanceResponse } from '../lib/api';
+import { formatNumber, formatPEN } from '../lib/formatters';
 
 type TabKey = 'summary' | 'items' | 'costs' | 'performance';
 
@@ -14,8 +15,6 @@ const FinanceDashboard = () => {
   const [perfError, setPerfError] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string>('');
   const [tab, setTab] = useState<TabKey>('summary');
-  const formatCurrency = (value?: number | null) =>
-    Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(value ?? 0);
 
   const exportPerformanceCsv = () => {
     if (!performance) return;
@@ -143,7 +142,7 @@ const FinanceDashboard = () => {
           {data ? (
             <span>
               {data.summary.overall.count} partidas • Contractual{' '}
-              {Intl.NumberFormat('es-PE').format(data.summary.overall.contractual ?? 0)}
+              {formatNumber(data.summary.overall.contractual ?? 0)}
             </span>
           ) : (
             'Sin datos'
@@ -213,22 +212,22 @@ const FinanceDashboard = () => {
                 <div>
                   <dt>Contractual</dt>
                   <dd className="font-semibold text-slate-700">
-                    {Intl.NumberFormat('es-PE').format(group.contractual ?? 0)}
+                    {formatNumber(group.contractual ?? 0)}
                   </dd>
                 </div>
                 <div>
                   <dt>Metrado</dt>
                   <dd className="font-semibold text-slate-700">
-                    {Intl.NumberFormat('es-PE').format(group.metrado ?? 0)}
+                    {formatNumber(group.metrado ?? 0)}
                   </dd>
                 </div>
                 <div>
                   <dt>Mayores</dt>
-                  <dd>{Intl.NumberFormat('es-PE').format(group.additions ?? 0)}</dd>
+                  <dd>{formatNumber(group.additions ?? 0)}</dd>
                 </div>
                 <div>
                   <dt>Deductivos</dt>
-                  <dd>{Intl.NumberFormat('es-PE').format(group.deductions ?? 0)}</dd>
+                  <dd>{formatNumber(group.deductions ?? 0)}</dd>
                 </div>
               </dl>
             </div>
@@ -294,18 +293,16 @@ const FinanceDashboard = () => {
                     <td className="px-3 py-2 font-semibold text-slate-700">{entry.description}</td>
                     <td className="px-3 py-2 text-right text-slate-700">{entry.executedQty ?? '—'}</td>
                     <td className="px-3 py-2 text-right text-slate-700">
-                      {Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(entry.materialsCost ?? 0)}
+                      {formatPEN(entry.materialsCost ?? 0)}
                     </td>
                     <td className="px-3 py-2 text-right text-slate-700">
-                      {Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(entry.laborCost ?? 0)}
+                      {formatPEN(entry.laborCost ?? 0)}
                     </td>
                     <td className="px-3 py-2 text-right text-slate-700">
-                      {Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(
-                        (entry.indirectFixed ?? 0) + (entry.indirectVariable ?? 0),
-                      )}
+                      {formatPEN((entry.indirectFixed ?? 0) + (entry.indirectVariable ?? 0))}
                     </td>
                     <td className="px-3 py-2 text-right font-semibold text-slate-900">
-                      {Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN' }).format(entry.totalCost ?? 0)}
+                      {formatPEN(entry.totalCost ?? 0)}
                     </td>
                   </tr>
                 ))}
@@ -341,19 +338,19 @@ const FinanceDashboard = () => {
                 <div>
                   <dt className="text-slate-500">Cantidad ejecutada</dt>
                   <dd className="text-lg font-semibold text-slate-900">
-                    {Intl.NumberFormat('es-PE').format(performance.overall.executedQty ?? 0)}
+                    {formatNumber(performance.overall.executedQty ?? 0)}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-slate-500">Costo real</dt>
                   <dd className="text-lg font-semibold text-slate-900">
-                    {formatCurrency(performance.overall.totalReal)}
+                    {formatPEN(performance.overall.totalReal)}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-slate-500">Presupuesto</dt>
                   <dd className="text-lg font-semibold text-slate-900">
-                    {formatCurrency(performance.overall.totalBudget)}
+                    {formatPEN(performance.overall.totalBudget)}
                   </dd>
                 </div>
                 <div>
@@ -372,7 +369,7 @@ const FinanceDashboard = () => {
                     }`}
                   >
                     {performance.overall.variance !== null
-                      ? formatCurrency(performance.overall.variance)
+                      ? formatPEN(performance.overall.variance)
                       : '—'}
                   </dd>
                 </div>
@@ -384,7 +381,7 @@ const FinanceDashboard = () => {
                 {categoryEntries.map(([category, value]) => (
                   <div key={category} className="flex items-center justify-between border-b border-slate-100 py-1">
                     <span className="text-slate-600 capitalize">{category}</span>
-                    <span className="font-semibold text-slate-900">{formatCurrency(value)}</span>
+                    <span className="font-semibold text-slate-900">{formatPEN(value)}</span>
                   </div>
                 ))}
                 {!categoryEntries.length && (
@@ -432,23 +429,23 @@ const FinanceDashboard = () => {
                           : '—'}
                       </td>
                       <td className="px-3 py-2 text-right text-slate-700">
-                        {item.puBudget ? formatCurrency(item.puBudget) : '—'}
+                        {item.puBudget ? formatPEN(item.puBudget) : '—'}
                       </td>
                       <td className="px-3 py-2 text-right text-slate-700">
-                        {item.puReal ? formatCurrency(item.puReal) : '—'}
+                        {item.puReal ? formatPEN(item.puReal) : '—'}
                       </td>
                       <td
                         className={`px-3 py-2 text-right font-semibold ${
                           (item.variance ?? 0) > 0 ? 'text-rose-600' : 'text-emerald-600'
                         }`}
                       >
-                        {item.variance !== null ? formatCurrency(item.variance) : '—'}
+                        {item.variance !== null ? formatPEN(item.variance) : '—'}
                       </td>
                       <td className="px-3 py-2 text-right text-slate-600">
-                        {formatCurrency(item.costBreakdown?.labor)}
+                        {formatPEN(item.costBreakdown?.labor)}
                       </td>
                       <td className="px-3 py-2 text-right text-slate-600">
-                        {formatCurrency(item.costBreakdown?.materials)}
+                        {formatPEN(item.costBreakdown?.materials)}
                       </td>
                       <td className="px-3 py-2 text-right">
                         <span
@@ -490,9 +487,9 @@ const FinanceDashboard = () => {
                       <tr key={row.tramo} className="border-t border-slate-100">
                         <td className="px-3 py-2 font-semibold text-slate-800">{row.tramo}</td>
                         <td className="px-3 py-2 text-right text-slate-700">{row.executedQty}</td>
-                        <td className="px-3 py-2 text-right text-slate-700">{formatCurrency(row.totalReal)}</td>
+                        <td className="px-3 py-2 text-right text-slate-700">{formatPEN(row.totalReal)}</td>
                         <td className="px-3 py-2 text-right text-slate-900">
-                          {row.puReal ? formatCurrency(row.puReal) : '—'}
+                          {row.puReal ? formatPEN(row.puReal) : '—'}
                         </td>
                       </tr>
                     ))}

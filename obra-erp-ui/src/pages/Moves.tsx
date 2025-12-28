@@ -17,6 +17,7 @@ import type {
 } from '../lib/types';
 import { SearchableSelect } from '../components/SearchableSelect';
 import { useDeleteAuth } from '../hooks/useDeleteAuth';
+import { formatDecimal, formatPEN } from '../lib/formatters';
 
 
 type Opt = { value: number; label: string };
@@ -265,8 +266,7 @@ const normalizeSearchValue = (value: string) =>
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
 
-const fmtMoney = (value: number) =>
-  new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN', minimumFractionDigits: 2 }).format(value);
+const fmtMoney = (value: number) => formatPEN(value);
 
 const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : String(error);
@@ -320,6 +320,7 @@ export default function MovesPage() {
   const [inventoryShowLowOnly, setInventoryShowLowOnly] = useState(false);
   const [inventoryTypeFilter, setInventoryTypeFilter] = useState<'ALL' | 'ASSETS' | 'CONSUMPTION'>('ALL');
   const [inventoryQuery, setInventoryQuery] = useState('');
+  const [inventoryQueryDebounced, setInventoryQueryDebounced] = useState('');
   const [inventoryAlert, setInventoryAlert] = useState<string | null>(null);
   const [selectedInventoryMaterialId, setSelectedInventoryMaterialId] = useState<number | null>(null);
   const [materialDetailSaving, setMaterialDetailSaving] = useState(false);
@@ -361,12 +362,17 @@ export default function MovesPage() {
 const [filterType, setFilterType] = useState<'ALL'|'IN'|'OUT'>('ALL');
 const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL');
   const [materialQuery, setMaterialQuery] = useState<string>('');
+  const [materialQueryDebounced, setMaterialQueryDebounced] = useState('');
   const [movesSearchResults, setMovesSearchResults] = useState<Move[] | null>(null);
   const [movesSearching, setMovesSearching] = useState(false);
   const [movesSearchError, setMovesSearchError] = useState<string | null>(null);
   const [movesSearchReloadKey, setMovesSearchReloadKey] = useState(0);
   const [warehouseSearch, setWarehouseSearch] = useState('');
   const [warehouseSearchFocused, setWarehouseSearchFocused] = useState(false);
+  const [movesPage, setMovesPage] = useState(1);
+  const [movesPageSize, setMovesPageSize] = useState(50);
+  const [inventoryPage, setInventoryPage] = useState(1);
+  const [inventoryPageSize, setInventoryPageSize] = useState(50);
 
   // disponible del material en obra
   const [disponible, setDisponible] = useState<number | null>(null);
@@ -562,11 +568,83 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
     return null;
   }, [filterRange]);
 
+  useEffect(() => {
+    const handler = window.setTimeout(() => setMaterialQueryDebounced(materialQuery), 250);
+    return () => window.clearTimeout(handler);
+  }, [materialQuery]);
+
+  useEffect(() => {
+    const handler = window.setTimeout(() => setInventoryQueryDebounced(inventoryQuery), 250);
+    return () => window.clearTimeout(handler);
+  }, [inventoryQuery]);
+
+  useEffect(() => {
+    const raw = window.localStorage.getItem('obra-erp.moves.filters');
+    if (!raw) return;
+    try {
+      const stored = JSON.parse(raw) as Partial<{
+        filterType: 'ALL' | 'IN' | 'OUT';
+        filterRange: 'DAY' | 'WEEK' | 'MONTH' | 'ALL';
+        materialQuery: string;
+        viewMode: 'MOVES' | 'INVENTORY';
+        inventoryGroupFilter: number | 'ALL' | 'UNGROUPED';
+        inventoryShowLowOnly: boolean;
+        inventoryTypeFilter: 'ALL' | 'ASSETS' | 'CONSUMPTION';
+        inventoryQuery: string;
+        movesPageSize: number;
+        inventoryPageSize: number;
+      }>;
+      if (stored.filterType) setFilterType(stored.filterType);
+      if (stored.filterRange) setFilterRange(stored.filterRange);
+      if (typeof stored.materialQuery === 'string') setMaterialQuery(stored.materialQuery);
+      if (stored.viewMode) setViewMode(stored.viewMode);
+      if (stored.inventoryGroupFilter !== undefined) setInventoryGroupFilter(stored.inventoryGroupFilter);
+      if (typeof stored.inventoryShowLowOnly === 'boolean') setInventoryShowLowOnly(stored.inventoryShowLowOnly);
+      if (stored.inventoryTypeFilter) setInventoryTypeFilter(stored.inventoryTypeFilter);
+      if (typeof stored.inventoryQuery === 'string') setInventoryQuery(stored.inventoryQuery);
+      if (typeof stored.movesPageSize === 'number' && stored.movesPageSize > 0) {
+        setMovesPageSize(stored.movesPageSize);
+      }
+      if (typeof stored.inventoryPageSize === 'number' && stored.inventoryPageSize > 0) {
+        setInventoryPageSize(stored.inventoryPageSize);
+      }
+    } catch {
+      // ignore malformed storage
+    }
+  }, []);
+
+  useEffect(() => {
+    const payload = {
+      filterType,
+      filterRange,
+      materialQuery,
+      viewMode,
+      inventoryGroupFilter,
+      inventoryShowLowOnly,
+      inventoryTypeFilter,
+      inventoryQuery,
+      movesPageSize,
+      inventoryPageSize,
+    };
+    window.localStorage.setItem('obra-erp.moves.filters', JSON.stringify(payload));
+  }, [
+    filterType,
+    filterRange,
+    materialQuery,
+    viewMode,
+    inventoryGroupFilter,
+    inventoryShowLowOnly,
+    inventoryTypeFilter,
+    inventoryQuery,
+    movesPageSize,
+    inventoryPageSize,
+  ]);
+
   // Filtrado local
   const filtered = useMemo(() => {
     const from = filterRangeStart;
     const sourceRows = movesSearchResults ?? last;
-    const normalizedQuery = normalizeSearchValue(materialQuery.trim());
+    const normalizedQuery = normalizeSearchValue(materialQueryDebounced.trim());
 
     return sourceRows
       .filter(m => (!obraId || m.obraId === obraId))
@@ -610,12 +688,23 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
         }
         return values.some(value => value.includes(normalizedQuery));
       });
-  }, [last, movesSearchResults, obraId, filterType, filterRangeStart, materialQuery, matById, proveedorById, obraById, frenteById]);
+  }, [last, movesSearchResults, obraId, filterType, filterRangeStart, materialQueryDebounced, matById, proveedorById, obraById, frenteById]);
 
   const displayRows = useMemo(() => {
     if (!selectedMaterialId) return filtered;
     return filtered.filter(row => row.materialId === selectedMaterialId);
   }, [filtered, selectedMaterialId]);
+
+  const movesTotalPages = Math.max(1, Math.ceil(displayRows.length / movesPageSize));
+  const safeMovesPage = Math.min(movesPage, movesTotalPages);
+  const movesPageRows = useMemo(() => {
+    const start = (safeMovesPage - 1) * movesPageSize;
+    return displayRows.slice(start, start + movesPageSize);
+  }, [displayRows, safeMovesPage, movesPageSize]);
+
+  useEffect(() => {
+    setMovesPage(1);
+  }, [displayRows.length, movesPageSize]);
 
   const totalsByMaterial = useMemo(() => {
     const acc = new Map<number, { inU: number; outU: number; saldo: number }>();
@@ -667,8 +756,7 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
-    const formatUnits = (value: number) =>
-      new Intl.NumberFormat('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    const formatUnits = (value: number) => formatDecimal(value);
 
     const rangeLabel =
       filterRange === 'DAY'
@@ -907,7 +995,7 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
   ]);
 
   const inventoryFiltered = useMemo<InventoryViewRow[]>(() => {
-    const query = normalizeSearchValue(inventoryQuery.trim());
+    const query = normalizeSearchValue(inventoryQueryDebounced.trim());
     return inventoryRows
       .filter(row => {
         if (inventoryTypeFilter === 'ALL') return true;
@@ -950,7 +1038,18 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
         };
       })
       .sort((a, b) => a.name?.localeCompare(b.name ?? '') ?? 0);
-  }, [inventoryRows, inventoryGroupFilter, inventoryShowLowOnly, inventoryQuery, buildGroupPath, belongsToGroup, inventoryTypeFilter]);
+  }, [inventoryRows, inventoryGroupFilter, inventoryShowLowOnly, inventoryQueryDebounced, buildGroupPath, belongsToGroup, inventoryTypeFilter]);
+
+  const inventoryTotalPages = Math.max(1, Math.ceil(inventoryFiltered.length / inventoryPageSize));
+  const safeInventoryPage = Math.min(inventoryPage, inventoryTotalPages);
+  const inventoryPageRows = useMemo(() => {
+    const start = (safeInventoryPage - 1) * inventoryPageSize;
+    return inventoryFiltered.slice(start, start + inventoryPageSize);
+  }, [inventoryFiltered, safeInventoryPage, inventoryPageSize]);
+
+  useEffect(() => {
+    setInventoryPage(1);
+  }, [inventoryFiltered.length, inventoryPageSize]);
 
   const inventoryStats = useMemo(() => {
     const total = inventoryFiltered.length;
@@ -1101,7 +1200,7 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
   }, [obraId, filterType, filterRange, materialQuery]);
 
   useEffect(() => {
-    const trimmed = materialQuery.trim();
+    const trimmed = materialQueryDebounced.trim();
     if (trimmed.length < 2) {
       setMovesSearchResults(null);
       setMovesSearchError(null);
@@ -1136,7 +1235,7 @@ const [filterRange, setFilterRange] = useState<'DAY'|'WEEK'|'MONTH'|'ALL'>('ALL'
     return () => {
       cancelled = true;
     };
-  }, [materialQuery, obraId, filterType, filterRangeStart, movesSearchReloadKey]);
+  }, [materialQueryDebounced, obraId, filterType, filterRangeStart, movesSearchReloadKey]);
 
   useEffect(() => {
     loadInventorySnapshot();
@@ -2077,7 +2176,39 @@ useEffect(() => {
           <div className="card">
             <div className="mb-3 flex items-center justify-between border-b border-slate-200 pb-2">
               <h2 className="text-lg font-semibold text-slate-700">Stock por material</h2>
-              <span className="text-xs text-slate-500">{inventoryFiltered.length} registros</span>
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                <span>{inventoryFiltered.length} registros</span>
+                <span>·</span>
+                <label className="flex items-center gap-1">
+                  <span>Filas</span>
+                  <select
+                    className="admin-input h-7 px-2 py-0 text-xs"
+                    value={inventoryPageSize}
+                    onChange={event => setInventoryPageSize(Number(event.target.value))}
+                  >
+                    {[25, 50, 100, 200].map(size => (
+                      <option key={size} value={size}>{size}</option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+                  onClick={() => setInventoryPage(prev => Math.max(1, prev - 1))}
+                  disabled={safeInventoryPage <= 1}
+                >
+                  ←
+                </button>
+                <span>Página {safeInventoryPage} de {inventoryTotalPages}</span>
+                <button
+                  type="button"
+                  className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+                  onClick={() => setInventoryPage(prev => Math.min(inventoryTotalPages, prev + 1))}
+                  disabled={safeInventoryPage >= inventoryTotalPages}
+                >
+                  →
+                </button>
+              </div>
             </div>
             <div className="table-shell">
               <table className="w-full text-sm">
@@ -2103,7 +2234,7 @@ useEffect(() => {
                       <td colSpan={8} className="py-4 text-center text-slate-500">Sin materiales en el filtro seleccionado.</td>
                     </tr>
                   ) : (
-                    inventoryFiltered.map(row => {
+                    inventoryPageRows.map(row => {
                       const isSelected = selectedInventoryMaterialId === row.materialId;
                       const {
                         displayName,
@@ -2773,6 +2904,40 @@ useEffect(() => {
       </div>
 
       <h2 className="subtitle">Últimos movimientos</h2>
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+        <span>{displayRows.length} registros</span>
+        <div className="flex items-center gap-2">
+          <label className="flex items-center gap-1">
+            <span>Filas</span>
+            <select
+              className="admin-input h-7 px-2 py-0 text-xs"
+              value={movesPageSize}
+              onChange={event => setMovesPageSize(Number(event.target.value))}
+            >
+              {[25, 50, 100, 200].map(size => (
+                <option key={size} value={size}>{size}</option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+            onClick={() => setMovesPage(prev => Math.max(1, prev - 1))}
+            disabled={safeMovesPage <= 1}
+          >
+            ←
+          </button>
+          <span>Página {safeMovesPage} de {movesTotalPages}</span>
+          <button
+            type="button"
+            className="admin-button admin-button--ghost h-7 px-2 py-0 text-xs"
+            onClick={() => setMovesPage(prev => Math.min(movesTotalPages, prev + 1))}
+            disabled={safeMovesPage >= movesTotalPages}
+          >
+            →
+          </button>
+        </div>
+      </div>
       {/* Tabla principal de movimientos — estilos en index.css bajo “Tabla ‘Últimos movimientos’” */}
       <div className="table-shell">
         <div className="table card">
@@ -2794,7 +2959,7 @@ useEffect(() => {
             <div>Acciones</div>
           </div>
 
-          {displayRows.map((m) => {
+          {movesPageRows.map((m) => {
             const isEditing = editMode && editingId === m.id;
             const isSelected = !editMode && selectedMaterialId === m.materialId;
 
