@@ -30,8 +30,10 @@ jobs:
         working-directory: api
 
       - name: Generate Prisma client
-        run: npx prisma generate
+        run: npx prisma generate --schema=./prisma/schema.prisma
         working-directory: api
+        env:
+          DATABASE_URL: file:./prisma/dev.db
 
       - name: Install UI deps
         run: npm ci
@@ -72,8 +74,10 @@ jobs:
         working-directory: api
 
       - name: Generate Prisma client
-        run: npx prisma generate
+        run: npx prisma generate --schema=./prisma/schema.prisma
         working-directory: api
+        env:
+          DATABASE_URL: file:./prisma/dev.db
 
       - name: Install UI deps
         run: npm ci
