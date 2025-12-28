@@ -2233,7 +2233,7 @@ useEffect(() => {
               </div>
             </div>
             <div className="table-shell">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[980px] text-sm">
                 <thead className="text-slate-500">
                   <tr>
                     <th className="text-left">Material</th>
@@ -2354,7 +2354,7 @@ useEffect(() => {
                     ))}
                   </select>
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="flex flex-col gap-1">
                     <span className="text-xs text-slate-500">Stock mínimo</span>
                     <input

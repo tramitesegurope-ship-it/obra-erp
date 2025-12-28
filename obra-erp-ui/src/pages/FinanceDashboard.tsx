@@ -250,7 +250,7 @@ const FinanceDashboard = () => {
       {!loading && data && tab === 'items' && (
         <div className="rounded-md border border-slate-200 bg-white shadow-sm">
           <div className="max-h-[480px] overflow-auto">
-            <table className="min-w-full text-sm">
+            <table className="w-full min-w-[720px] text-sm">
               <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                 <tr>
                   <th className="px-3 py-2 text-left">Código</th>
@@ -284,7 +284,7 @@ const FinanceDashboard = () => {
         <div className="space-y-2 rounded-md border border-slate-200 bg-white p-4 shadow-sm">
           <div className="text-xs text-slate-500">Actualizado: {new Date(costReport.generatedAt).toLocaleString()}</div>
           <div className="max-h-[480px] overflow-auto">
-            <table className="min-w-full text-sm">
+            <table className="w-full min-w-[900px] text-sm">
               <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                 <tr>
                   <th className="px-3 py-2 text-left">Fecha</th>
@@ -405,7 +405,7 @@ const FinanceDashboard = () => {
 
           <div className="rounded-md border border-slate-200 bg-white shadow-sm">
             <div className="max-h-[520px] overflow-auto">
-              <table className="min-w-full text-sm">
+              <table className="w-full min-w-[840px] text-sm">
                 <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                   <tr>
                     <th className="px-3 py-2 text-left">Partida</th>
@@ -485,7 +485,7 @@ const FinanceDashboard = () => {
             <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
               <h4 className="text-base font-semibold text-slate-800">PU real por tramo</h4>
               <div className="mt-3 max-h-[320px] overflow-auto">
-                <table className="min-w-full text-sm">
+                <table className="w-full min-w-[720px] text-sm">
                   <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                     <tr>
                       <th className="px-3 py-2 text-left">Tramo / Hoja</th>

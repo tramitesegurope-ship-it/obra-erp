@@ -1136,7 +1136,7 @@ function IngredientsTab({
           </button>
         </div>
         <div className="max-h-[480px] overflow-auto border border-slate-100">
-          <table className="min-w-full divide-y divide-slate-200 text-sm">
+          <table className="w-full min-w-[520px] divide-y divide-slate-200 text-sm">
             <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
                 <th className="px-3 py-2">Ingrediente</th>
@@ -1380,7 +1380,7 @@ function PoolsTab({ pools, form, setForm, onSubmit, onComputeShare, onEdit, onDe
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <h3 className="mb-3 text-lg font-semibold">Gastos fijos y prorrateos</h3>
         <div className="max-h-[520px] overflow-auto border border-slate-100">
-          <table className="min-w-full divide-y divide-slate-200 text-sm">
+          <table className="w-full min-w-[520px] divide-y divide-slate-200 text-sm">
             <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
               <tr>
                 <th className="px-3 py-2">Concepto</th>
@@ -2518,7 +2518,7 @@ function MealPlannerTab({
                   </p>
                 </div>
                 <div className="max-h-64 overflow-auto border border-slate-100">
-                  <table className="min-w-full divide-y divide-slate-200 text-xs">
+                  <table className="w-full min-w-[520px] divide-y divide-slate-200 text-xs">
                     <thead className="bg-slate-50 text-slate-500">
                       <tr>
                         <th className="px-2 py-1 text-left">Ingrediente</th>
@@ -2590,7 +2590,7 @@ function TimeDistributionCard({ entries, onAddEntry, onRemoveEntry, onChangeEntr
         </div>
       </div>
       <div className="overflow-auto rounded-lg border border-slate-100">
-        <table className="min-w-full divide-y divide-slate-100 text-sm">
+        <table className="w-full min-w-[520px] divide-y divide-slate-100 text-sm">
           <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
             <tr>
               <th className="px-3 py-2">Hora</th>
