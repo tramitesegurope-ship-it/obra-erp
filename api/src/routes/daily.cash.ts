@@ -9,10 +9,14 @@ const toPlainNumber = (value: Prisma.Decimal | number | null | undefined): numbe
 
 const router = Router();
 
-const parseDate = (value?: string) => {
+const parseLocalDateInput = (value?: string) => {
   if (!value) return undefined;
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+  const [year, month, day] = value.split('-').map(Number);
+  if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) {
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+  }
+  return new Date(year, month - 1, day);
 };
 
 const ExpenseItem = z
@@ -45,11 +49,8 @@ const CreateRendition = z.object({
 
 const parseLocalDate = (value?: string) => {
   if (!value) return new Date();
-  const [year, month, day] = value.split('-').map(Number);
-  if (!Number.isFinite(year) || !Number.isFinite(month) || !Number.isFinite(day)) {
-    return new Date(value);
-  }
-  return new Date(year, month - 1, day);
+  const parsed = parseLocalDateInput(value);
+  return parsed ?? new Date(value);
 };
 
 const resolveOpeningBalance = async (date: Date, custom?: number | null) => {
@@ -65,8 +66,8 @@ const resolveOpeningBalance = async (date: Date, custom?: number | null) => {
 
 router.get('/admin/daily-cash', async (req, res) => {
   const obraId = req.query.obraId ? Number(req.query.obraId) : undefined;
-  const from = parseDate(req.query.from as string | undefined);
-  const to = parseDate(req.query.to as string | undefined);
+  const from = parseLocalDateInput(req.query.from as string | undefined);
+  const to = parseLocalDateInput(req.query.to as string | undefined);
 
   const where: Prisma.DailyCashRenditionWhereInput = {};
   if (obraId) where.obraId = obraId;
