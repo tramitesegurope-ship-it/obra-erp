@@ -51,7 +51,7 @@ export default function AppShell<T extends string>({
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-800">
-      <aside className="hidden w-64 flex-shrink-0 border-r border-slate-200 bg-white/90 p-4 shadow-sm lg:flex lg:flex-col">
+      <aside className="hidden w-64 flex-shrink-0 border-r border-slate-200 bg-white/90 p-4 shadow-sm xl:flex xl:flex-col">
         <div className="mb-6">
           <p className="text-xs uppercase tracking-wide text-slate-500">Suite de gestión</p>
           <h1 className="text-xl font-bold text-slate-900">Obra ERP</h1>
@@ -88,7 +88,7 @@ export default function AppShell<T extends string>({
           <div className="mx-auto flex w-full max-w-[1600px] items-center gap-4 px-3 py-3 sm:px-4 lg:px-6">
             <button
               type="button"
-              className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 lg:hidden"
+              className="rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 xl:hidden"
               onClick={() => setMobileOpen(true)}
             >
               Menu
@@ -112,7 +112,7 @@ export default function AppShell<T extends string>({
         </header>
 
         {mobileOpen && (
-          <div className="fixed inset-0 z-40 lg:hidden">
+          <div className="fixed inset-0 z-40 xl:hidden">
             <button
               type="button"
               aria-label="Cerrar menu"
